@@ -18,6 +18,9 @@ from ingest.derive import (
     derive_persons,
     derive_price_ref,
 )
+from ingest.log import get_logger
+
+log = get_logger(__name__)
 
 
 def _image_url(path: str | None, base: str) -> str | None:
@@ -192,7 +195,16 @@ def transform_store(raw: dict) -> dict:
     try:
         lng = float(raw["longitude"])
         lat = float(raw["latitude"])
-        geo = {"type": "Point", "coordinates": [lng, lat]}
+        if -180 <= lng <= 180 and -90 <= lat <= 90:
+            geo = {"type": "Point", "coordinates": [lng, lat]}
+        else:
+            log.warning(
+                "store_geo_out_of_bounds",
+                store_id=raw.get("store_id"),
+                name=raw.get("name"),
+                lng=lng,
+                lat=lat,
+            )
     except (KeyError, TypeError, ValueError):
         pass
 
