@@ -1,12 +1,15 @@
 """
-Logging setup — structured JSON for K8s / pretty console for local dev.
+Logging setup — pretty console for local dev, structured JSON for K8s.
 
-The renderer is chosen automatically:
-- **TTY detected** (local terminal) → coloured, human-readable ``ConsoleRenderer``.
-- **No TTY** (K8s, CI, Docker) → newline-delimited JSON, one object per line,
-  ready for log aggregators (Datadog, Loki, ELK, GCP Logging…).
+Format is selected in this order:
+1. ``LOG_FORMAT`` env var: ``console`` → pretty, ``json`` → JSON.
+2. Auto-detect: if stdout is a TTY → pretty; otherwise → JSON.
 
-Override with the ``LOG_LEVEL`` env var (default ``INFO``).
+This means ``poetry run python run.py`` in a terminal gets pretty output
+by default.  In K8s / Docker / CI (no TTY, or ``LOG_FORMAT=json``), every
+line is a valid JSON object ready for log aggregators (Datadog, Loki, ELK…).
+
+Override log verbosity with ``LOG_LEVEL`` (default ``INFO``).
 
 Usage::
 
@@ -27,6 +30,20 @@ import structlog
 _CONFIGURED = False
 
 
+def _use_json() -> bool:
+    """Decide whether to emit JSON or pretty console output.
+
+    Priority: LOG_FORMAT env var → TTY auto-detect.
+    """
+    fmt = os.getenv("LOG_FORMAT", "").lower().strip()
+    if fmt == "json":
+        return True
+    if fmt == "console":
+        return False
+    # Auto-detect: no TTY = K8s / CI / Docker → JSON
+    return not sys.stdout.isatty()
+
+
 def configure_logging() -> None:
     """Configure structlog once for the entire process.
 
@@ -39,24 +56,21 @@ def configure_logging() -> None:
     log_level_name = os.getenv("LOG_LEVEL", "INFO").upper()
     log_level = getattr(logging, log_level_name, logging.INFO)
 
-    is_tty = sys.stdout.isatty()
-
-    # Processors run for every log entry, in order
     processors: list = [
         structlog.contextvars.merge_contextvars,
         structlog.processors.add_log_level,
         structlog.processors.TimeStamper(fmt="iso", utc=True),
     ]
 
-    if is_tty:
-        # ── Local dev: coloured, human-readable ──────────────────────────────
-        processors.append(structlog.dev.ConsoleRenderer(colors=True))
-    else:
+    if _use_json():
         # ── K8s / CI / Docker: newline-delimited JSON ────────────────────────
-        # Each log line is a valid JSON object — easy to ingest with any
-        # log aggregator.  Stack traces are serialised under "exception" key.
+        # Each line is a valid JSON object — easy to ingest with any aggregator.
+        # Stack traces are serialised under the "exception" key.
         processors.append(structlog.processors.format_exc_info)
         processors.append(structlog.processors.JSONRenderer(ensure_ascii=False))
+    else:
+        # ── Local dev / Python terminal: coloured, human-readable ────────────
+        processors.append(structlog.dev.ConsoleRenderer(colors=True))
 
     structlog.configure(
         processors=processors,
@@ -66,13 +80,8 @@ def configure_logging() -> None:
         cache_logger_on_first_use=True,
     )
 
-    # Also route stdlib ``logging`` through structlog so pymongo / tqdm
-    # warnings land in the same structured stream.
-    logging.basicConfig(
-        format="%(message)s",
-        stream=sys.stdout,
-        level=log_level,
-    )
+    # Route stdlib logging through structlog so pymongo warnings appear too.
+    logging.basicConfig(format="%(message)s", stream=sys.stdout, level=log_level)
 
     _CONFIGURED = True
 
@@ -80,9 +89,8 @@ def configure_logging() -> None:
 def get_logger(name: str = __name__):
     """Return a bound structlog logger with the module name pre-bound.
 
-    The ``logger`` key is bound at creation time so it appears in every
-    log line emitted by this logger — useful for filtering in K8s log
-    aggregators (e.g. ``{logger: "ingest.transform"}``).
+    The ``logger`` key appears in every log line — useful for filtering
+    in K8s log aggregators (e.g. ``{logger: "ingest.transform"}``).
 
     Args:
         name: Typically ``__name__`` of the calling module.

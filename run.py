@@ -4,6 +4,7 @@ Carrefour Traiteur — ETL ingestion pipeline.
 
 Reads three JSONL exports from ``data/`` and upserts them into MongoDB.
 Idempotent: safe to re-run; existing documents are updated in place.
+Documents no longer present in the export are soft-deleted (not hard-removed).
 
 Usage::
 
@@ -14,9 +15,10 @@ Usage::
 
 Environment variables::
 
-    MONGO_URI   MongoDB connection string  (default: mongodb://localhost:27017)
-    MONGO_DB    Database name              (default: carrefour_traiteur)
-    LOG_LEVEL   Logging verbosity          (default: INFO)
+    MONGO_URI    MongoDB connection string  (default: mongodb://localhost:27017)
+    MONGO_DB     Database name              (default: carrefour_traiteur)
+    LOG_LEVEL    Logging verbosity          (default: INFO)
+    LOG_FORMAT   console | json             (default: auto-detect via TTY)
 """
 
 import argparse
@@ -26,7 +28,13 @@ import sys
 from tqdm import tqdm
 
 from ingest.config import PRICES_FILE, PRODUCTS_FILE, STORES_FILE
-from ingest.db import bulk_upsert, bulk_upsert_prices, ensure_indexes, get_db
+from ingest.db import (
+    bulk_upsert,
+    bulk_upsert_prices,
+    ensure_indexes,
+    get_db,
+    soft_delete_removed,
+)
 from ingest.log import get_logger
 from ingest.transform import (
     build_price_index,
@@ -50,12 +58,17 @@ def count_lines(path) -> int:
 
 
 def ingest_stores() -> None:
-    """Read ``stores.jsonl`` and upsert all store documents into MongoDB."""
+    """Read ``stores.jsonl``, upsert all stores, and soft-delete removed ones.
+
+    Stores no longer present in the export are flagged ``is_active: False``
+    with a ``removed_at`` timestamp — they are never hard-deleted.
+    """
     log.info("ingest_started", collection="stores", file=str(STORES_FILE))
 
     db = get_db()
     total = count_lines(STORES_FILE)
     batch: list[dict] = []
+    seen_ids: set = set()
     upserted = modified = 0
 
     with open(STORES_FILE) as f, tqdm(total=total, unit="store", desc="stores", file=sys.stderr) as bar:
@@ -64,7 +77,9 @@ def ingest_stores() -> None:
             if not line:
                 continue
             raw = json.loads(line)
-            batch.append(transform_store(raw))
+            doc = transform_store(raw)
+            seen_ids.add(doc["_id"])
+            batch.append(doc)
             bar.update(1)
 
             if len(batch) >= BATCH:
@@ -79,14 +94,29 @@ def ingest_stores() -> None:
             upserted += r["upserted"]
             modified += r["modified"]
 
-    log.info("ingest_complete", collection="stores", total=total, upserted=upserted, modified=modified)
+    removed = soft_delete_removed(db.stores, seen_ids, "is_active", False)
+    if removed:
+        log.warning("soft_deleted", collection="stores", count=removed)
+
+    log.info(
+        "ingest_complete",
+        collection="stores",
+        total=total,
+        upserted=upserted,
+        modified=modified,
+        soft_deleted=removed,
+    )
 
 
 # ── Prices ────────────────────────────────────────────────────────────────────
 
 
 def ingest_prices() -> None:
-    """Read ``products_prices.jsonl`` and upsert all (product, store, price) rows."""
+    """Read ``products_prices.jsonl`` and upsert all (product, store, price) rows.
+
+    No soft-delete for prices — if a product is removed it will be
+    soft-deleted from the products collection, making its prices irrelevant.
+    """
     log.info("ingest_started", collection="prices", file=str(PRICES_FILE))
 
     total = count_lines(PRICES_FILE)
@@ -130,11 +160,14 @@ def ingest_prices() -> None:
 
 
 def ingest_products() -> None:
-    """Read ``products.jsonl`` and upsert all product documents into MongoDB.
+    """Read ``products.jsonl``, upsert all products, and soft-delete removed ones.
 
     Pre-loads the full price index into memory so each product document
     can include a ``price_ref`` (median across stores) without extra
     database round-trips.
+
+    Products no longer present in the export are flagged ``status: "inactive"``
+    with a ``removed_at`` timestamp — they are never hard-deleted.
     """
     log.info("ingest_started", collection="products", file=str(PRODUCTS_FILE))
     log.info("price_index_loading", file=str(PRICES_FILE))
@@ -145,6 +178,7 @@ def ingest_products() -> None:
     db = get_db()
     total = count_lines(PRODUCTS_FILE)
     batch: list[dict] = []
+    seen_ids: set = set()
     upserted = modified = 0
     step_counts: dict[str, int] = {}
 
@@ -155,6 +189,7 @@ def ingest_products() -> None:
                 continue
             raw = json.loads(line)
             doc = transform_product(raw, price_index)
+            seen_ids.add(doc["_id"])
             batch.append(doc)
 
             step = doc.get("menu_step") or "unclassified"
@@ -173,12 +208,17 @@ def ingest_products() -> None:
             upserted += r["upserted"]
             modified += r["modified"]
 
+    removed = soft_delete_removed(db.products, seen_ids, "status", "inactive")
+    if removed:
+        log.warning("soft_deleted", collection="products", count=removed)
+
     log.info(
         "ingest_complete",
         collection="products",
         total=total,
         upserted=upserted,
         modified=modified,
+        soft_deleted=removed,
         menu_step_distribution=step_counts,
     )
 

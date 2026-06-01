@@ -5,6 +5,8 @@ A single module-level client is created lazily on first call to ``get_db``
 so the connection is shared across the entire ingestion run.
 """
 
+from datetime import datetime, timezone
+
 from pymongo import ASCENDING, GEOSPHERE, MongoClient, UpdateOne
 from pymongo.collection import Collection
 
@@ -108,3 +110,37 @@ def bulk_upsert_prices(docs: list[dict]) -> dict:
         "upserted": result.upserted_count,
         "modified": result.modified_count,
     }
+
+
+def soft_delete_removed(
+    collection: Collection,
+    seen_ids: set,
+    status_field: str,
+    inactive_value: object,
+) -> int:
+    """Mark documents no longer present in the export as inactive.
+
+    Compares ``seen_ids`` (IDs found in the current export) against every
+    document in the collection.  Any document whose ``_id`` is not in
+    ``seen_ids`` and is not already inactive gets flagged with:
+    - ``{status_field}: inactive_value``
+    - ``removed_at: <utc now>``
+
+    Args:
+        collection:     Target MongoDB collection.
+        seen_ids:       Set of ``_id`` values present in the current export.
+        status_field:   Field used to mark activity (``"status"`` or ``"is_active"``).
+        inactive_value: Value that means inactive (``"inactive"`` or ``False``).
+
+    Returns:
+        Number of documents soft-deleted.
+    """
+    now = datetime.now(timezone.utc)
+    result = collection.update_many(
+        {
+            "_id": {"$nin": list(seen_ids)},
+            status_field: {"$ne": inactive_value},
+        },
+        {"$set": {status_field: inactive_value, "removed_at": now}},
+    )
+    return result.modified_count
