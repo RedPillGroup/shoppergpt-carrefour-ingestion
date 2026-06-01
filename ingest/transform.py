@@ -69,16 +69,19 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     comp_raw = raw.get("composition") or {}
     composition = None
     if comp_raw and comp_raw.get("pieces"):
-        composition = {
-            "title": comp_raw.get("title", ""),
-            "pieces": [
-                {
+        pieces = []
+        for p in comp_raw["pieces"]:
+            if isinstance(p, str):
+                pieces.append({"name": p, "qty": 1, "image_url": None})
+            elif isinstance(p, dict):
+                pieces.append({
                     "name": p.get("name", ""),
                     "qty": _safe_int(p.get("qty")) or 1,
                     "image_url": _image_url(p.get("image"), COMPOSITION_IMAGE_BASE),
-                }
-                for p in comp_raw["pieces"]
-            ],
+                })
+        composition = {
+            "title": comp_raw.get("title", ""),
+            "pieces": pieces,
         }
 
     status_raw = raw.get("status") or ""

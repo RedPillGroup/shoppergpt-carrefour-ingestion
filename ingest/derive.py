@@ -271,8 +271,12 @@ def derive_embed_text(product: dict) -> str:
 
     comp = product.get("composition") or {}
     for piece in comp.get("pieces") or []:
-        piece_name = (piece.get("name") or "").strip()
-        if piece_name:
-            parts.append(piece_name)
+        if isinstance(piece, str):
+            if piece.strip():
+                parts.append(piece.strip())
+        elif isinstance(piece, dict):
+            piece_name = (piece.get("name") or "").strip()
+            if piece_name:
+                parts.append(piece_name)
 
     return " ".join(parts)
