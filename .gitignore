@@ -1,0 +1,20 @@
+# Data files — never commit raw exports
+data/*.jsonl
+data/*.csv
+data/*.json
+
+# Env
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Poetry virtualenv (local)
+.venv/
+
+# OS
+.DS_Store
