@@ -11,6 +11,8 @@ pymongo = "^4.17.0"
 python-dotenv = "^1.2.2"
 tqdm = "^4.67.3"
 structlog = "^25.5.0"
+openai = "^1.0.0"
+pinecone = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15.15"

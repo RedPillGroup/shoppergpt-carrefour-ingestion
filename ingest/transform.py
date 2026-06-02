@@ -10,6 +10,7 @@ import json
 from datetime import datetime, timezone
 
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
+from ingest.categories import derive_category_tags
 from ingest.derive import (
     derive_dietary_tags,
     derive_embed_text,
@@ -64,6 +65,7 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     persons = derive_persons(raw, menu_step)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
     embed_text = derive_embed_text(raw)
+    category_tags = derive_category_tags(raw)
 
     # Composition — resolve piece image URLs
     comp_raw = raw.get("composition") or {}
@@ -97,6 +99,8 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         "menu_step": menu_step,  # heuristic — replace once Carrefour confirms field
         "is_food": is_food,
         "dietary_tags": dietary_tags,
+        # Curated taxonomy: {occasion, season, cuisine, diet, service_style} → [tags]
+        "category_tags": category_tags,
         "allergens": [],  # empty — type_allergene not yet populated by Carrefour
         "persons": persons,
         "price_ref": price_ref,  # median across stores; None if no price data

@@ -12,13 +12,18 @@ Usage::
     poetry run python run.py --stores     # stores only
     poetry run python run.py --products   # products only
     poetry run python run.py --prices     # prices only
+    poetry run python run.py --pinecone   # embed & upsert to Pinecone only
 
 Environment variables::
 
-    MONGO_URI    MongoDB connection string  (default: mongodb://localhost:27017)
-    MONGO_DB     Database name              (default: carrefour_traiteur)
-    LOG_LEVEL    Logging verbosity          (default: INFO)
-    LOG_FORMAT   console | json             (default: auto-detect via TTY)
+    MONGO_URI           MongoDB connection string   (default: mongodb://localhost:27017)
+    MONGO_DB            Database name               (default: carrefour_traiteur)
+    OPENAI_API_KEY      Required for --pinecone
+    PINECONE_API_KEY    Required for --pinecone
+    PINECONE_INDEX_NAME Pinecone index              (default: waib-dev-large)
+    EMBEDDING_MODEL     OpenAI model                (default: text-embedding-3-large)
+    LOG_LEVEL           Logging verbosity           (default: INFO)
+    LOG_FORMAT          console | json              (default: auto-detect via TTY)
 """
 
 import argparse
@@ -35,6 +40,7 @@ from ingest.db import (
     get_db,
     soft_delete_removed,
 )
+from ingest.embed import ingest_to_pinecone
 from ingest.log import get_logger
 from ingest.transform import (
     build_price_index,
@@ -239,9 +245,14 @@ def main() -> None:
     parser.add_argument("--stores", action="store_true", help="Ingest stores only")
     parser.add_argument("--prices", action="store_true", help="Ingest prices only")
     parser.add_argument("--products", action="store_true", help="Ingest products only")
+    parser.add_argument(
+        "--pinecone",
+        action="store_true",
+        help="Embed active food products and upsert vectors to Pinecone",
+    )
     args = parser.parse_args()
 
-    run_all = not (args.stores or args.prices or args.products)
+    run_all = not (args.stores or args.prices or args.products or args.pinecone)
 
     log.info("pipeline_starting", run_all=run_all, steps={k: v for k, v in vars(args).items() if v})
 
@@ -254,6 +265,9 @@ def main() -> None:
             ingest_prices()
         if run_all or args.products:
             ingest_products()
+        if run_all or args.pinecone:
+            db = get_db()
+            ingest_to_pinecone(db)
 
         log.info("pipeline_complete")
 
