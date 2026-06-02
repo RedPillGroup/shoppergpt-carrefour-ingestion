@@ -32,7 +32,7 @@ import sys
 
 from tqdm import tqdm
 
-from ingest.config import PRICES_FILE, PRODUCTS_FILE, STORES_FILE
+from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
     bulk_upsert,
     bulk_upsert_prices,
@@ -195,6 +195,9 @@ def ingest_products() -> None:
                 continue
             raw = json.loads(line)
             doc = transform_product(raw, price_index)
+            if not INGEST_NON_RECOMMENDABLE and doc.get("recommendable") is False:
+                bar.update(1)
+                continue
             seen_ids.add(doc["_id"])
             batch.append(doc)
 

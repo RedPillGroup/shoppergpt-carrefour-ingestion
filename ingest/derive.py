@@ -129,6 +129,30 @@ def derive_is_food(product: dict) -> bool:
     return dept not in NON_FOOD_DEPARTMENTS
 
 
+# ── recommendable ──────────────────────────────────────────────────────────────
+# "Compose-it-yourself" products (e.g. "Assortiment de 10 pâtisseries au choix")
+# require the customer to pick the contents, so the assistant can't meaningfully
+# recommend or compose them into a menu. We flag them non-recommendable; the
+# Pinecone ingestion skips them, so they never surface in menu suggestions.
+
+_NON_RECOMMENDABLE_NAME_KEYWORDS = [
+    "au choix",
+    "à composer",
+    "a composer",
+    "à garnir",
+    "a garnir",
+    "composez",
+    "à préciser",
+    "a preciser",
+]
+
+
+def derive_recommendable(product: dict) -> bool:
+    """Return ``False`` for compose-it-yourself products the assistant can't auto-select."""
+    name = (product.get("name") or "").lower()
+    return not any(kw in name for kw in _NON_RECOMMENDABLE_NAME_KEYWORDS)
+
+
 # ── dietary_tags ─────────────────────────────────────────────────────────────
 
 _DIETARY_ALLOWLIST = {

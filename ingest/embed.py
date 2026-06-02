@@ -31,7 +31,7 @@ from typing import Any
 
 from tqdm import tqdm
 
-from ingest.config import EMBEDDING_DIMENSIONS, EMBEDDING_MODEL, OPENAI_API_KEY, PINECONE_API_KEY, PINECONE_INDEX_NAME
+from ingest.config import EMBEDDING_DIMENSIONS, EMBEDDING_MODEL, INGEST_NON_RECOMMENDABLE, OPENAI_API_KEY, PINECONE_API_KEY, PINECONE_INDEX_NAME
 from ingest.log import get_logger
 
 log = get_logger(__name__)
@@ -41,11 +41,18 @@ EMBED_BATCH = 100
 UPSERT_BATCH = 100
 
 # MongoDB query: only embed active food products that have embed_text set.
+# When INGEST_NON_RECOMMENDABLE is False (default), compose-it-yourself products
+# (… au choix) are excluded — they were never stored in MongoDB, so this filter
+# is a safety net for legacy docs that predate the flag.
+# When INGEST_NON_RECOMMENDABLE is True the filter is dropped so those products
+# are embedded and surfaced in Pinecone alongside regular products.
 _QUERY: dict[str, Any] = {
     "status": "active",
     "is_food": True,
     "embed_text": {"$exists": True, "$ne": ""},
 }
+if not INGEST_NON_RECOMMENDABLE:
+    _QUERY["recommendable"] = {"$ne": False}
 
 # Fields fetched from MongoDB — fetch only what we need for efficiency.
 _PROJECTION: dict[str, int] = {

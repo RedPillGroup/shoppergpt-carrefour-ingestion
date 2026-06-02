@@ -18,6 +18,7 @@ from ingest.derive import (
     derive_menu_step,
     derive_persons,
     derive_price_ref,
+    derive_recommendable,
 )
 from ingest.log import get_logger
 
@@ -61,6 +62,7 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
 
     menu_step = derive_menu_step(raw)
     is_food = derive_is_food(raw)
+    recommendable = derive_recommendable(raw)
     dietary_tags = derive_dietary_tags(raw)
     persons = derive_persons(raw, menu_step)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
@@ -98,6 +100,9 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         # ── AI pipeline fields ──────────────────────────────────
         "menu_step": menu_step,  # heuristic — replace once Carrefour confirms field
         "is_food": is_food,
+        # False for "compose-it-yourself" products (… au choix / à composer) the
+        # assistant can't auto-select — excluded from Pinecone menu suggestions.
+        "recommendable": recommendable,
         "dietary_tags": dietary_tags,
         # Curated taxonomy: {occasion, season, cuisine, diet, service_style} → [tags]
         "category_tags": category_tags,
