@@ -53,56 +53,24 @@ def strip_html(html: str | None) -> str:
     return s.get_text()
 
 
-# ── menu_step ─────────────────────────────────────────────────────────────────
-# TODO: replace with a dedicated Carrefour field once confirmed.
-#       Current approach: check department first, then scan category names.
-
 NON_FOOD_DEPARTMENTS = {"Non AL", "Fleurs", "PLS"}
 
+# Department → guaranteed menu_step overrides (high-precision signals)
 _DEPARTMENT_STEP: dict[str, str] = {
     "Fromage": "Fromages",
 }
 
-# Category name substrings → step (checked in order, first match wins)
-_CATEGORY_STEP_RULES: list[tuple[str, str]] = [
-    # Boissons (check early — "carte des boissons" etc.)
-    ("boisson", "Boissons"),
-    ("carte des", "Boissons"),
-    # Desserts
-    ("dessert", "Desserts"),
-    ("gâteau", "Desserts"),
-    ("bûche", "Desserts"),
-    ("letter cake", "Desserts"),
-    ("number cake", "Desserts"),
-    ("pâtisserie", "Desserts"),
-    # Fromages
-    ("fromage", "Fromages"),
-    # Entrées
-    ("entrée", "Entrées"),
-    ("velouté", "Entrées"),
-    # Apéritifs
-    ("apéritif", "Apéritifs"),
-    ("apéro", "Apéritifs"),
-    ("cocktail", "Apéritifs"),
-    ("sushi", "Apéritifs"),
-    ("planche", "Apéritifs"),
-    ("plateau de char", "Apéritifs"),
-    # Plats (broad — intentionally last among food steps)
-    ("plat", "Plats"),
-    ("buffet", "Plats"),
-    ("a table", "Plats"),
-    ("à table", "Plats"),
-    ("repas", "Plats"),
-]
-
+# Department fallback when no category rule fires.
+# "Charcuterie" → Apéritifs is safe here: products that also have a Plats
+# category ("Plats complets", "Pizzas & quiches", etc.) are already caught
+# by the category rules above and never reach this fallback.
 _DEPARTMENT_FOOD_STEP: dict[str, str] = {
-    # When no category rule fires, fall back by department
-    "Charcuterie": "Apéritifs",
-    "Poisson": "Plats",
-    "Boucherie": "Plats",
-    "Boulangerie": "Desserts",
+    "Charcuterie":    "Apéritifs",
+    "Poisson":        "Plats",
+    "Boucherie":      "Plats",
+    "Boulangerie":    "Desserts",
     "Fruits et lég.": "Entrées",
-    "PGC": "Plats",
+    "PGC":            "Plats",
 }
 
 
@@ -110,22 +78,37 @@ def derive_menu_step(product: dict) -> str | None:
     """Infer the menu course (Apéritifs, Entrées, Plats, Fromages, Desserts, Boissons).
 
     Resolution order:
-    1. Explicit department mapping (e.g. "Fromage" → "Fromages").
-    2. First matching substring in any category name.
-    3. Department-level fallback.
-    4. ``None`` if nothing matches — logged as a warning.
+    1. Non-food department → None.
+    2. Explicit department override (e.g. "Fromage" dept → Fromages).
+    3. Category mapping from menu_step_mapping.py — rules checked in priority
+       order across ALL category names joined, so a high-priority rule always
+       beats a lower-priority one regardless of category order on the product.
+    4. Department-level fallback.
+    5. None if nothing matches.
     """
+    from ingest.menu_step_mapping import CATEGORY_TO_STEP, NON_FOOD_CATEGORY_KEYWORDS
+
     dept = product.get("carrefour_suppliers_department") or ""
+
+    if dept in NON_FOOD_DEPARTMENTS:
+        return None
 
     if dept in _DEPARTMENT_STEP:
         return _DEPARTMENT_STEP[dept]
 
     categories = product.get("categories") or []
-    for cat in categories:
-        name = (cat.get("category_name") or "").lower()
-        for keyword, step in _CATEGORY_STEP_RULES:
-            if keyword in name:
-                return step
+    all_categories = " | ".join(
+        (cat.get("category_name") or "").lower() for cat in categories
+    )
+
+    # Non-food check (tableware, decoration, etc.)
+    if any(kw in all_categories for kw in NON_FOOD_CATEGORY_KEYWORDS):
+        # Only return None if there's no food signal to override
+        pass  # let food rules below decide first
+
+    for keyword, step in CATEGORY_TO_STEP:
+        if keyword in all_categories:
+            return step
 
     if dept in _DEPARTMENT_FOOD_STEP:
         return _DEPARTMENT_FOOD_STEP[dept]

@@ -39,6 +39,7 @@ poetry run python run.py
 poetry run python run.py --stores
 poetry run python run.py --prices
 poetry run python run.py --products
+poetry run python run.py --pinecone
 ```
 
 ## Data files
