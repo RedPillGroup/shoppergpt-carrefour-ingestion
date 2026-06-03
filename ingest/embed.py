@@ -40,15 +40,17 @@ log = get_logger(__name__)
 EMBED_BATCH = 100
 UPSERT_BATCH = 100
 
-# MongoDB query: only embed active food products that have embed_text set.
+# MongoDB query: embed all active products that have embed_text AND a valid
+# menu_step (including non-food items like Table & Déco tableware/decorations).
+# Previously restricted to is_food=True, but non-food product categories such
+# as arts de la table and décoration de fête now map to "Table & Déco" and
+# must be searchable via Pinecone.
 # When INGEST_NON_RECOMMENDABLE is False (default), compose-it-yourself products
 # (… au choix) are excluded — they were never stored in MongoDB, so this filter
 # is a safety net for legacy docs that predate the flag.
-# When INGEST_NON_RECOMMENDABLE is True the filter is dropped so those products
-# are embedded and surfaced in Pinecone alongside regular products.
 _QUERY: dict[str, Any] = {
     "status": "active",
-    "is_food": True,
+    "menu_step": {"$ne": None},
     "embed_text": {"$exists": True, "$ne": ""},
 }
 if not INGEST_NON_RECOMMENDABLE:

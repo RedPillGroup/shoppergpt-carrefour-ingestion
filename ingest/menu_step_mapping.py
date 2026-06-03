@@ -2,10 +2,12 @@
 Carrefour Traiteur official navigation hierarchy → menu_step mapping.
 
 Structure mirrors traiteur.carrefour.fr/a-la-carte.html exactly.
-Each top-level section maps to one of our 6 menu steps:
-  Apéritifs | Entrées | Plats | Fromages | Desserts | Boissons
+Each top-level section maps to one of our 11 menu steps:
+  Apéritifs | Entrées | Plats | Plateaux | Fromages | Desserts | Boissons | Pains | Petit Déj | Table & Déco | Fleurs
 
-Non-food sections (Arts de la table, Décoration de fête) map to None.
+Non-food sections (Arts de la table, Décoration de fête) now map to "Table & Déco"
+so they are indexed in Pinecone and surfaceable by the assistant.
+Only true non-product categories (fleurs, bouquets) remain excluded.
 
 Usage in derive.py: join all product category names, then iterate
 CATEGORY_TO_STEP in order — first match wins. More specific entries
@@ -13,30 +15,14 @@ must appear before broader ones that could shadow them.
 """
 
 # ---------------------------------------------------------------------------
-# Non-food — products in these categories should have menu_step = None
+# Non-food — products in these categories should have menu_step = None.
+# Arts de la table and Déco de fête are intentionally NOT here anymore —
+# they now map to "Table & Déco" so the assistant can recommend them.
 # ---------------------------------------------------------------------------
 
 NON_FOOD_CATEGORY_KEYWORDS: list[str] = [
-    # Arts de la table
-    "spécial anniversaire",
-    "assiettes et contenants",
-    "serviettes",
-    "gobelets",
-    "couverts",
-    "nappes",
-    "vaisselle",
-    "arts de la table",
-    # Décoration de fête
-    "bougies",
-    "ballons",
-    "décoration de fête",
-    "déco de fête",
-    "déco spéciale",
-    "déco de table",
-    # Misc non-food found in data
-    "fleurs et vaisselle",
-    "fleurs",
-    "bouquets",
+    # Nothing excluded at this level anymore — all categories with products
+    # now map to an explicit step so the assistant can recommend them.
 ]
 
 # ---------------------------------------------------------------------------
@@ -62,16 +48,34 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("vins",                            "Boissons"),
     ("boissons",                        "Boissons"),
 
+    # ── Plateaux ─────────────────────────────────────────────────────────
+    # Section: Les plateaux — mixed assorted platters (meat, charcuterie, BBQ)
+    # Must come before Apéritifs/Plats/Fromages to win over generic matches.
+    ("les plateaux du boucher",         "Plateaux"),
+    ("plateaux déjà composés",          "Plateaux"),
+    ("plateaux à composer",             "Plateaux"),
+    ("plateaux grands formats",         "Plateaux"),
+    ("accompagnez votre plateau",       "Plateaux"),
+    ("plateaux barbecue",               "Plateaux"),
+    ("les plateaux de charcuterie",     "Plateaux"),
+    ("plateau de charcuterie",          "Plateaux"),
+    ("plateaux de charcuteries",        "Plateaux"),
+
     # ── Fromages ─────────────────────────────────────────────────────────
-    # Section: Fromages
-    ("plateaux déjà composés",          "Fromages"),
-    ("plateaux à composer",             "Fromages"),
+    # Section: Fromages — cheese-specific boards and products
     ("fromages à la carte",             "Fromages"),
-    ("plateaux grands formats",         "Fromages"),
-    ("accompagnez votre plateau",       "Fromages"),
     ("plateaux de fromages",            "Fromages"),
     ("fromages & pains",                "Fromages"),
     ("fromages",                        "Fromages"),
+
+    # ── Petit Déj ─────────────────────────────────────────────────────────
+    # Section: Petit déjeuner & goûter — must appear before Desserts to win
+    ("petit déjeuner & goûter",         "Petit Déj"),
+    ("viennoiseries",                   "Petit Déj"),
+    ("au petit déjeuner",               "Petit Déj"),
+    ("au petit-déjeuner",               "Petit Déj"),
+    ("petit déjeuner",                  "Petit Déj"),
+    ("café et petit déjeuner",          "Petit Déj"),
 
     # ── Desserts ─────────────────────────────────────────────────────────
     # Section: Gâteaux & desserts
@@ -87,14 +91,12 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("desserts et gâteaux",             "Desserts"),
     ("desserts et gourmandises",        "Desserts"),
     ("desserts",                        "Desserts"),
-    # Section: Petit déjeuner & goûter
-    ("viennoiseries",                   "Desserts"),
+    # Petit-déj items that also appear under dessert sections
     ("mignardises et petits plaisirs",  "Desserts"),
     ("pâtisseries américaines",         "Desserts"),
     ("pâtisseries individuelles",       "Desserts"),
     ("gâteaux et tartes",               "Desserts"),
     ("bonbons et friandises",           "Desserts"),
-    ("petit déjeuner",                  "Desserts"),
     ("pâtisserie",                      "Desserts"),
     # Letter/Number cakes (found in data)
     ("letter cake",                     "Desserts"),
@@ -111,10 +113,6 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("à picorer",                       "Apéritifs"),
     ("a picorer",                       "Apéritifs"),
     ("formules apéro",                  "Apéritifs"),
-    # Section: Les plateaux (charcuterie platters = apéritif)
-    ("les plateaux de charcuterie",     "Apéritifs"),
-    ("plateau de charcuterie",          "Apéritifs"),
-    ("plateaux de charcuteries",        "Apéritifs"),
     # Section: Pizzas & Bruschettas — whole pizzas are main course
     ("pizzas & bruschettas",            "Plats"),
     ("bruschettas",                     "Apéritifs"),
@@ -166,8 +164,6 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("soupes",                          "Entrées"),
 
     # ── Plats ────────────────────────────────────────────────────────────
-    # Section: Les plateaux (boucher = main course)
-    ("les plateaux du boucher",         "Plats"),
     ("les pizzas & quiches géantes",    "Plats"),
     # Section: Fruits de mer
     ("plateaux de fruits de mer",       "Plats"),
@@ -189,20 +185,54 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("plats et menus de réveillon",     "Plats"),
     # Generic plat signals (from data)
     ("grillade",                        "Plats"),
-    ("plateaux barbecue",               "Plats"),
     ("prêts à griller",                 "Plats"),
     ("spécial barbecue",                "Plats"),
     ("plats",                           "Plats"),  # broad — keep last
 
-    # ── Pains → Apéritifs ────────────────────────────────────────────────
-    # Section: Pains (bread served at reception = apéritif context)
-    ("baguettes",                       "Apéritifs"),
-    ("tranchés",                        "Apéritifs"),
-    ("à garnir / à tartiner",           "Apéritifs"),
-    ("à garnir",                        "Apéritifs"),
+    # ── Pains ─────────────────────────────────────────────────────────────
+    # Section: Pains — breads, baguettes, rolls for serving alongside food
+    ("baguettes",                       "Pains"),
+    ("tranchés",                        "Pains"),
+    ("à garnir / à tartiner",           "Pains"),
+    ("à garnir",                        "Pains"),
+    ("mini pains",                      "Pains"),
+    ("pains burger",                    "Pains"),
+    ("navettes",                        "Pains"),
     # "produits bio" is too generic — omitted, let department fallback decide
 
     # ── Les à côtés → Plats ───────────────────────────────────────────────
     # Section: Les à côtés (side dishes)
     ("sauces et condiments",            "Plats"),
+
+    # ── Fleurs ────────────────────────────────────────────────────────────
+    # Section: Fleurs — fresh and artificial flowers, bouquets, compositions
+    ("fleurs et vaisselle",             "Fleurs"),
+    ("fleurs fraîches",                 "Fleurs"),
+    ("fleurs séchées",                  "Fleurs"),
+    ("fleurs artificielles",            "Fleurs"),
+    ("composition florale",             "Fleurs"),
+    ("bouquets",                        "Fleurs"),
+    ("fleurs",                          "Fleurs"),
+
+    # ── Table & Déco ──────────────────────────────────────────────────────
+    # Section: Arts de la table — tableware for serving and decoration
+    ("arts de la table",                "Table & Déco"),
+    ("assiettes et contenants",         "Table & Déco"),
+    ("gobelets",                        "Table & Déco"),
+    ("couverts",                        "Table & Déco"),
+    ("nappes",                          "Table & Déco"),
+    ("vaisselle",                       "Table & Déco"),
+    ("a table !",                       "Table & Déco"),
+    ("vaisselle & déco de fête",        "Table & Déco"),
+    ("vaisselle et déco de table",      "Table & Déco"),
+    ("vaisselle et accessoires",        "Table & Déco"),
+    # Section: Décoration de fête
+    ("décoration de fête",              "Table & Déco"),
+    ("déco de fête",                    "Table & Déco"),
+    ("déco spéciale",                   "Table & Déco"),
+    ("déco de table",                   "Table & Déco"),
+    ("bougies",                         "Table & Déco"),
+    ("ballons",                         "Table & Déco"),
+    ("spécial anniversaire",            "Table & Déco"),
+    ("serviettes",                      "Table & Déco"),
 ]
