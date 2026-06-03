@@ -37,7 +37,14 @@ NON_FOOD_CATEGORY_KEYWORDS: list[str] = [
 CATEGORY_TO_STEP: list[tuple[str, str]] = [
 
     # ── Boissons ─────────────────────────────────────────────────────────
-    # Section: Boissons
+    # Section: Boissons — specific categories first, generic last.
+    # "boissons & déco de fête" / "boisson & déco de fête" are INTENTIONALLY
+    # placed after the specific Boissons categories (vins, champagnes, etc.)
+    # because Carrefour uses them as a shared parent for BOTH wine products
+    # AND party tableware. Real beverages already carry a specific category
+    # (e.g. "Vins", "Champagnes et vins pétillants") that fires earlier.
+    # Only products with NO specific boissons category (serviettes, chemins
+    # de table…) fall through to the "& déco de fête" rule → Table & Déco.
     ("eaux, sodas et jus de fruits",    "Boissons"),
     ("bières & cidres",                 "Boissons"),
     ("champagnes et vins pétillants",   "Boissons"),
@@ -46,6 +53,10 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("carte des boissons",              "Boissons"),
     ("boissons chaudes",                "Boissons"),
     ("vins",                            "Boissons"),
+    # Mixed "boissons & déco" categories — redirect to Table & Déco when the
+    # product has no real beverage category above.
+    ("boissons & déco de fête",         "Table & Déco"),
+    ("boisson & déco de fête",          "Table & Déco"),
     ("boissons",                        "Boissons"),
 
     # ── Plateaux ─────────────────────────────────────────────────────────
@@ -68,8 +79,17 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("fromages & pains",                "Fromages"),
     ("fromages",                        "Fromages"),
 
+    # ── Desserts (high-priority specific keywords) ───────────────────────
+    # These must come BEFORE Petit Déj because Carrefour sometimes tags pastry
+    # and dessert products with "Petit déjeuner & goûter" as a secondary
+    # category. The product-specific signals win.
+    ("pâtisseries individuelles",       "Desserts"),
+    ("les individuels",                 "Desserts"),
+    ("petits fours et mignardises",     "Desserts"),
+    ("gâteaux enfants",                 "Desserts"),
+
     # ── Petit Déj ─────────────────────────────────────────────────────────
-    # Section: Petit déjeuner & goûter — must appear before Desserts to win
+    # Section: Petit déjeuner & goûter
     ("petit déjeuner & goûter",         "Petit Déj"),
     ("viennoiseries",                   "Petit Déj"),
     ("au petit déjeuner",               "Petit Déj"),
@@ -79,10 +99,7 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
 
     # ── Desserts ─────────────────────────────────────────────────────────
     # Section: Gâteaux & desserts
-    ("petits fours et mignardises",     "Desserts"),
     ("tartes",                          "Desserts"),
-    ("gâteaux enfants",                 "Desserts"),
-    ("les individuels",                 "Desserts"),
     ("fruits et corbeilles de fruits",  "Desserts"),
     ("gâteaux et desserts",             "Desserts"),
     ("gâteaux",                         "Desserts"),
@@ -196,6 +213,7 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("à garnir / à tartiner",           "Pains"),
     ("à garnir",                        "Pains"),
     ("mini pains",                      "Pains"),
+    ("petits pains",                    "Pains"),
     ("pains burger",                    "Pains"),
     ("navettes",                        "Pains"),
     # "produits bio" is too generic — omitted, let department fallback decide
@@ -203,16 +221,6 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     # ── Les à côtés → Plats ───────────────────────────────────────────────
     # Section: Les à côtés (side dishes)
     ("sauces et condiments",            "Plats"),
-
-    # ── Fleurs ────────────────────────────────────────────────────────────
-    # Section: Fleurs — fresh and artificial flowers, bouquets, compositions
-    ("fleurs et vaisselle",             "Fleurs"),
-    ("fleurs fraîches",                 "Fleurs"),
-    ("fleurs séchées",                  "Fleurs"),
-    ("fleurs artificielles",            "Fleurs"),
-    ("composition florale",             "Fleurs"),
-    ("bouquets",                        "Fleurs"),
-    ("fleurs",                          "Fleurs"),
 
     # ── Table & Déco ──────────────────────────────────────────────────────
     # Section: Arts de la table — tableware for serving and decoration
@@ -222,9 +230,12 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("couverts",                        "Table & Déco"),
     ("nappes",                          "Table & Déco"),
     ("vaisselle",                       "Table & Déco"),
-    ("a table !",                       "Table & Déco"),
+    # NOTE: "a table !" intentionally omitted — in Carrefour's taxonomy it
+    # means "foods ready to eat at the table" (pains, fromages…), not tableware.
+    # Products with this tag fall through to their other categories instead.
     ("vaisselle & déco de fête",        "Table & Déco"),
     ("vaisselle et déco de table",      "Table & Déco"),
+    ("vaisselle et décoration de table","Table & Déco"),  # actual spelling in export
     ("vaisselle et accessoires",        "Table & Déco"),
     # Section: Décoration de fête
     ("décoration de fête",              "Table & Déco"),
@@ -235,4 +246,17 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     ("ballons",                         "Table & Déco"),
     ("spécial anniversaire",            "Table & Déco"),
     ("serviettes",                      "Table & Déco"),
+
+    # ── Fleurs ────────────────────────────────────────────────────────────
+    # Note: "Fleurs" department products are caught earlier by _DEPARTMENT_STEP
+    # in derive.py, so these keywords are a safety fallback only.
+    # "fleurs et vaisselle" intentionally omitted — it's a shared parent
+    # category that also applies to tableware products (Non AL dept), causing
+    # them to be misclassified as Fleurs instead of Table & Déco.
+    ("fleurs fraîches",                 "Fleurs"),
+    ("fleurs séchées",                  "Fleurs"),
+    ("fleurs artificielles",            "Fleurs"),
+    ("composition florale",             "Fleurs"),
+    ("bouquets",                        "Fleurs"),
+    ("fleurs",                          "Fleurs"),
 ]

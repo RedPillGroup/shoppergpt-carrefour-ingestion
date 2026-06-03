@@ -53,11 +53,18 @@ def strip_html(html: str | None) -> str:
     return s.get_text()
 
 
+# PLS = "Produits en Libre Service" — standard supermarket shelf products
+# (packaged charcuterie, milk, butter, eggs…). These are NOT traiteur-prepared
+# items and would pollute LLM recommendations. Excluded like Non AL / Fleurs.
+# The few PLS products that ARE traiteur-relevant (foie gras, saumon fumé…)
+# already have Carrefour category tags and are caught by CATEGORY_TO_STEP.
 NON_FOOD_DEPARTMENTS = {"Non AL", "Fleurs", "PLS"}
 
-# Department → guaranteed menu_step overrides (high-precision signals)
+# Department → guaranteed menu_step overrides (high-precision signals).
+# These bypass the category check entirely — use only for unambiguous departments.
 _DEPARTMENT_STEP: dict[str, str] = {
     "Fromage": "Fromages",
+    "Fleurs":  "Fleurs",   # Fleurs dept always → Fleurs step (still is_food=False)
 }
 
 # Department fallback when no category rule fires.
@@ -71,6 +78,15 @@ _DEPARTMENT_FOOD_STEP: dict[str, str] = {
     "Boulangerie":    "Desserts",
     "Fruits et lég.": "Entrées",
     "PGC":            "Plats",
+}
+
+# Non-food departments that still belong in the panel with a known step.
+# These are reached only when the category loop found no match (i.e., no
+# categories, or no matching keyword).
+_NON_FOOD_DEPT_STEP: dict[str, str] = {
+    # "Non AL" = non-alimentaire: tableware, accessories, decoration, cleaning.
+    # All serve a table-setting or event-decoration purpose → Table & Déco.
+    "Non AL": "Table & Déco",
 }
 
 
@@ -90,25 +106,27 @@ def derive_menu_step(product: dict) -> str | None:
 
     dept = product.get("carrefour_suppliers_department") or ""
 
-    if dept in NON_FOOD_DEPARTMENTS:
-        return None
-
+    # High-precision department overrides first (e.g. "Fromage" → Fromages,
+    # "Fleurs" → Fleurs).  These bypass the category loop intentionally.
     if dept in _DEPARTMENT_STEP:
         return _DEPARTMENT_STEP[dept]
 
+    # Category-based rules — checked in declared priority order.
+    # We do this BEFORE the non-food department guard so that "Non AL" / "PLS"
+    # products with tableware/decoration categories still get a menu_step.
     categories = product.get("categories") or []
     all_categories = " | ".join(
         (cat.get("category_name") or "").lower() for cat in categories
     )
 
-    # Non-food check (tableware, decoration, etc.)
-    if any(kw in all_categories for kw in NON_FOOD_CATEGORY_KEYWORDS):
-        # Only return None if there's no food signal to override
-        pass  # let food rules below decide first
-
     for keyword, step in CATEGORY_TO_STEP:
         if keyword in all_categories:
             return step
+
+    # Non-food departments — check if they have a known panel step first,
+    # then fall back to None (excluded from menu).
+    if dept in NON_FOOD_DEPARTMENTS:
+        return _NON_FOOD_DEPT_STEP.get(dept)  # None if not in the map
 
     if dept in _DEPARTMENT_FOOD_STEP:
         return _DEPARTMENT_FOOD_STEP[dept]

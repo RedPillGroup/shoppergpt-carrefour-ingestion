@@ -36,9 +36,10 @@ from ingest.log import get_logger
 
 log = get_logger(__name__)
 
-# Batch sizes — kept identical for OpenAI and Pinecone to simplify flow.
-EMBED_BATCH = 100
-UPSERT_BATCH = 100
+# OpenAI supports up to 2048 inputs per request; Pinecone upsert limit is 1000
+# vectors per call (recommended ≤ 200 for optimal throughput at 1536 dims).
+EMBED_BATCH = 500
+UPSERT_BATCH = 200
 
 # MongoDB query: embed all active products that have embed_text AND a valid
 # menu_step (including non-food items like Table & Déco tableware/decorations).
