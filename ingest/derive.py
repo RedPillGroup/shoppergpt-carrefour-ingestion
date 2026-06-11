@@ -1,56 +1,24 @@
 """
-Derivation helpers — compute the fields the AI pipeline needs
+Derivation helpers — compute the minimal fields the AI pipeline needs
 from raw Carrefour product records.
 
-``menu_step`` is a heuristic for now and will be replaced once Carrefour
-provides a dedicated field (email sent, awaiting response).
+Philosophy: stay as close as possible to Carrefour's raw data.
+We derive only what is strictly required for the app to function:
+  - menu_step   → from Carrefour's own category names
+  - is_food     → from department
+  - persons     → from Carrefour's nb_portion field only
+  - price_ref   → median across stores
+  - recommendable → filter out "compose-it-yourself" products
+
+Everything else (dietary restrictions, allergens, occasion tags, etc.)
+is kept as raw Carrefour data and left to the LLM to interpret.
 """
 
-import re
 import statistics
-from html.parser import HTMLParser
 
 from ingest.log import get_logger
 
 log = get_logger(__name__)
-
-
-# ── HTML stripping ────────────────────────────────────────────────────────────
-
-
-class _Stripper(HTMLParser):
-    """Minimal HTML parser that extracts visible text content."""
-
-    def __init__(self) -> None:
-        """Initialise the parser and the internal text buffer."""
-        super().__init__()
-        self._parts: list[str] = []
-
-    def handle_data(self, data: str) -> None:
-        """Collect non-empty text nodes."""
-        text = data.strip()
-        if text:
-            self._parts.append(text)
-
-    def get_text(self) -> str:
-        """Return all collected text joined by spaces."""
-        return " ".join(self._parts)
-
-
-def strip_html(html: str | None) -> str:
-    """Strip HTML tags and return clean plain text.
-
-    Falls back to a naive regex replacement if the parser raises.
-    Returns an empty string for ``None`` or empty input.
-    """
-    if not html:
-        return ""
-    s = _Stripper()
-    try:
-        s.feed(html)
-    except Exception:
-        return re.sub(r"<[^>]+>", " ", html).strip()
-    return s.get_text()
 
 
 # PLS = "Produits en Libre Service" — standard supermarket shelf products
@@ -102,7 +70,7 @@ def derive_menu_step(product: dict) -> str | None:
     4. Department-level fallback.
     5. None if nothing matches.
     """
-    from ingest.menu_step_mapping import CATEGORY_TO_STEP, NON_FOOD_CATEGORY_KEYWORDS
+    from ingest.menu_step_mapping import CATEGORY_TO_STEP
 
     dept = product.get("carrefour_suppliers_department") or ""
 
@@ -171,84 +139,17 @@ def derive_recommendable(product: dict) -> bool:
     return not any(kw in name for kw in _NON_RECOMMENDABLE_NAME_KEYWORDS)
 
 
-# ── dietary_tags ─────────────────────────────────────────────────────────────
-
-_DIETARY_ALLOWLIST = {
-    "végétarien",
-    "vegan",
-    "sans porc",
-    "sans viande",
-    "sans poisson",
-    "sans gluten",
-    "sans lactose",
-    "hallal",
-    "casher",
-    "bio",
-}
-
-
-def derive_dietary_tags(product: dict) -> list[str]:
-    """Extract dietary restriction/preference tags from ``type_envie``.
-
-    Only allowlisted tags are kept — taste and temperature values
-    (e.g. "salé", "froid") are filtered out.
-    """
-    raw = product.get("type_envie") or []
-    if isinstance(raw, str):
-        raw = [raw]
-    return [tag for tag in raw if tag in _DIETARY_ALLOWLIST]
-
-
-
-# ── allergen_tags ──────────────────────────────────────────────────────────────
-# Maps EU official allergen names (type_allergene) to short engine tags.
-# These are PRESENCE tags — the product CONTAINS this allergen.
-# The engine uses them to exclude products for guests with allergies.
-_ALLERGEN_TO_TAG: dict[str, str] = {
-    "Arachides":                        "arachides",
-    "Crustacés":                        "crustacés",
-    "Mollusques":                       "mollusques",
-    "Poissons":                         "poissons",
-    "Œufs":                             "œufs",
-    "Lait":                             "lait",
-    "Soja":                             "soja",
-    "Céréales contenant du gluten":     "gluten",
-    "Fruits à coque":                   "fruits à coque",
-    "Graines de sésame":                "sésame",
-    "Moutarde":                         "moutarde",
-    "Céleri":                           "céleri",
-    "Lupin":                            "lupin",
-    "Anhydride sulfureux et sulfites":  "sulfites",
-}
-
-
-def derive_allergen_tags(product: dict) -> list[str]:
-    """Return short allergen presence tags derived from ``type_allergene``.
-
-    Maps the 14 EU regulated allergen names to compact engine tags so the
-    composer can exclude products that contain a guest's allergen.
-    Only returns tags for allergens actually present in the product.
-    """
-    raw = product.get("type_allergene") or []
-    if isinstance(raw, str):
-        raw = [raw]
-    return [_ALLERGEN_TO_TAG[a] for a in raw if a in _ALLERGEN_TO_TAG]
-
-
 # ── persons ───────────────────────────────────────────────────────────────────
 
-_NORM_G_PER_PERSON: dict[str, float] = {
-    "Apéritifs": 150.0,
-    "Entrées": 200.0,
-    "Plats": 300.0,
-    "Fromages": 80.0,
-    "Desserts": 150.0,
-    "Boissons": 250.0,
-}
 
+def derive_persons(product: dict) -> int | None:
+    """Return how many people one unit serves, from Carrefour's ``nb_portion`` field.
 
-def _to_positive_int(val: object) -> int | None:
-    """Convert a value to a positive int, returning ``None`` on failure."""
+    Returns ``None`` if the field is absent or not a positive integer — the LLM
+    will infer coverage from the product name instead.
+    No invented fallbacks (weight norms, piece counts, etc.).
+    """
+    val = product.get("nb_portion")
     if val is None:
         return None
     try:
@@ -256,36 +157,6 @@ def _to_positive_int(val: object) -> int | None:
         return v if v > 0 else None
     except (ValueError, TypeError):
         return None
-
-
-def derive_persons(product: dict, menu_step: str | None) -> int:
-    """Estimate how many people one unit of this product serves.
-
-    Fallback chain:
-    1. ``nb_portion`` if populated and positive.
-    2. ``weight`` (grams) divided by the per-person norm for the course.
-    3. ``nb_pieces_dans_boite`` as a proxy for piece-based products.
-    4. Hard fallback of ``1``.
-    """
-    v = _to_positive_int(product.get("nb_portion"))
-    if v:
-        return v
-
-    weight_str = str(product.get("weight") or "0").strip()
-    if weight_str not in ("0", "0.0000", "", "None"):
-        try:
-            weight_g = float(weight_str)
-            if weight_g > 0 and menu_step:
-                norm = _NORM_G_PER_PERSON.get(menu_step, 200.0)
-                return max(1, round(weight_g / norm))
-        except (ValueError, TypeError):
-            pass
-
-    v = _to_positive_int(product.get("nb_pieces_dans_boite"))
-    if v:
-        return v
-
-    return 1
 
 
 # ── price_ref ─────────────────────────────────────────────────────────────────
@@ -302,42 +173,3 @@ def derive_price_ref(prices: list[float]) -> float | None:
     return round(statistics.median(prices), 2)
 
 
-# ── embed_text ────────────────────────────────────────────────────────────────
-
-
-def derive_embed_text(product: dict) -> str:
-    """Build a clean text string for future Pinecone vector embedding.
-
-    Concatenates: name + ingredients (HTML-stripped) + keywords +
-    category names + composition piece names.
-    """
-    parts: list[str] = []
-
-    name = (product.get("name") or "").strip()
-    if name:
-        parts.append(name)
-
-    ingredients = strip_html(product.get("ingredients"))
-    if ingredients:
-        parts.append(ingredients)
-
-    keywords = (product.get("mots_cles") or "").strip()
-    if keywords:
-        parts.append(keywords)
-
-    for cat in product.get("categories") or []:
-        cat_name = (cat.get("category_name") or "").strip()
-        if cat_name:
-            parts.append(cat_name)
-
-    comp = product.get("composition") or {}
-    for piece in comp.get("pieces") or []:
-        if isinstance(piece, str):
-            if piece.strip():
-                parts.append(piece.strip())
-        elif isinstance(piece, dict):
-            piece_name = (piece.get("name") or "").strip()
-            if piece_name:
-                parts.append(piece_name)
-
-    return " ".join(parts)

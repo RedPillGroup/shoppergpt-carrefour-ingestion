@@ -10,11 +10,7 @@ import json
 from datetime import datetime, timezone
 
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
-from ingest.categories import derive_category_tags
 from ingest.derive import (
-    derive_allergen_tags,
-    derive_dietary_tags,
-    derive_embed_text,
     derive_is_food,
     derive_menu_step,
     derive_persons,
@@ -64,12 +60,8 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     menu_step = derive_menu_step(raw)
     is_food = derive_is_food(raw)
     recommendable = derive_recommendable(raw)
-    dietary_tags = derive_dietary_tags(raw)
-    allergen_tags = derive_allergen_tags(raw)
-    persons = derive_persons(raw, menu_step)
+    persons = derive_persons(raw)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
-    embed_text = derive_embed_text(raw)
-    category_tags = derive_category_tags(raw)
 
     # Composition — resolve piece image URLs
     comp_raw = raw.get("composition") or {}
@@ -99,17 +91,12 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         "name": raw.get("name", ""),
         "status": status,
         "type_id": raw.get("type_id"),
-        # ── AI pipeline fields ──────────────────────────────────
-        "menu_step": menu_step,  # heuristic — replace once Carrefour confirms field
+        # ── App pipeline fields ──────────────────────────────────
+        # Derived from Carrefour's own category/department data.
+        "menu_step": menu_step,
         "is_food": is_food,
-        # False for "compose-it-yourself" products (… au choix / à composer) the
-        # assistant can't auto-select — excluded from Pinecone menu suggestions.
+        # False for "compose-it-yourself" products (… au choix / à composer).
         "recommendable": recommendable,
-        "dietary_tags": dietary_tags,
-        "allergen_tags": allergen_tags,
-        # Curated taxonomy: {occasion, season, cuisine, diet, service_style} → [tags]
-        "category_tags": category_tags,
-        "allergens": raw.get("type_allergene") or [],  # 14 EU allergens, now populated
         "persons": persons,
         "price_ref": price_ref,  # median across stores; None if no price data
         # ── Product details ──────────────────────────────────────
@@ -124,9 +111,9 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         ],
         # ── Composition (plateaux/buffets) ───────────────────────
         "composition": composition,
-        # ── Future Pinecone embedding source ─────────────────────
-        "embed_text": embed_text,
-        # ── Meta ─────────────────────────────────────────────────
+        # ── Raw Carrefour data (source of truth) ─────────────────
+        # Dietary info, allergens, ingredients etc. live here.
+        # The LLM reads this directly — we don't pre-process it.
         "ingested_at": now,
         "raw": raw,
     }

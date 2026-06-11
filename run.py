@@ -21,7 +21,7 @@ Environment variables::
     OPENAI_API_KEY      Required for --pinecone
     PINECONE_API_KEY    Required for --pinecone
     PINECONE_INDEX_NAME Pinecone index              (default: waib-dev-large)
-    EMBEDDING_MODEL     OpenAI model                (default: text-embedding-3-large)
+    EMBEDDING_MODEL     OpenAI model                (default: text-embedding-3-small)
     LOG_LEVEL           Logging verbosity           (default: INFO)
     LOG_FORMAT          console | json              (default: auto-detect via TTY)
 """
@@ -235,7 +235,7 @@ def ingest_products() -> None:
         log.warning(
             "unclassified_products_detected",
             count=step_counts["unclassified"],
-            hint="Set LOG_LEVEL=DEBUG to see individual products. Consider updating _CATEGORY_STEP_RULES in derive.py.",
+            hint="Set LOG_LEVEL=DEBUG to see individual products. Consider updating CATEGORY_TO_STEP in menu_step_mapping.py.",
         )
 
 

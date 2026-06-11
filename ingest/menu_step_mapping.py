@@ -15,17 +15,6 @@ must appear before broader ones that could shadow them.
 """
 
 # ---------------------------------------------------------------------------
-# Non-food — products in these categories should have menu_step = None.
-# Arts de la table and Déco de fête are intentionally NOT here anymore —
-# they now map to "Table & Déco" so the assistant can recommend them.
-# ---------------------------------------------------------------------------
-
-NON_FOOD_CATEGORY_KEYWORDS: list[str] = [
-    # Nothing excluded at this level anymore — all categories with products
-    # now map to an explicit step so the assistant can recommend them.
-]
-
-# ---------------------------------------------------------------------------
 # Food categories → menu_step
 #
 # Carrefour navigation sections and their subcategories.
@@ -111,7 +100,6 @@ CATEGORY_TO_STEP: list[tuple[str, str]] = [
     # Petit-déj items that also appear under dessert sections
     ("mignardises et petits plaisirs",  "Desserts"),
     ("pâtisseries américaines",         "Desserts"),
-    ("pâtisseries individuelles",       "Desserts"),
     ("gâteaux et tartes",               "Desserts"),
     ("bonbons et friandises",           "Desserts"),
     ("pâtisserie",                      "Desserts"),

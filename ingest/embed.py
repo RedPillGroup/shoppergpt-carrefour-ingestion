@@ -1,21 +1,14 @@
 """
-Pinecone embedding ingestion — reads active food products from MongoDB,
-embeds their ``embed_text`` field via OpenAI, and upserts vectors to Pinecone.
+Pinecone embedding ingestion — reads active products from MongoDB,
+embeds the product ``name`` field via OpenAI, and upserts vectors to Pinecone.
 
-The resulting Pinecone index supports metadata filters on:
-- ``menu_step``     (str)   — course category used by ShopperGPT to slot products
-- ``is_food``       (bool)  — excludes beverages / non-food items when needed
-- ``status``        (str)   — only "active" products are ingested
-- ``dietary_tags``  (list)  — used with ``$in`` filters (vegan, sans_gluten, …)
-- ``occasion``      (list)  — curated taxonomy: mariage, anniversaire, obseques, …
-- ``season``        (list)  — curated taxonomy: noel, paques, halloween, …
-- ``cuisine``       (list)  — curated taxonomy: italien, japonais, oriental, …
-- ``diet``          (list)  — curated taxonomy: vegetarien, bio, sans_gluten
-- ``service_style`` (list)  — curated taxonomy: buffet, cocktail, a_partager, …
+Pinecone metadata filters available:
+- ``menu_step``  (str)  — course category (Apéritifs, Plats, Table & Déco, …)
+- ``is_food``    (bool) — False for Table & Déco / Fleurs
+- ``status``     (str)  — only "active" products are ingested
 
-The taxonomy keys above are only present on products that carry a tag in that
-dimension (see ``ingest.categories``), so ``$in`` filters naturally match only
-the relevant subset.
+Dietary restrictions, allergens and occasion tags are NOT stored in Pinecone.
+The LLM reads raw Carrefour data from MongoDB and applies common sense.
 
 Usage::
 
@@ -41,34 +34,22 @@ log = get_logger(__name__)
 EMBED_BATCH = 500
 UPSERT_BATCH = 200
 
-# MongoDB query: embed all active products that have embed_text AND a valid
-# menu_step (including non-food items like Table & Déco tableware/decorations).
-# Previously restricted to is_food=True, but non-food product categories such
-# as arts de la table and décoration de fête now map to "Table & Déco" and
-# must be searchable via Pinecone.
-# When INGEST_NON_RECOMMENDABLE is False (default), compose-it-yourself products
-# (… au choix) are excluded — they were never stored in MongoDB, so this filter
-# is a safety net for legacy docs that predate the flag.
+# MongoDB query: embed all active products with a name and a valid menu_step.
 _QUERY: dict[str, Any] = {
     "status": "active",
     "menu_step": {"$ne": None},
-    "embed_text": {"$exists": True, "$ne": ""},
+    "name": {"$exists": True, "$ne": ""},
 }
 if not INGEST_NON_RECOMMENDABLE:
     _QUERY["recommendable"] = {"$ne": False}
 
-# Fields fetched from MongoDB — fetch only what we need for efficiency.
+# Fields fetched from MongoDB — only what's needed for embedding and filtering.
 _PROJECTION: dict[str, int] = {
     "_id": 1,
     "name": 1,
-    "sku": 1,
     "menu_step": 1,
     "is_food": 1,
     "status": 1,
-    "dietary_tags": 1,
-    "category_tags": 1,
-    "price_ref": 1,
-    "embed_text": 1,
 }
 
 
@@ -149,31 +130,22 @@ def embed_texts(texts: list[str], model: str = EMBEDDING_MODEL) -> list[list[flo
 def _build_vector(doc: dict[str, Any], embedding: list[float]) -> dict[str, Any]:
     """Build a Pinecone vector dict from a MongoDB product document.
 
+    Only the fields needed for search filtering are stored in Pinecone metadata.
+    Everything else (dietary info, allergens, etc.) is read from MongoDB.
+
     Args:
         doc: A MongoDB product document (with at minimum ``_id``, ``name``).
-        embedding: The float vector for this document's ``embed_text``.
+        embedding: The float vector for this document's ``name``.
 
     Returns:
         A dict with ``id``, ``values``, and ``metadata`` keys ready for
         ``index.upsert()``.
     """
     metadata: dict[str, Any] = {
-        "name": doc.get("name") or "",
-        "sku": doc.get("sku") or "",
         "menu_step": doc.get("menu_step") or "",
         "is_food": bool(doc.get("is_food", False)),
         "status": doc.get("status", "inactive"),
-        "dietary_tags": doc.get("dietary_tags") or [],
-        "price_ref": float(doc["price_ref"]) if doc.get("price_ref") else 0.0,
     }
-
-    # Curated taxonomy — one metadata key per dimension, omitted when empty so
-    # only products that actually carry a tag are matched by ``$in`` filters.
-    # (Pinecone is schemaless, so absent keys simply never match.)
-    category_tags = doc.get("category_tags") or {}
-    for dimension, tags in category_tags.items():
-        if tags:
-            metadata[dimension] = list(tags)
 
     return {
         "id": str(doc["_id"]),
@@ -185,9 +157,9 @@ def _build_vector(doc: dict[str, Any], embedding: list[float]) -> dict[str, Any]
 def ingest_to_pinecone(db) -> None:
     """Read active food products from MongoDB and upsert embeddings to Pinecone.
 
-    Products with an empty ``embed_text`` field are skipped (logged at DEBUG).
+    Products with an empty ``name`` are skipped (logged at DEBUG).
     Embedding and upsert are performed in batches of ``EMBED_BATCH`` /
-    ``UPSERT_BATCH`` documents (both default to 100).
+    ``UPSERT_BATCH`` documents.
 
     At completion, logs ``pinecone_upsert_complete`` with the total count of
     vectors upserted.
@@ -212,9 +184,8 @@ def ingest_to_pinecone(db) -> None:
 
     with tqdm(total=total, unit="product", desc="pinecone", file=sys.stderr) as bar:
         for doc in cursor:
-            embed_text = (doc.get("embed_text") or "").strip()
-            if not embed_text:
-                log.debug("embed_text_empty_skipped", product_id=str(doc["_id"]))
+            if not (doc.get("name") or "").strip():
+                log.debug("name_empty_skipped", product_id=str(doc["_id"]))
                 skipped_empty += 1
                 bar.update(1)
                 continue
@@ -231,7 +202,7 @@ def ingest_to_pinecone(db) -> None:
             upserted_total += _flush_batch(batch_docs, index)
 
     if skipped_empty:
-        log.warning("pinecone_skipped_empty_embed_text", count=skipped_empty)
+        log.warning("pinecone_skipped_empty_name", count=skipped_empty)
 
     log.info("pinecone_upsert_complete", count=upserted_total)
 
@@ -246,7 +217,7 @@ def _flush_batch(docs: list[dict[str, Any]], index) -> int:
     Returns:
         The number of vectors successfully upserted.
     """
-    texts = [doc["embed_text"].strip() for doc in docs]
+    texts = [(doc.get("name") or "").strip() for doc in docs]
     embeddings = embed_texts(texts)
 
     vectors = []
