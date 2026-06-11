@@ -199,6 +199,42 @@ def derive_dietary_tags(product: dict) -> list[str]:
     return [tag for tag in raw if tag in _DIETARY_ALLOWLIST]
 
 
+
+# ── allergen_tags ──────────────────────────────────────────────────────────────
+# Maps EU official allergen names (type_allergene) to short engine tags.
+# These are PRESENCE tags — the product CONTAINS this allergen.
+# The engine uses them to exclude products for guests with allergies.
+_ALLERGEN_TO_TAG: dict[str, str] = {
+    "Arachides":                        "arachides",
+    "Crustacés":                        "crustacés",
+    "Mollusques":                       "mollusques",
+    "Poissons":                         "poissons",
+    "Œufs":                             "œufs",
+    "Lait":                             "lait",
+    "Soja":                             "soja",
+    "Céréales contenant du gluten":     "gluten",
+    "Fruits à coque":                   "fruits à coque",
+    "Graines de sésame":                "sésame",
+    "Moutarde":                         "moutarde",
+    "Céleri":                           "céleri",
+    "Lupin":                            "lupin",
+    "Anhydride sulfureux et sulfites":  "sulfites",
+}
+
+
+def derive_allergen_tags(product: dict) -> list[str]:
+    """Return short allergen presence tags derived from ``type_allergene``.
+
+    Maps the 14 EU regulated allergen names to compact engine tags so the
+    composer can exclude products that contain a guest's allergen.
+    Only returns tags for allergens actually present in the product.
+    """
+    raw = product.get("type_allergene") or []
+    if isinstance(raw, str):
+        raw = [raw]
+    return [_ALLERGEN_TO_TAG[a] for a in raw if a in _ALLERGEN_TO_TAG]
+
+
 # ── persons ───────────────────────────────────────────────────────────────────
 
 _NORM_G_PER_PERSON: dict[str, float] = {

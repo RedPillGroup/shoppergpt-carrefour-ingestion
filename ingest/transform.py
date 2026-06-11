@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
 from ingest.categories import derive_category_tags
 from ingest.derive import (
+    derive_allergen_tags,
     derive_dietary_tags,
     derive_embed_text,
     derive_is_food,
@@ -64,6 +65,7 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     is_food = derive_is_food(raw)
     recommendable = derive_recommendable(raw)
     dietary_tags = derive_dietary_tags(raw)
+    allergen_tags = derive_allergen_tags(raw)
     persons = derive_persons(raw, menu_step)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
     embed_text = derive_embed_text(raw)
@@ -104,9 +106,10 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         # assistant can't auto-select — excluded from Pinecone menu suggestions.
         "recommendable": recommendable,
         "dietary_tags": dietary_tags,
+        "allergen_tags": allergen_tags,
         # Curated taxonomy: {occasion, season, cuisine, diet, service_style} → [tags]
         "category_tags": category_tags,
-        "allergens": [],  # empty — type_allergene not yet populated by Carrefour
+        "allergens": raw.get("type_allergene") or [],  # 14 EU allergens, now populated
         "persons": persons,
         "price_ref": price_ref,  # median across stores; None if no price data
         # ── Product details ──────────────────────────────────────
@@ -152,7 +155,12 @@ def build_price_index(prices_file) -> dict[int, list[float]]:
             pid = record["product_id"]
             flat: list[float] = []
             for store in record.get("stores", []):
-                for p in store.get("prices", []):
+                # Support both old structure (prices: [{price: x}])
+                # and new structure (price: {price: x})
+                prices_list = store.get("prices") or (
+                    [store["price"]] if store.get("price") else []
+                )
+                for p in prices_list:
                     price = p.get("price")
                     if price is not None:
                         flat.append(float(price))
