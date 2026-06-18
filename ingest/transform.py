@@ -11,7 +11,6 @@ from datetime import datetime, timezone
 
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
 from ingest.derive import (
-    derive_is_food,
     derive_menu_step,
     derive_persons,
     derive_price_ref,
@@ -58,7 +57,6 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     now = datetime.now(timezone.utc)
 
     menu_step = derive_menu_step(raw)
-    is_food = derive_is_food(raw)
     recommendable = derive_recommendable(raw)
     persons = derive_persons(raw)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
@@ -92,9 +90,7 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         "status": status,
         "type_id": raw.get("type_id"),
         # ── App pipeline fields ──────────────────────────────────
-        # Derived from Carrefour's own category/department data.
         "menu_step": menu_step,
-        "is_food": is_food,
         # False for "compose-it-yourself" products (… au choix / à composer).
         "recommendable": recommendable,
         "persons": persons,
@@ -159,7 +155,7 @@ def build_price_index(prices_file) -> dict[int, list[float]]:
 def transform_price_records(raw: dict) -> list[dict]:
     """Flatten one ``products_prices.jsonl`` record into individual price rows.
 
-    Skips store entries where ``prices`` is an empty list (no price data).
+    Skips store entries that carry no price data.
 
     Args:
         raw: Raw record with ``product_id`` and nested ``stores`` list.
@@ -171,7 +167,12 @@ def transform_price_records(raw: dict) -> list[dict]:
     docs = []
     for store in raw.get("stores", []):
         store_id = store.get("store_id")
-        for p in store.get("prices", []):
+        # Support both old structure (prices: [{price: x}]) and new
+        # structure (price: {price: x}) — same as build_price_index.
+        prices_list = store.get("prices") or (
+            [store["price"]] if store.get("price") else []
+        )
+        for p in prices_list:
             price = p.get("price")
             if price is not None and store_id is not None:
                 docs.append(

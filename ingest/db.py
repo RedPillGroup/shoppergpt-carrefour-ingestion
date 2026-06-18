@@ -34,13 +34,13 @@ def ensure_indexes() -> None:
     index already exists with the same key pattern and options.
 
     Indexes created:
-    - ``products``: (is_food, menu_step) for the main pipeline query; status.
+    - ``products``: (menu_step, status) for the main pipeline query.
     - ``prices``: (store_id, product_id) unique compound; product_id alone.
     - ``stores``: 2dsphere on geo; is_active.
     """
     db = get_db()
 
-    db.products.create_index([("is_food", ASCENDING), ("menu_step", ASCENDING)])
+    db.products.create_index([("menu_step", ASCENDING), ("status", ASCENDING)])
     db.products.create_index([("status", ASCENDING)])
 
     db.prices.create_index(

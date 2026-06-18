@@ -3,9 +3,10 @@ Pinecone embedding ingestion — reads active products from MongoDB,
 embeds the product ``name`` field via OpenAI, and upserts vectors to Pinecone.
 
 Pinecone metadata filters available:
-- ``menu_step``  (str)  — course category (Apéritifs, Plats, Table & Déco, …)
-- ``is_food``    (bool) — False for Table & Déco / Fleurs
+- ``menu_step``  (str)  — course category (Apéritifs, Plats, …)
 - ``status``     (str)  — only "active" products are ingested
+
+Table & Déco and Fleurs are excluded from Pinecone (not orderable as menu items).
 
 Dietary restrictions, allergens and occasion tags are NOT stored in Pinecone.
 The LLM reads raw Carrefour data from MongoDB and applies common sense.
@@ -34,10 +35,13 @@ log = get_logger(__name__)
 EMBED_BATCH = 500
 UPSERT_BATCH = 200
 
-# MongoDB query: embed all active products with a name and a valid menu_step.
+# Steps that are not menu items — never embed in Pinecone.
+_NON_EMBEDDABLE_STEPS = {"Table & Déco", "Fleurs"}
+
+# MongoDB query: embed all active products with a name and a valid food menu_step.
 _QUERY: dict[str, Any] = {
     "status": "active",
-    "menu_step": {"$ne": None},
+    "menu_step": {"$nin": [None, *_NON_EMBEDDABLE_STEPS]},
     "name": {"$exists": True, "$ne": ""},
 }
 if not INGEST_NON_RECOMMENDABLE:
@@ -48,7 +52,6 @@ _PROJECTION: dict[str, int] = {
     "_id": 1,
     "name": 1,
     "menu_step": 1,
-    "is_food": 1,
     "status": 1,
 }
 
@@ -143,7 +146,6 @@ def _build_vector(doc: dict[str, Any], embedding: list[float]) -> dict[str, Any]
     """
     metadata: dict[str, Any] = {
         "menu_step": doc.get("menu_step") or "",
-        "is_food": bool(doc.get("is_food", False)),
         "status": doc.get("status", "inactive"),
     }
 

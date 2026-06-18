@@ -32,6 +32,7 @@ import sys
 
 from tqdm import tqdm
 
+from ingest.categorize import batch_categorize
 from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
     bulk_upsert,
@@ -165,12 +166,15 @@ def ingest_prices() -> None:
 # ── Products ──────────────────────────────────────────────────────────────────
 
 
-def ingest_products() -> None:
+def ingest_products(force_categorize: bool = False) -> None:
     """Read ``products.jsonl``, upsert all products, and soft-delete removed ones.
 
     Pre-loads the full price index into memory so each product document
     can include a ``price_ref`` (median across stores) without extra
     database round-trips.
+
+    Before transforming, runs batch_categorize() to assign menu_step via Gemini
+    (or from MongoDB cache for already-seen SKUs).
 
     Products no longer present in the export are flagged ``status: "inactive"``
     with a ``removed_at`` timestamp — they are never hard-deleted.
@@ -181,19 +185,33 @@ def ingest_products() -> None:
     price_index = build_price_index(PRICES_FILE)
     log.info("price_index_ready", products_with_prices=len(price_index))
 
+    # ── Step 1: Load all raw products into memory for batch categorization ──
+    log.info("categorize_loading_products")
+    raw_products: list[dict] = []
+    with open(PRODUCTS_FILE) as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                raw_products.append(json.loads(line))
+
+    # ── Step 2: Batch LLM categorization (cache-first) ──
     db = get_db()
-    total = count_lines(PRODUCTS_FILE)
+    step_cache = batch_categorize(db, raw_products, force=force_categorize)
+
+    # ── Step 3: Inject menu_step_llm into each raw product ──
+    for raw in raw_products:
+        pid = int(raw["product_id"])
+        raw["menu_step_llm"] = step_cache.get(pid)
+
+    # ── Step 4: Transform + upsert ──
+    total = len(raw_products)
     batch: list[dict] = []
     seen_ids: set = set()
     upserted = modified = 0
     step_counts: dict[str, int] = {}
 
-    with open(PRODUCTS_FILE) as f, tqdm(total=total, unit="product", desc="products", file=sys.stderr) as bar:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            raw = json.loads(line)
+    with tqdm(total=total, unit="product", desc="products", file=sys.stderr) as bar:
+        for raw in raw_products:
             doc = transform_product(raw, price_index)
             if not INGEST_NON_RECOMMENDABLE and doc.get("recommendable") is False:
                 bar.update(1)
@@ -253,6 +271,11 @@ def main() -> None:
         action="store_true",
         help="Embed active food products and upsert vectors to Pinecone",
     )
+    parser.add_argument(
+        "--force-categorize",
+        action="store_true",
+        help="Ignore LLM category cache and re-categorize all products via Gemini",
+    )
     args = parser.parse_args()
 
     run_all = not (args.stores or args.prices or args.products or args.pinecone)
@@ -267,7 +290,7 @@ def main() -> None:
         if run_all or args.prices:
             ingest_prices()
         if run_all or args.products:
-            ingest_products()
+            ingest_products(force_categorize=args.force_categorize)
         if run_all or args.pinecone:
             db = get_db()
             ingest_to_pinecone(db)
