@@ -6,7 +6,8 @@ Pinecone metadata filters available:
 - ``menu_step``  (str)  — course category (Apéritifs, Plats, …)
 - ``status``     (str)  — only "active" products are ingested
 
-Table & Déco and Fleurs are excluded from Pinecone (not orderable as menu items).
+All menu steps are embedded — the LLM filters by ``menu_step`` at query time,
+so Table & Déco and Fleurs are included and never pollute unrelated searches.
 
 Dietary restrictions, allergens and occasion tags are NOT stored in Pinecone.
 The LLM reads raw Carrefour data from MongoDB and applies common sense.
@@ -35,13 +36,10 @@ log = get_logger(__name__)
 EMBED_BATCH = 500
 UPSERT_BATCH = 200
 
-# Steps that are not menu items — never embed in Pinecone.
-_NON_EMBEDDABLE_STEPS = {"Table & Déco", "Fleurs"}
-
-# MongoDB query: embed all active products with a name and a valid food menu_step.
+# MongoDB query: embed all active products with a name and a menu_step.
 _QUERY: dict[str, Any] = {
     "status": "active",
-    "menu_step": {"$nin": [None, *_NON_EMBEDDABLE_STEPS]},
+    "menu_step": {"$ne": None},
     "name": {"$exists": True, "$ne": ""},
 }
 if not INGEST_NON_RECOMMENDABLE:
@@ -154,6 +152,19 @@ def _build_vector(doc: dict[str, Any], embedding: list[float]) -> dict[str, Any]
         "values": embedding,
         "metadata": metadata,
     }
+
+
+def reset_pinecone_index() -> None:
+    """Delete ALL vectors from the Pinecone index (full wipe).
+
+    Use before a full re-ingest to remove stale vectors for products that are
+    no longer active. Safe to call — the index structure is preserved, only
+    vectors are removed.
+    """
+    index = get_pinecone_index()
+    log.info("pinecone_reset_started", index=PINECONE_INDEX_NAME)
+    index.delete(delete_all=True)
+    log.info("pinecone_reset_complete", index=PINECONE_INDEX_NAME)
 
 
 def ingest_to_pinecone(db) -> None:

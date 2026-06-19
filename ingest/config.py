@@ -28,9 +28,26 @@ MONGO_DB = os.getenv("MONGO_DB", _DEFAULT_DB)
 
 # ── Data files ───────────────────────────────────────────────────────────────
 DATA_DIR = Path(__file__).parent.parent / "data"
-PRODUCTS_FILE = DATA_DIR / "products.jsonl"
-PRICES_FILE = DATA_DIR / "products_prices.jsonl"
-STORES_FILE = DATA_DIR / "stores.jsonl"
+
+
+def _latest_file(*prefixes: str) -> Path:
+    """Return the most recent file matching any of the given prefixes + *.jsonl.gz or *.jsonl.
+    Supports both plain .jsonl and gzipped .jsonl.gz. Falls back to the first legacy name."""
+    candidates = sorted(
+        [
+            f
+            for prefix in prefixes
+            for f in [*DATA_DIR.glob(f"{prefix}*.jsonl.gz"), *DATA_DIR.glob(f"{prefix}*.jsonl")]
+        ],
+        reverse=True,  # lexicographic sort → most recent date suffix first
+    )
+    return candidates[0] if candidates else DATA_DIR / f"{prefixes[-1]}.jsonl"
+
+
+# Support both legacy names and new prefixed+dated names from GCS exports
+PRODUCTS_FILE = _latest_file("catalogue_products", "products")
+PRICES_FILE = _latest_file("mapping_products_prices", "products_prices")
+STORES_FILE = _latest_file("magasins_stores", "stores")
 
 # ── Image CDN ────────────────────────────────────────────────────────────────
 # Confirmed live via HTTP probe — see README for details.

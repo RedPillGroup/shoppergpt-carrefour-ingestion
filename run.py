@@ -12,6 +12,7 @@ Usage::
     poetry run python run.py --stores     # stores only
     poetry run python run.py --products   # products only
     poetry run python run.py --prices     # prices only
+    poetry run python run.py --catalogue  # precompute per-store step availability
     poetry run python run.py --pinecone   # embed & upsert to Pinecone only
 
 Environment variables::
@@ -27,12 +28,16 @@ Environment variables::
 """
 
 import argparse
+import gzip
+import io
 import json
 import sys
+from pathlib import Path
 
 from tqdm import tqdm
 
 from ingest.categorize import batch_categorize
+from ingest.catalogue import build_store_catalogue
 from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
     bulk_upsert,
@@ -41,7 +46,7 @@ from ingest.db import (
     get_db,
     soft_delete_removed,
 )
-from ingest.embed import ingest_to_pinecone
+from ingest.embed import ingest_to_pinecone, reset_pinecone_index
 from ingest.log import get_logger
 from ingest.transform import (
     build_price_index,
@@ -55,8 +60,20 @@ log = get_logger(__name__)
 BATCH = 500  # documents per bulk_write call
 
 
+def open_jsonl(path):
+    """Open a .jsonl or .jsonl.gz file transparently, returning a text-mode file object."""
+    path = Path(path)
+    if path.suffix == ".gz":
+        return gzip.open(path, "rt", encoding="utf-8")
+    return open(path, encoding="utf-8")
+
+
 def count_lines(path) -> int:
-    """Count the number of lines in a file (used for tqdm totals)."""
+    """Count the number of lines in a file (supports .jsonl and .jsonl.gz)."""
+    path = Path(path)
+    if path.suffix == ".gz":
+        with gzip.open(path, "rb") as f:
+            return sum(1 for _ in f)
     with open(path, "rb") as f:
         return sum(1 for _ in f)
 
@@ -78,7 +95,7 @@ def ingest_stores() -> None:
     seen_ids: set = set()
     upserted = modified = 0
 
-    with open(STORES_FILE) as f, tqdm(total=total, unit="store", desc="stores", file=sys.stderr) as bar:
+    with open_jsonl(STORES_FILE) as f, tqdm(total=total, unit="store", desc="stores", file=sys.stderr) as bar:
         for line in f:
             line = line.strip()
             if not line:
@@ -130,7 +147,7 @@ def ingest_prices() -> None:
     batch: list[dict] = []
     upserted = modified = skipped = 0
 
-    with open(PRICES_FILE) as f, tqdm(total=total, unit="product", desc="prices ", file=sys.stderr) as bar:
+    with open_jsonl(PRICES_FILE) as f, tqdm(total=total, unit="product", desc="prices ", file=sys.stderr) as bar:
         for line in f:
             line = line.strip()
             if not line:
@@ -188,7 +205,7 @@ def ingest_products(force_categorize: bool = False) -> None:
     # ── Step 1: Load all raw products into memory for batch categorization ──
     log.info("categorize_loading_products")
     raw_products: list[dict] = []
-    with open(PRODUCTS_FILE) as f:
+    with open_jsonl(PRODUCTS_FILE) as f:
         for line in f:
             line = line.strip()
             if line:
@@ -267,6 +284,11 @@ def main() -> None:
     parser.add_argument("--prices", action="store_true", help="Ingest prices only")
     parser.add_argument("--products", action="store_true", help="Ingest products only")
     parser.add_argument(
+        "--catalogue",
+        action="store_true",
+        help="Precompute per-store per-step product counts into stores.step_catalogue",
+    )
+    parser.add_argument(
         "--pinecone",
         action="store_true",
         help="Embed active food products and upsert vectors to Pinecone",
@@ -276,9 +298,14 @@ def main() -> None:
         action="store_true",
         help="Ignore LLM category cache and re-categorize all products via Gemini",
     )
+    parser.add_argument(
+        "--reset-pinecone",
+        action="store_true",
+        help="Wipe ALL vectors from Pinecone before re-ingesting (removes stale data)",
+    )
     args = parser.parse_args()
 
-    run_all = not (args.stores or args.prices or args.products or args.pinecone)
+    run_all = not (args.stores or args.prices or args.products or args.catalogue or args.pinecone)
 
     log.info("pipeline_starting", run_all=run_all, steps={k: v for k, v in vars(args).items() if v})
 
@@ -291,7 +318,12 @@ def main() -> None:
             ingest_prices()
         if run_all or args.products:
             ingest_products(force_categorize=args.force_categorize)
+        if run_all or args.catalogue:
+            db = get_db()
+            build_store_catalogue(db)
         if run_all or args.pinecone:
+            if args.reset_pinecone:
+                reset_pinecone_index()
             db = get_db()
             ingest_to_pinecone(db)
 

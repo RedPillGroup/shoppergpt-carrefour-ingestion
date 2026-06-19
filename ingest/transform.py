@@ -6,8 +6,10 @@ document ready for upsert.  No I/O is performed here — side-effect-free
 by design so functions are easy to unit-test.
 """
 
+import gzip
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
 from ingest.derive import (
@@ -129,7 +131,8 @@ def build_price_index(prices_file) -> dict[int, list[float]]:
         Dict mapping ``product_id`` to a list of all store prices for that product.
     """
     index: dict[int, list[float]] = {}
-    with open(prices_file) as f:
+    _open = gzip.open(prices_file, "rt", encoding="utf-8") if Path(prices_file).suffix == ".gz" else open(prices_file, encoding="utf-8")
+    with _open as f:
         for line in f:
             line = line.strip()
             if not line:

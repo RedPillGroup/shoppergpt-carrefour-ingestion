@@ -38,10 +38,9 @@ poetry run python run.py
 # Or one collection at a time
 poetry run python run.py --stores
 poetry run python run.py --prices
-poetry run python run.py --force-categorize (new cat logic)
+poetry run python run.py --force-categorize
 poetry run python run.py --products
-poetry run python run.py --pinecone
-```
+poetry run python run.py --pinecone --reset-pinecone
 
 ## Data files
 
