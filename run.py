@@ -36,7 +36,7 @@ from pathlib import Path
 
 from tqdm import tqdm
 
-from ingest.categorize import batch_categorize
+from ingest.categorize import batch_categorize, batch_classify_roles
 from ingest.catalogue import build_store_catalogue
 from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
@@ -215,10 +215,14 @@ def ingest_products(force_categorize: bool = False) -> None:
     db = get_db()
     step_cache = batch_categorize(db, raw_products, force=force_categorize)
 
-    # ── Step 3: Inject menu_step_llm into each raw product ──
+    # ── Step 2b: Tag main|side for Plats products (cache-first) ──
+    role_cache = batch_classify_roles(db, raw_products, step_cache, force=force_categorize)
+
+    # ── Step 3: Inject menu_step_llm + dish_role_llm into each raw product ──
     for raw in raw_products:
         pid = int(raw["product_id"])
         raw["menu_step_llm"] = step_cache.get(pid)
+        raw["dish_role_llm"] = role_cache.get(pid)
 
     # ── Step 4: Transform + upsert ──
     total = len(raw_products)

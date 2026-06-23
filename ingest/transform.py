@@ -93,6 +93,9 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         "type_id": raw.get("type_id"),
         # ── App pipeline fields ──────────────────────────────────
         "menu_step": menu_step,
+        # main|side for Plats products (None elsewhere) — lets the engine require one
+        # protein main + optional accompaniments. From batch_classify_roles.
+        "dish_role": raw.get("dish_role_llm"),
         # False for "compose-it-yourself" products (… au choix / à composer).
         "recommendable": recommendable,
         "persons": persons,

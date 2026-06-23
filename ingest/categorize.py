@@ -80,6 +80,138 @@ Réponds UNIQUEMENT avec du JSON valide où les clés sont les NUMÉROS des prod
 Utilise exactement les noms de steps (avec accents et majuscules).
 En cas de doute absolu, utilise "À côté"."""
 
+# ── Dish role (main vs side) — second pass, Plats products only ────────────────
+# The PLATS step deliberately lumps main dishes with their accompaniments (gratins,
+# pommes de terre, légumes…). The composer/coverage then can't tell a protein main
+# from a side, so it may pick two "plats" where one is just a garnish. This pass tags
+# each Plats product main|side so the engine can require one main + optional sides.
+# Conservative fallback = "main" (never demote a real main to a side).
+
+VALID_ROLES = {"main", "side"}
+ROLE_FALLBACK = "main"
+_ROLE_LOOKUP: dict[str, str] = {r.upper(): r for r in VALID_ROLES}
+
+ROLE_SYSTEM_PROMPT = """Tu es un expert en traiteur français. Pour chaque PLAT ci-dessous, indique s'il s'agit d'un plat principal (main) ou d'un accompagnement (side).
+
+main (plat principal) : centré sur une protéine ou plat complet — viande/volaille/poisson/gibier cuisinés, rôtis, magrets, souris d'agneau, lasagnes, pizzas/quiches entières, sushis/makis, plats complets, gratins de viande/poisson.
+
+side (accompagnement) : féculents et légumes servis EN ACCOMPAGNEMENT — gratin dauphinois, pommes de terre (purée, grenailles, sautées, dauphine), riz, pâtes nature, haricots verts, légumes poêlés/vapeur, salades vertes, crudités, ratatouille.
+
+En cas de doute sur un plat végétarien substantiel et complet (ex. lasagnes de légumes) → main.
+
+Réponds UNIQUEMENT en JSON valide où les clés sont les NUMÉROS des produits :
+{"1": "main", "2": "side", ...}
+En cas de doute absolu, utilise "main"."""
+
+
+def _call_role_batch(batch: list[tuple[int, dict]]) -> dict[int, str]:
+    """Call Gemini to tag a batch of (index, raw_product) as main|side. Returns {index: role}."""
+    lines = [_format_product(i, raw) for i, raw in batch]
+    prompt = f"{ROLE_SYSTEM_PROMPT}\n\nPlats :\n" + "\n".join(lines)
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"responseMimeType": "application/json", "temperature": 0},
+    }
+    for attempt in range(3):
+        try:
+            response = _make_request(GEMINI_MODEL, payload)
+            text = response["candidates"][0]["content"]["parts"][0]["text"].strip()
+            if text.startswith("```"):
+                text = text.split("```")[1]
+                if text.startswith("json"):
+                    text = text[4:]
+            parsed = json.loads(text)
+            result = {}
+            for k, v in parsed.items():
+                try:
+                    idx = int(k)
+                except (ValueError, TypeError):
+                    continue
+                result[idx] = _ROLE_LOOKUP.get(str(v).upper().strip(), ROLE_FALLBACK)
+            return result
+        except urllib.error.HTTPError as exc:
+            if exc.code in (429, 503) and attempt < 2:
+                time.sleep(2 ** attempt * 2)
+                continue
+            log.warning("gemini_role_http_error", code=exc.code, batch_size=len(batch))
+            return {i: ROLE_FALLBACK for i, _ in batch}
+        except Exception as exc:
+            if attempt < 2:
+                time.sleep(1.5 ** attempt)
+                continue
+            log.warning("gemini_role_failed", error=str(exc), batch_size=len(batch))
+            return {i: ROLE_FALLBACK for i, _ in batch}
+    return {i: ROLE_FALLBACK for i, _ in batch}
+
+
+def _load_role_cache(db: Database, product_ids: list[int]) -> dict[int, str]:
+    cached = {}
+    for doc in db.products.find(
+        {"_id": {"$in": product_ids}, "dish_role": {"$ne": None}, "dish_role_source": "llm"},
+        {"_id": 1, "dish_role": 1},
+    ):
+        cached[doc["_id"]] = doc["dish_role"]
+    return cached
+
+
+def _save_role_cache(db: Database, role_map: dict[int, str]) -> None:
+    ops = [
+        UpdateOne({"_id": pid}, {"$set": {"dish_role": role, "dish_role_source": "llm"}})
+        for pid, role in role_map.items()
+    ]
+    if ops:
+        db.products.bulk_write(ops, ordered=False)
+
+
+def batch_classify_roles(
+    db: Database,
+    raw_products: list[dict],
+    step_map: dict[int, str],
+    force: bool = False,
+) -> dict[int, str]:
+    """Tag main|side for PLATS products only (cache-first, like batch_categorize).
+
+    Args:
+        db: MongoDB handle.
+        raw_products: raw JSONL dicts (must have ``product_id``).
+        step_map: ``{product_id: menu_step}`` from batch_categorize — selects Plats.
+        force: ignore cache and re-classify.
+
+    Returns:
+        ``{product_id: "main"|"side"}`` for Plats products (empty for the rest).
+    """
+    plats_ids = [
+        int(r["product_id"]) for r in raw_products if step_map.get(int(r["product_id"])) == "Plats"
+    ]
+    if not plats_ids:
+        return {}
+    id_to_raw = {int(r["product_id"]): r for r in raw_products}
+
+    cached: dict[int, str] = {} if force else _load_role_cache(db, plats_ids)
+    to_classify = [pid for pid in plats_ids if pid not in cached]
+    log.info("dish_role_start", plats=len(plats_ids), from_cache=len(cached), via_llm=len(to_classify))
+    if not to_classify:
+        return cached
+
+    indexed = [(i, id_to_raw[pid]) for i, pid in enumerate(to_classify, start=1)]
+    batches = [indexed[i:i + BATCH_SIZE] for i in range(0, len(indexed), BATCH_SIZE)]
+    index_to_pid = {i: pid for i, pid in enumerate(to_classify, start=1)}
+    llm_results: dict[int, str] = {}
+    with ThreadPoolExecutor(max_workers=min(MAX_WORKERS, len(batches))) as executor:
+        futures = {executor.submit(_call_role_batch, batch): batch for batch in batches}
+        for future in as_completed(futures):
+            llm_results.update(future.result())
+
+    llm_by_pid = {index_to_pid[idx]: role for idx, role in llm_results.items() if idx in index_to_pid}
+    _save_role_cache(db, llm_by_pid)
+    final = {**cached, **llm_by_pid}
+    dist: dict[str, int] = {}
+    for role in final.values():
+        dist[role] = dist.get(role, 0) + 1
+    log.info("dish_role_complete", from_cache=len(cached), via_llm=len(llm_by_pid), distribution=dist)
+    return final
+
+
 # ── Auth helpers (mirrors waib-api/gemini_http.py) ────────────────────────────
 
 _CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform"
