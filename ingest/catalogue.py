@@ -1,9 +1,15 @@
 """
 Store catalogue builder — precomputes per-store, per-step product availability.
 
-Runs an aggregation over ``prices × products`` to count how many active
-products are available at each store for each menu step, then persists the
-result as ``step_catalogue: {menu_step: count}`` on each store document.
+Runs an aggregation over ``prices × products`` to compute, for each store and
+each menu step, two things, persisted on the store document:
+  • ``step_catalogue: {menu_step: count}``  — how many active products exist.
+  • ``step_floor: {menu_step: min_price_per_person}`` — the cheapest €/guest for
+    that step (= min over products of ``store_price / persons``). Multiplying by
+    the guest count gives the MINIMUM cost to serve that step — the API's step
+    recommender uses it to decide which steps fit a budget (e.g. "Plats ≈ 3€/pers
+    → 150€ for 50 guests, so it can't fit a 100€ budget"). ``null`` when no product
+    in the step has a known portion size (e.g. drinks).
 
 Must be run **after** ``--products`` and ``--prices`` have both been ingested,
 so that the ``products`` and ``prices`` collections are up to date.
@@ -23,10 +29,11 @@ log = get_logger(__name__)
 
 
 def build_store_catalogue(db) -> int:
-    """Aggregate prices × products and upsert ``step_catalogue`` into each store.
+    """Aggregate prices × products and upsert ``step_catalogue`` + ``step_floor``.
 
     For every store that has at least one priced active product, computes
-    ``{menu_step: count}`` and stores it as ``stores.step_catalogue``.
+    ``{menu_step: count}`` (→ ``stores.step_catalogue``) and
+    ``{menu_step: min_price_per_person}`` (→ ``stores.step_floor``).
 
     Args:
         db: A live ``pymongo.database.Database`` instance (from ``get_db()``).
@@ -56,29 +63,59 @@ def build_store_catalogue(db) -> int:
                 "product.menu_step": {"$ne": None},
             }
         },
-        # Count distinct products per (store_id, menu_step).
+        # Price per person (€/guest) — only when the portion size and price are
+        # known and positive; otherwise null so $min ignores it.
+        {
+            "$addFields": {
+                "ppp": {
+                    "$cond": [
+                        {
+                            "$and": [
+                                {"$gt": ["$product.persons", 0]},
+                                {"$gt": ["$price", 0]},
+                            ]
+                        },
+                        {"$divide": ["$price", "$product.persons"]},
+                        None,
+                    ]
+                }
+            }
+        },
+        # Per (store_id, menu_step): product count + cheapest €/guest ($min skips nulls).
         {
             "$group": {
                 "_id": {"store_id": "$store_id", "menu_step": "$product.menu_step"},
                 "count": {"$sum": 1},
+                "min_ppp": {"$min": "$ppp"},
             }
         },
-        # Roll up: one doc per store_id with an array of {k, v} pairs.
+        # Roll up: one doc per store_id with parallel {k, v} arrays for both maps.
         {
             "$group": {
                 "_id": "$_id.store_id",
                 "steps": {"$push": {"k": "$_id.menu_step", "v": "$count"}},
+                "floors": {"$push": {"k": "$_id.menu_step", "v": "$min_ppp"}},
             }
         },
-        # Convert array to object: {menu_step: count, ...}
-        {"$project": {"step_catalogue": {"$arrayToObject": "$steps"}}},
+        # Convert arrays to objects: {menu_step: count} and {menu_step: €/guest}.
+        {
+            "$project": {
+                "step_catalogue": {"$arrayToObject": "$steps"},
+                "step_floor": {"$arrayToObject": "$floors"},
+            }
+        },
     ]
 
     updated = 0
     for doc in db.prices.aggregate(pipeline, allowDiskUse=True):
         db.stores.update_one(
             {"_id": doc["_id"]},
-            {"$set": {"step_catalogue": doc["step_catalogue"]}},
+            {
+                "$set": {
+                    "step_catalogue": doc["step_catalogue"],
+                    "step_floor": doc["step_floor"],
+                }
+            },
         )
         updated += 1
         log.debug(
