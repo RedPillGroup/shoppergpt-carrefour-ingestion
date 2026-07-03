@@ -42,7 +42,7 @@ FALLBACK_STEP = "Plats"  # safe fallback for uncategorizable products — broade
 VALID_STEPS = {
     "Apéritifs", "Entrées", "Plats", "Sauces", "Fromages",
     "Desserts", "Boissons", "Pains", "Petit Déj",
-    "Table & Déco", "Fleurs",
+    "Table & Déco",
 }
 
 # Case-insensitive lookup (model sometimes returns UPPERCASE or mixed case)
@@ -67,9 +67,7 @@ PAINS : pain au sens strict — baguette, pain de campagne, pain de mie, pain au
 
 PETIT DÉJ : viennoiseries (croissants, pains au chocolat, brioches, pains aux raisins, kouign-amann), assortiments petit-déjeuner, coffee break, paniers matinaux, chouquettes, madeleines, financiers. Produits consommés au petit-déjeuner ou à la pause café.
 
-TABLE & DÉCO : vaisselle jetable, assiettes, gobelets, couverts plastique, serviettes en papier, nappes, chemins de table, bougies, ballons, décorations de fête. Également : produits ménagers (éponges, liquide vaisselle, sacs poubelle), ethylotests, et tout article non comestible.
-
-FLEURS : bouquets de fleurs, compositions florales, plantes.
+TABLE & DÉCO : vaisselle jetable, assiettes, gobelets, couverts plastique, serviettes en papier, nappes, chemins de table, bougies, ballons, décorations de fête, bouquets de fleurs, compositions florales, plantes. Également : produits ménagers (éponges, liquide vaisselle, sacs poubelle), ethylotests, et tout article non comestible.
 
 SAUCES : sauces (mayonnaise, ketchup, nuoc-mâm, tapenade, anchoïade, béarnaise…), condiments (moutarde, cornichons…), assaisonnements (épices, sel, poivre, sucre), beurre. PAS les accompagnements alimentaires (légumes, salades, féculents) qui vont dans PLATS.
 

@@ -7,7 +7,7 @@ Pinecone metadata filters available:
 - ``status``     (str)  — only "active" products are ingested
 
 All menu steps are embedded — the LLM filters by ``menu_step`` at query time,
-so Table & Déco and Fleurs are included and never pollute unrelated searches.
+so Table & Déco is included and never pollutes unrelated searches.
 
 Dietary restrictions, allergens and occasion tags are NOT stored in Pinecone.
 The LLM reads raw Carrefour data from MongoDB and applies common sense.
