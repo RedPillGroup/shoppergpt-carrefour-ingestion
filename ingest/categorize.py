@@ -37,12 +37,12 @@ log = get_logger(__name__)
 GEMINI_MODEL = "gemini-3.1-flash-lite"
 BATCH_SIZE = 50    # products per Gemini call
 MAX_WORKERS = 10   # parallel Gemini calls
-FALLBACK_STEP = "À côté"  # safe fallback for uncategorizable products
+FALLBACK_STEP = "Plats"  # safe fallback for uncategorizable products — broadest, most generic step
 
 VALID_STEPS = {
-    "Apéritifs", "Entrées", "Plats", "Plateaux", "Fromages",
+    "Apéritifs", "Entrées", "Plats", "Sauces", "Fromages",
     "Desserts", "Boissons", "Pains", "Petit Déj",
-    "Table & Déco", "Fleurs", "À côté",
+    "Table & Déco", "Fleurs",
 }
 
 # Case-insensitive lookup (model sometimes returns UPPERCASE or mixed case)
@@ -51,17 +51,15 @@ _STEP_LOOKUP: dict[str, str] = {s.upper(): s for s in VALID_STEPS}
 SYSTEM_PROMPT = """Tu es un expert en traiteur français. Catégorise chaque produit dans exactement un des steps suivants.
 Lis attentivement les distinctions — elles sont importantes.
 
-APÉRITIFS : finger food, amuse-bouches, canapés, mini-toasts, verrines, mousses en petits pots (format individuel), chips, crackers, dips, mini-brochettes, petits fours salés, mini-quiches, mini-burgers, pizzas découpées en toasts (ex: "pizza en 60 toasts"), œufs de poisson. Formats petits, à grignoter debout.
+APÉRITIFS : finger food, amuse-bouches, canapés, mini-toasts, verrines, mousses en petits pots (format individuel), chips, crackers, dips, mini-brochettes, petits fours salés, mini-quiches, mini-burgers, pizzas découpées en toasts (ex: "pizza en 60 toasts"), œufs de poisson, plateau de charcuterie, plateau mixte apéro. Formats petits, à grignoter/partager debout.
 
 ENTRÉES : plats froids ou chauds servis assis en début de repas. Carpaccio, foie gras entier/mi-cuit (en portion), terrine (en tranche), céviche, œufs mimosa, assiette de crudités, saumon fumé en tranche (format assiette, pas toast). Distinctions clés : foie gras en toast → Apéritifs. Saumon fumé en toast → Apéritifs. Saumon fumé en assiette/tranche → Entrées.
 
-PLATS : plats principaux ET accompagnements. Viandes cuisinées (rôti, magret, souris d'agneau…), poissons cuisinés (pavé de saumon, filet…), volailles, lasagnes, gratins, pizzas entières, quiches entières, plats complets, sushis/makis, plateaux japonais. Également : légumes et accompagnements servis avec les plats (haricots verts, pommes de terre, salades vertes, légumes bruts, pois, carottes).
+PLATS : plats principaux ET accompagnements. Viandes cuisinées (rôti, magret, souris d'agneau…), poissons cuisinés (pavé de saumon, filet…), volailles, lasagnes, gratins, pizzas entières, quiches entières, plats complets, sushis/makis, plateaux japonais, plateau du boucher, plateau BBQ. Également : légumes et accompagnements servis avec les plats (haricots verts, pommes de terre, salades vertes, légumes bruts, pois, carottes).
 
-PLATEAUX : plateaux traiteur composés à partager — plateau de charcuterie, plateau du boucher, plateau BBQ, plateau mixte apéro de grande taille.
+FROMAGES : fromages à la coupe ou en plateau (plateau de fromages), raclette, fondue.
 
-FROMAGES : fromages à la coupe ou en plateau, raclette, fondue.
-
-DESSERTS : pâtisseries sucrées (gâteaux, tartes, macarons, entremets, éclairs, mille-feuilles, bûches, mignardises sucrées, fruits en dessert, coupes glacées). NE PAS inclure les viennoiseries du matin.
+DESSERTS : pâtisseries sucrées (gâteaux, tartes, macarons, entremets, éclairs, mille-feuilles, bûches, mignardises sucrées, fruits en dessert, coupes glacées), bonbons et confiseries. NE PAS inclure les viennoiseries du matin.
 
 BOISSONS : toutes les boissons — eau, jus, sodas, champagne, vins, bières, cafés, thés, infusions.
 
@@ -73,12 +71,12 @@ TABLE & DÉCO : vaisselle jetable, assiettes, gobelets, couverts plastique, serv
 
 FLEURS : bouquets de fleurs, compositions florales, plantes.
 
-À CÔTÉ : UNIQUEMENT sauces (mayonnaise, ketchup, nuoc-mâm, tapenade, anchoïade…), condiments (moutarde, cornichons…), épices, sel, poivre, sucre, beurre, bonbons et confiseries. PAS les accompagnements alimentaires (légumes, salades) qui vont dans PLATS.
+SAUCES : sauces (mayonnaise, ketchup, nuoc-mâm, tapenade, anchoïade, béarnaise…), condiments (moutarde, cornichons…), assaisonnements (épices, sel, poivre, sucre), beurre. PAS les accompagnements alimentaires (légumes, salades, féculents) qui vont dans PLATS.
 
 Réponds UNIQUEMENT avec du JSON valide où les clés sont les NUMÉROS des produits (pas les noms) :
 {"1": "Desserts", "2": "Boissons", "3": "Apéritifs", ...}
 Utilise exactement les noms de steps (avec accents et majuscules).
-En cas de doute absolu, utilise "À côté"."""
+En cas de doute absolu, utilise "Plats"."""
 
 # ── Dish role (main vs side) — second pass, Plats products only ────────────────
 # The PLATS step deliberately lumps main dishes with their accompaniments (gratins,
