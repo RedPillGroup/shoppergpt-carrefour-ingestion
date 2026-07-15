@@ -208,6 +208,176 @@ def batch_classify_roles(
     return final
 
 
+# ── Event fit — which occasions a product genuinely suits (third pass) ────────
+# Complements menu_step: a product can be correctly categorized (e.g. Table & Déco)
+# yet still be wrong for a given occasion (birthday candles for a business lunch).
+# This tags each product with the events it plausibly fits, computed ONCE at ingest
+# by a stronger model than the runtime per-request vetting call — so at compose time
+# a sparse/risky pool can be widened with genuinely-relevant products instead of
+# being padded with random ones. "ALL" is the universal tag for versatile products
+# (a cheese platter, a plain baguette) that suit virtually any occasion — the model
+# is told explicitly to use it rather than force an artificial partial list.
+
+EVENT_CATEGORIES = [
+    "Anniversaire",
+    "Noël et Nouvel An",
+    "Mariage",
+    "Pâques",
+    "Repas en famille",
+    "Naissance et Baptême",
+    "Brunch et Petit Déjeuner",
+    "Apéro Dînatoire",
+    "Spécial enfant",
+    "Barbecue",
+    "Pique-nique",
+    "Dîner en amoureux",
+    "Pot de départ",
+]
+_EVENT_LOOKUP: dict[str, str] = {e.upper(): e for e in EVENT_CATEGORIES}
+_EVENT_LOOKUP["ALL"] = "ALL"
+# Fail-safe default: never let a classification failure silently exclude a product
+# from every occasion — "ALL" only ever widens the pool, so it's the safe fallback.
+EVENT_FIT_FALLBACK = ["ALL"]
+
+EVENT_FIT_SYSTEM_PROMPT = (
+    "Tu es un expert en traiteur français. Pour chaque produit ci-dessous, indique à "
+    "quel(s) type(s) d'événement il convient VRAIMENT, parmi cette liste :\n"
+    + ", ".join(EVENT_CATEGORIES)
+    + "\n\nRègles :\n"
+    "- Si le produit est polyvalent et convient à pratiquement n'importe quelle occasion "
+    "(ex. plateau de fromages, pain, eau minérale, salade composée), réponds UNIQUEMENT "
+    "[\"ALL\"] — ne force pas une liste partielle artificielle pour un produit générique.\n"
+    "- Si le produit est spécifique à un ou plusieurs événements précis (ex. bougies "
+    "d'anniversaire, bûche de Noël, faire-part, décoration de baptême, panier pique-nique "
+    "jetable), liste UNIQUEMENT ces événements précis — pas \"ALL\".\n"
+    "- Sois strict sur les produits de niche/décoration/thème (Table & Déco, produits "
+    "enfants, produits festifs) : c'est là que l'erreur coûte le plus cher (ex. des "
+    "confettis d'anniversaire ne conviennent PAS à un pot de départ professionnel).\n"
+    "- Un produit alimentaire neutre (viande, poisson, légume, dessert classique non "
+    "thématique) est presque toujours \"ALL\".\n\n"
+    "Réponds UNIQUEMENT en JSON valide où les clés sont les NUMÉROS des produits et les "
+    "valeurs des LISTES de chaînes exactes de la liste ci-dessus (ou [\"ALL\"]) :\n"
+    '{"1": ["ALL"], "2": ["Anniversaire", "Spécial enfant"], ...}\n'
+    "En cas de doute absolu, réponds [\"ALL\"]."
+)
+
+
+def _call_event_fit_batch(batch: list[tuple[int, dict]]) -> dict[int, list[str]]:
+    """Call Gemini to tag a batch of (index, raw_product) with event-fit labels."""
+    lines = [_format_product(i, raw) for i, raw in batch]
+    prompt = f"{EVENT_FIT_SYSTEM_PROMPT}\n\nProduits :\n" + "\n".join(lines)
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"responseMimeType": "application/json", "temperature": 0},
+    }
+    for attempt in range(3):
+        try:
+            response = _make_request(GEMINI_MODEL, payload)
+            text = response["candidates"][0]["content"]["parts"][0]["text"].strip()
+            if text.startswith("```"):
+                text = text.split("```")[1]
+                if text.startswith("json"):
+                    text = text[4:]
+            parsed = json.loads(text)
+            result: dict[int, list[str]] = {}
+            for k, v in parsed.items():
+                try:
+                    idx = int(k)
+                except (ValueError, TypeError):
+                    continue
+                if not isinstance(v, list):
+                    result[idx] = list(EVENT_FIT_FALLBACK)
+                    continue
+                tags = [_EVENT_LOOKUP[t] for t in (str(x).upper().strip() for x in v) if t in _EVENT_LOOKUP]
+                # "ALL" alongside specific tags is redundant/contradictory — keep just ALL.
+                if "ALL" in tags or not tags:
+                    result[idx] = ["ALL"]
+                else:
+                    result[idx] = sorted(set(tags))
+            return result
+        except urllib.error.HTTPError as exc:
+            if exc.code in (429, 503) and attempt < 2:
+                time.sleep(2 ** attempt * 2)
+                continue
+            log.warning("gemini_event_fit_http_error", code=exc.code, batch_size=len(batch))
+            return {i: list(EVENT_FIT_FALLBACK) for i, _ in batch}
+        except Exception as exc:
+            if attempt < 2:
+                time.sleep(1.5 ** attempt)
+                continue
+            log.warning("gemini_event_fit_failed", error=str(exc), batch_size=len(batch))
+            return {i: list(EVENT_FIT_FALLBACK) for i, _ in batch}
+    return {i: list(EVENT_FIT_FALLBACK) for i, _ in batch}
+
+
+def _load_event_fit_cache(db: Database, product_ids: list[int]) -> dict[int, list[str]]:
+    cached = {}
+    for doc in db.products.find(
+        {"_id": {"$in": product_ids}, "could_fit_event": {"$ne": None}, "could_fit_event_source": "llm"},
+        {"_id": 1, "could_fit_event": 1},
+    ):
+        cached[doc["_id"]] = doc["could_fit_event"]
+    return cached
+
+
+def _save_event_fit_cache(db: Database, event_fit_map: dict[int, list[str]]) -> None:
+    ops = [
+        UpdateOne({"_id": pid}, {"$set": {"could_fit_event": tags, "could_fit_event_source": "llm"}})
+        for pid, tags in event_fit_map.items()
+    ]
+    if ops:
+        db.products.bulk_write(ops, ordered=False)
+
+
+def batch_classify_event_fit(
+    db: Database,
+    raw_products: list[dict],
+    force: bool = False,
+) -> dict[int, list[str]]:
+    """Tag every product with the event(s) it genuinely fits (cache-first, like
+    batch_categorize). ``["ALL"]`` marks a versatile product suiting any occasion.
+
+    Args:
+        db: MongoDB handle.
+        raw_products: raw JSONL dicts (must have ``product_id``).
+        force: ignore cache and re-classify.
+
+    Returns:
+        ``{product_id: [event, ...]}`` for every input product.
+    """
+    all_ids = [int(r["product_id"]) for r in raw_products]
+    id_to_raw = {int(r["product_id"]): r for r in raw_products}
+
+    cached: dict[int, list[str]] = {} if force else _load_event_fit_cache(db, all_ids)
+    to_classify = [pid for pid in all_ids if pid not in cached]
+    log.info("event_fit_start", total=len(all_ids), from_cache=len(cached), via_llm=len(to_classify))
+    if not to_classify:
+        return cached
+
+    indexed = [(i, id_to_raw[pid]) for i, pid in enumerate(to_classify, start=1)]
+    batches = [indexed[i:i + BATCH_SIZE] for i in range(0, len(indexed), BATCH_SIZE)]
+    index_to_pid = {i: pid for i, pid in enumerate(to_classify, start=1)}
+    llm_results: dict[int, list[str]] = {}
+    with ThreadPoolExecutor(max_workers=min(MAX_WORKERS, len(batches))) as executor:
+        futures = {executor.submit(_call_event_fit_batch, batch): batch for batch in batches}
+        completed = 0
+        for future in as_completed(futures):
+            completed += 1
+            llm_results.update(future.result())
+            log.info("event_fit_progress", batches_done=completed, total_batches=len(batches))
+
+    llm_by_pid = {index_to_pid[idx]: tags for idx, tags in llm_results.items() if idx in index_to_pid}
+    _save_event_fit_cache(db, llm_by_pid)
+    final = {**cached, **llm_by_pid}
+
+    dist: dict[str, int] = {}
+    for tags in final.values():
+        for t in tags:
+            dist[t] = dist.get(t, 0) + 1
+    log.info("event_fit_complete", from_cache=len(cached), via_llm=len(llm_by_pid), distribution=dist)
+    return final
+
+
 # ── Auth helpers (mirrors waib-api/gemini_http.py) ────────────────────────────
 
 _CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform"

@@ -96,6 +96,9 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         # main|side for Plats products (None elsewhere) — lets the engine require one
         # protein main + optional accompaniments. From batch_classify_roles.
         "dish_role": raw.get("dish_role_llm"),
+        # Event(s) this product genuinely suits, e.g. ["Anniversaire", "Spécial enfant"],
+        # or ["ALL"] for versatile products. From batch_classify_event_fit.
+        "could_fit_event": raw.get("could_fit_event_llm") or ["ALL"],
         # False for "compose-it-yourself" products (… au choix / à composer).
         "recommendable": recommendable,
         "persons": persons,

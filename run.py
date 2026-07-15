@@ -36,7 +36,7 @@ from pathlib import Path
 
 from tqdm import tqdm
 
-from ingest.categorize import batch_categorize, batch_classify_roles
+from ingest.categorize import batch_categorize, batch_classify_event_fit, batch_classify_roles
 from ingest.catalogue import build_store_catalogue
 from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
@@ -218,11 +218,15 @@ def ingest_products(force_categorize: bool = False) -> None:
     # ── Step 2b: Tag main|side for Plats products (cache-first) ──
     role_cache = batch_classify_roles(db, raw_products, step_cache, force=force_categorize)
 
-    # ── Step 3: Inject menu_step_llm + dish_role_llm into each raw product ──
+    # ── Step 2c: Tag could_fit_event for ALL products (cache-first) ──
+    event_fit_cache = batch_classify_event_fit(db, raw_products, force=force_categorize)
+
+    # ── Step 3: Inject menu_step_llm + dish_role_llm + could_fit_event_llm ──
     for raw in raw_products:
         pid = int(raw["product_id"])
         raw["menu_step_llm"] = step_cache.get(pid)
         raw["dish_role_llm"] = role_cache.get(pid)
+        raw["could_fit_event_llm"] = event_fit_cache.get(pid)
 
     # ── Step 4: Transform + upsert ──
     total = len(raw_products)
