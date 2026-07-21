@@ -13,6 +13,7 @@ from pathlib import Path
 
 from ingest.config import COMPOSITION_IMAGE_BASE, PRODUCT_IMAGE_BASE
 from ingest.derive import (
+    derive_composable,
     derive_menu_step,
     derive_persons,
     derive_price_ref,
@@ -59,6 +60,7 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
     now = datetime.now(timezone.utc)
 
     menu_step = derive_menu_step(raw)
+    is_composable = derive_composable(raw)
     recommendable = derive_recommendable(raw)
     persons = derive_persons(raw)
     price_ref = derive_price_ref(all_prices.get(product_id, []))
@@ -82,6 +84,54 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
             "pieces": pieces,
         }
 
+    # composition_plateau — the "build-your-own" structure (e.g. "choisissez 6
+    # fromages parmi 22"): grouped, selectable pieces, DIFFERENT shape from
+    # ``composition`` above (which is a flat pieces list for buffets and was
+    # never going to match this nested groups/pieces format). This is the same
+    # structure derive_composable() checks for — kept here as clean, usable
+    # data for the composer UI (piece name/conditioning/image per group),
+    # instead of leaving callers to reach into raw JSON themselves.
+    plateau_raw = raw.get("composition_plateau") or {}
+    composition_plateau = None
+    plateau_groups_raw = plateau_raw.get("groups")
+    if isinstance(plateau_groups_raw, list) and plateau_groups_raw:
+        groups = []
+        for g in plateau_groups_raw:
+            if not isinstance(g, dict):
+                continue
+            pieces = []
+            for p in g.get("pieces") or []:
+                if not isinstance(p, dict):
+                    continue
+                # `disabled: "on"` pieces are temporarily unavailable per Carrefour's
+                # own data — excluded so the composer never offers a choice that
+                # can't actually be ordered.
+                if str(p.get("disabled") or "").strip().lower() == "on":
+                    continue
+                pieces.append({
+                    # REQUIRED for the actual add-to-cart call later — the Cart
+                    # API's `POST /cart/add` expects options.plateau keyed
+                    # EXACTLY by this "{group_index}-{piece_index}" code (per
+                    # the Carrefour API doc), not by name or position. Dropping
+                    # it here would make the composed selection unusable at
+                    # checkout time.
+                    "code": p.get("code"),
+                    "name": p.get("name", ""),
+                    "conditionnement": p.get("conditionnement"),
+                    "image_url": _image_url(p.get("image"), COMPOSITION_IMAGE_BASE),
+                    # extra_price: "" (falsy) means no surcharge on the base
+                    # plateau price for this piece — keep as float when present.
+                    "extra_price": float(p["price"]) if p.get("price") else None,
+                })
+            if pieces:
+                groups.append({"name": g.get("name", ""), "pieces": pieces})
+        if groups:
+            composition_plateau = {
+                "title": plateau_raw.get("title", ""),
+                "qty": _safe_int(plateau_raw.get("qty")),
+                "groups": groups,
+            }
+
     status_raw = raw.get("status") or ""
     status = "active" if status_raw == "Activé" else "inactive"
 
@@ -99,7 +149,11 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         # Event(s) this product genuinely suits, e.g. ["Anniversaire", "Spécial enfant"],
         # or ["ALL"] for versatile products. From batch_classify_event_fit.
         "could_fit_event": raw.get("could_fit_event_llm") or ["ALL"],
-        # False for "compose-it-yourself" products (… au choix / à composer).
+        # True for genuine build-your-own products — real structured Carrefour
+        # data (composition_plateau below), not name-keyword guessing.
+        "is_composable": is_composable,
+        # False only for compose-it-yourself products with NO structured data
+        # to back a real "Composer" flow (see derive_recommendable).
         "recommendable": recommendable,
         "persons": persons,
         "price_ref": price_ref,  # median across stores; None if no price data
@@ -115,6 +169,9 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
         ],
         # ── Composition (plateaux/buffets) ───────────────────────
         "composition": composition,
+        # "Build-your-own" grouped choices (e.g. "6 fromages parmi 22") — the
+        # data the composer UI actually needs. None when not composable.
+        "composition_plateau": composition_plateau,
         # ── Raw Carrefour data (source of truth) ─────────────────
         # Dietary info, allergens, ingredients etc. live here.
         # The LLM reads this directly — we don't pre-process it.
