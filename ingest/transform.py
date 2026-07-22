@@ -122,6 +122,12 @@ def transform_product(raw: dict, all_prices: dict[int, list[float]]) -> dict:
                     # extra_price: "" (falsy) means no surcharge on the base
                     # plateau price for this piece — keep as float when present.
                     "extra_price": float(p["price"]) if p.get("price") else None,
+                    # Per-piece composition/allergen text (e.g. "Appellation
+                    # d'origine protégée... LAIT, sel, présure..."), HTML from
+                    # Carrefour — the only place this level of detail exists
+                    # (there's no separate product page for a sub-piece of a
+                    # plateau), surfaced via an info icon on the composer UI.
+                    "ingredients": p.get("ingredients") or None,
                 })
             if pieces:
                 groups.append({"name": g.get("name", ""), "pieces": pieces})
