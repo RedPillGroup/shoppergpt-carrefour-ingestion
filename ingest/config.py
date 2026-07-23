@@ -49,6 +49,14 @@ PRODUCTS_FILE = _latest_file("catalogue_products", "products")
 PRICES_FILE = _latest_file("mapping_products_prices", "products_prices")
 STORES_FILE = _latest_file("magasins_stores", "stores")
 
+# Carrefour's curated business taxonomy — static export file (not dated/rotated
+# like the exports above). See ingest/concepts.py for how it's used. (The
+# "Evénement X Concept" and "Concept X Produits" sibling exports were used once
+# to hand-derive waib-api's hardcoded EVENT_CONCEPT_FIT table and are no longer
+# read at runtime — see ingest/concepts.py's module docstring for why the
+# per-product join was dropped.)
+CONCEPT_MAGASIN_FILE = DATA_DIR / "Evénement X Concept - Concept X Magasin.csv"
+
 # ── Image CDN ────────────────────────────────────────────────────────────────
 # Confirmed live via HTTP probe — see README for details.
 PRODUCT_IMAGE_BASE = "https://traiteur.carrefour.fr/media/catalog/product"

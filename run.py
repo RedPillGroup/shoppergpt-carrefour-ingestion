@@ -38,6 +38,7 @@ from tqdm import tqdm
 
 from ingest.categorize import batch_categorize, batch_classify_event_fit, batch_classify_roles
 from ingest.catalogue import build_store_catalogue
+from ingest.concepts import load_store_concepts
 from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
 from ingest.db import (
     bulk_upsert,
@@ -90,6 +91,7 @@ def ingest_stores() -> None:
     log.info("ingest_started", collection="stores", file=str(STORES_FILE))
 
     db = get_db()
+    store_concepts = load_store_concepts()
     total = count_lines(STORES_FILE)
     batch: list[dict] = []
     seen_ids: set = set()
@@ -101,7 +103,7 @@ def ingest_stores() -> None:
             if not line:
                 continue
             raw = json.loads(line)
-            doc = transform_store(raw)
+            doc = transform_store(raw, store_concepts)
             seen_ids.add(doc["_id"])
             batch.append(doc)
             bar.update(1)

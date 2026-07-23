@@ -257,14 +257,19 @@ def transform_price_records(raw: dict) -> list[dict]:
     return docs
 
 
-def transform_store(raw: dict) -> dict:
+def transform_store(raw: dict, store_concepts: dict[int, set[str]] | None = None) -> dict:
     """Transform one ``stores.jsonl`` record into a ``stores`` collection document.
 
     Builds a GeoJSON ``Point`` from ``longitude``/``latitude`` when available,
     enabling geospatial queries (e.g. find stores near a user).
 
     Args:
-        raw: Raw store dict from the JSONL export.
+        raw:            Raw store dict from the JSONL export.
+        store_concepts: ``{store_id: {concept_name, ...}}`` from
+                        ``ingest.concepts.load_store_concepts`` — which of
+                        Carrefour's curated concepts this store actually
+                        carries (distinct from the messy raw ``concepts``
+                        field below).
 
     Returns:
         A clean document ready for upsert (``_id`` = ``store_id``).
@@ -304,6 +309,11 @@ def transform_store(raw: dict) -> dict:
         "drive": raw.get("drive", False),
         "geo": geo,
         "concepts": raw.get("concepts", []),
+        # Carrefour's curated business taxonomy — which of the 18 concepts this
+        # store actually carries (Statut=Activé rows only). Empty list if the
+        # store isn't in the export. Drives the store-concept availability
+        # filter in waib-api's engine.py, parallel to the existing price filter.
+        "curated_concepts": sorted((store_concepts or {}).get(raw["store_id"], set())),
         "lad_postcodes": raw.get("lad_postcodes", []),
         "ingested_at": now,
     }
