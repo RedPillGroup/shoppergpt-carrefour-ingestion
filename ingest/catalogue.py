@@ -2,8 +2,12 @@
 Store catalogue builder — precomputes per-store, per-step product availability.
 
 Runs an aggregation over ``prices × products`` to compute, for each store and
-each menu step, two things, persisted on the store document:
+each menu step, three things, persisted on the store document:
   • ``step_catalogue: {menu_step: count}``  — how many active products exist.
+  • ``step_families: {menu_step: [sub-family, ...]}`` — WHICH kinds of product the
+    store actually carries in that step (vin, jus, champagne, cidre… for Boissons).
+    Injected into the API's query planner so it searches for sub-families that exist
+    instead of guessing ones that don't — see ``ingest.families`` for the rationale.
   • ``step_typical_cost: {menu_step: median_price_per_person}`` — the MEDIAN €/guest
     for that step (= median over products of ``store_price / persons``). The median
     (not the min) reflects what the composer ACTUALLY spends — a min-of-cheapest
@@ -28,16 +32,18 @@ only needs a single ``find_one`` on the stores collection.
 
 import statistics
 
+from ingest.families import extract_families
 from ingest.log import get_logger
 
 log = get_logger(__name__)
 
 
 def build_store_catalogue(db) -> int:
-    """Aggregate prices × products and upsert ``step_catalogue`` + ``step_typical_cost``.
+    """Aggregate prices × products and upsert the three per-store catalogue summaries.
 
     For every store that has at least one priced active product, computes
-    ``{menu_step: count}`` (→ ``stores.step_catalogue``) and
+    ``{menu_step: count}`` (→ ``stores.step_catalogue``),
+    ``{menu_step: [sub-family, ...]}`` (→ ``stores.step_families``) and
     ``{menu_step: median_price_per_person}`` (→ ``stores.step_typical_cost``).
 
     The €/guest median (not the cheapest product) is the typical cost the composer
@@ -104,12 +110,14 @@ def build_store_catalogue(db) -> int:
             }
         },
         # Per (store_id, menu_step): product count + all €/guest values (nulls kept,
-        # filtered in Python). Count includes sides; the cost estimate (ppp) does not.
+        # filtered in Python) + the product names the sub-families are derived from.
+        # Count includes sides; the cost estimate (ppp) does not.
         {
             "$group": {
                 "_id": {"store_id": "$store_id", "menu_step": "$product.menu_step"},
                 "count": {"$sum": 1},
                 "ppps": {"$push": "$ppp"},
+                "names": {"$push": "$product.name"},
             }
         },
         # Roll up: one doc per store_id with parallel {k, v} arrays.
@@ -118,13 +126,17 @@ def build_store_catalogue(db) -> int:
                 "_id": "$_id.store_id",
                 "steps": {"$push": {"k": "$_id.menu_step", "v": "$count"}},
                 "ppps": {"$push": {"k": "$_id.menu_step", "v": "$ppps"}},
+                "names": {"$push": {"k": "$_id.menu_step", "v": "$names"}},
             }
         },
-        # Convert arrays to objects: {menu_step: count} and {menu_step: [€/guest, ...]}.
+        # Convert arrays to objects keyed by menu_step. Names are condensed into
+        # sub-families in Python below and NOT persisted raw — the whole point is a
+        # compact hint, and a full name list per store would bloat the store doc.
         {
             "$project": {
                 "step_catalogue": {"$arrayToObject": "$steps"},
                 "step_ppps": {"$arrayToObject": "$ppps"},
+                "step_names": {"$arrayToObject": "$names"},
             }
         },
     ]
@@ -141,11 +153,21 @@ def build_store_catalogue(db) -> int:
             if valid:
                 step_typical_cost[step] = statistics.median(valid)
 
+        # Sub-families per step, derived from the product names (see ingest.families).
+        # Steps whose names yield nothing usable are omitted rather than stored empty,
+        # so the API can tell "no data" from "genuinely nothing here".
+        step_families = {}
+        for step, names in (doc.get("step_names") or {}).items():
+            families = extract_families(names)
+            if families:
+                step_families[step] = families
+
         db.stores.update_one(
             {"_id": doc["_id"]},
             {
                 "$set": {
                     "step_catalogue": doc["step_catalogue"],
+                    "step_families": step_families,
                     "step_typical_cost": step_typical_cost,
                 },
                 # Drop the legacy field (renamed from step_floor → step_typical_cost).
