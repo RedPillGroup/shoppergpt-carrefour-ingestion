@@ -57,6 +57,24 @@ def _local_suffix(blob_name: str) -> str:
     return ".jsonl.gz" if blob_name.endswith(".jsonl.gz") else ".jsonl"
 
 
+def latest_export_names() -> dict[str, str]:
+    """Return ``{local_prefix: latest_object_name}`` per stream WITHOUT downloading.
+
+    Used to decide whether anything new has landed since the last ingest (compared
+    against the marker in Mongo, see db.get_ingested_export_names). The object name
+    carries the export date, so a name change == a new export.
+    """
+    client = storage.Client(project=GCS_PROJECT)
+    bucket = client.bucket(GCS_BUCKET)
+    names: dict[str, str] = {}
+    for folder, local_prefix in GCS_STREAMS.items():
+        blobs = [b for b in client.list_blobs(bucket, prefix=f"{folder}/") if _is_data_object(b.name)]
+        if blobs:
+            latest = max(blobs, key=lambda b: (b.updated or b.time_created, b.name))
+            names[local_prefix] = latest.name
+    return names
+
+
 def fetch_latest_exports() -> dict[str, Path]:
     """Download the newest object of each stream into ``data/``, replacing the
     stream's previous local files. Returns ``{local_prefix: downloaded_path}``.

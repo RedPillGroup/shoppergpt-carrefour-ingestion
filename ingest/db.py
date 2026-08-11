@@ -27,6 +27,28 @@ def get_db():
     return _client[MONGO_DB]
 
 
+# Marker of the GCS exports ingested on the last SUCCESSFUL run — the CronJob pod
+# is ephemeral (no local file survives between daily runs), so "did anything new
+# land?" is answered against this persisted record rather than the filesystem.
+_EXPORT_MARKER_ID = "gcs_exports"
+
+
+def get_ingested_export_names(db) -> dict:
+    """Return ``{local_prefix: object_name}`` ingested on the last successful run."""
+    doc = db.ingestion_meta.find_one({"_id": _EXPORT_MARKER_ID}) or {}
+    return doc.get("names") or {}
+
+
+def set_ingested_export_names(db, names: dict) -> None:
+    """Record the GCS objects just ingested, so the next run can skip when nothing
+    newer has landed. Call only AFTER a successful ingestion."""
+    db.ingestion_meta.update_one(
+        {"_id": _EXPORT_MARKER_ID},
+        {"$set": {"names": names, "updated_at": datetime.now(timezone.utc)}},
+        upsert=True,
+    )
+
+
 def ensure_indexes() -> None:
     """Create all required indexes on the three collections.
 

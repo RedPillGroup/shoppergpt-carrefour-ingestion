@@ -50,6 +50,8 @@ from ingest.db import (
     bulk_upsert_prices,
     ensure_indexes,
     get_db,
+    get_ingested_export_names,
+    set_ingested_export_names,
     soft_delete_removed,
 )
 from ingest.embed import ingest_to_pinecone, reset_pinecone_index
@@ -323,23 +325,42 @@ def main() -> None:
         action="store_true",
         help="Wipe ALL vectors from Pinecone before re-ingesting (removes stale data)",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="With --fetch: ingest even if no new export has landed since the last run",
+    )
     args = parser.parse_args()
 
     run_all = not (args.stores or args.prices or args.products or args.catalogue or args.pinecone)
 
     log.info("pipeline_starting", run_all=run_all, steps={k: v for k, v in vars(args).items() if v})
 
+    fetched_names = None
     try:
         if args.fetch:
             # Imported lazily so runs without --fetch don't require the GCS client
             # (google-cloud-storage) to be installed.
-            from ingest.fetch import fetch_latest_exports
+            from ingest.fetch import fetch_latest_exports, latest_export_names
+
+            latest = latest_export_names()
+            last = get_ingested_export_names(get_db())
+            unchanged = bool(latest) and all(last.get(k) == v for k, v in latest.items())
+            if unchanged and not args.force:
+                # Nothing newer in the bucket since the last successful ingest — skip
+                # the whole run (no download, no ingestion). --force overrides. The
+                # marker is only written after a successful ingest, so a previously
+                # failed run re-tries here rather than being skipped.
+                log.info("no_new_exports_skipping", exports=latest)
+                log.info("pipeline_complete", ingested=False)
+                return
 
             fetch_latest_exports()
             # config resolved the *_FILE constants at import, BEFORE this download —
             # re-resolve so the ingest steps below read what we just pulled.
             global PRODUCTS_FILE, PRICES_FILE, STORES_FILE
             PRODUCTS_FILE, PRICES_FILE, STORES_FILE = latest_data_files()
+            fetched_names = latest
 
         ensure_indexes()
 
@@ -358,7 +379,12 @@ def main() -> None:
             db = get_db()
             ingest_to_pinecone(db)
 
-        log.info("pipeline_complete")
+        # Record what we just ingested so the next --fetch run can skip when nothing
+        # newer has landed. Only after everything above succeeded.
+        if fetched_names is not None:
+            set_ingested_export_names(get_db(), fetched_names)
+
+        log.info("pipeline_complete", ingested=True)
 
     except KeyboardInterrupt:
         log.warning("pipeline_interrupted")
