@@ -4,13 +4,15 @@ ETL pipeline that ingests the Carrefour Traiteur JSONL exports into MongoDB.
 
 ## What it does
 
-Reads 3 daily JSONL exports from Carrefour and upserts them into 3 MongoDB collections:
+Reads 3 JSONL exports from Carrefour (pulled from Google Cloud Storage — see
+[Fetching the exports](#fetching-the-exports-gcs)) and upserts them into 3
+MongoDB collections:
 
-| Export | Collection | Description |
-|---|---|---|
-| `products.jsonl` | `products` | Normalised product catalogue |
-| `products_prices.jsonl` | `prices` | Per-store pricing matrix |
-| `stores.jsonl` | `stores` | Store reference data |
+| GCS folder | Local file (`data/`) | Collection | Description |
+|---|---|---|---|
+| `catalogue/` | `catalogue_products_<date>.jsonl.gz` | `products` | Normalised product catalogue |
+| `mapping/` | `mapping_products_prices_<date>.jsonl.gz` | `prices` | Per-store pricing matrix |
+| `magasins/` | `magasins_stores_<date>.jsonl.gz` | `stores` | Store reference data |
 
 During ingestion, the pipeline derives the fields the AI recommendation engine needs:
 
@@ -29,29 +31,126 @@ cp .env.example .env
 poetry install
 ```
 
+To use `--fetch` (pull the latest exports from GCS), also authenticate with
+Application Default Credentials:
+
+```bash
+gcloud auth application-default login
+# or: export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+```
+
 ## Run
 
 ```bash
-# Ingest everything
+# Fetch the latest exports from GCS, then ingest everything
+poetry run python run.py --fetch
+
+# Ingest everything from whatever is already in data/
 poetry run python run.py
 
-# Or one collection at a time
+# Or one collection at a time (prepend --fetch to refresh from GCS first)
 poetry run python run.py --stores
 poetry run python run.py --prices
-poetry run python run.py --force-categorize
-poetry run python run.py --products
+poetry run python run.py --products --force-categorize
 poetry run python run.py --pinecone --reset-pinecone
+```
+
+`--fetch` composes with any of the above: it downloads first, then runs the
+selected steps (or everything, when no step flag is given).
+
+## Fetching the exports (GCS)
+
+Carrefour drops one dated export per stream into
+`gs://carrefour-shoppergpt-ingestion/<folder>/` (`catalogue`, `magasins`,
+`mapping`). `run.py --fetch` (see `ingest/fetch.py`) downloads the most recently
+updated object of each into `data/`, names it `<local_prefix>_<date>.jsonl.gz`,
+and removes that stream's previous local files so the newest export is always the
+one ingested.
+
+Bucket and project default to the current setup and can be overridden with
+`GCS_BUCKET` / `GCS_PROJECT` (see `.env.example`). Auth uses Application Default
+Credentials — see [Setup](#setup).
+
+## Store concepts (manual CSV — NOT from GCS)
+
+> **Don't skip this.** Missing this file silently breaks store-rayon logic in
+> production.
+
+The per-store **rayons / concepts** (Boucherie, Charcuterie & Traiteur, Pâtisserie…)
+come from a **static** CSV that is **not** part of the daily GCS export and is
+**not** pulled by `--fetch`. You must place it in `data/` yourself, with this
+**exact** filename (the accent and spaces matter — `load_store_concepts` matches it
+byte-for-byte):
+
+```
+data/Evénement X Concept - Concept X Magasin.csv
+```
+
+- **Source:** the Carrefour shared Drive. The `Evénement X Concept` workbook exports
+  several tabs; **only the `Concept X Magasin` tab is used at runtime.** The sibling
+  tabs (`Concept X Produits`, `Evénement X Concept`) are ignored — you can leave
+  them out, or drop them in `data/` too, they're harmless.
+- **Expected columns:** `ID Magasin`, `Nom Magasin`, `Statut` (`Activé` / `Désactivé`),
+  then one column per concept holding a `1` / `0` flag. Read by
+  `ingest/concepts.py:load_store_concepts`, written onto each store as
+  `curated_concepts` during the **`--stores`** step.
+- **If the file is missing,** every store gets an empty `curated_concepts`, and the
+  assistant wrongly tells users a store lacks rayons it actually has (e.g. *"ce
+  magasin ne dispose pas du rayon pâtisserie"*) and can block on it. This has
+  already bitten us on the preprod bot.
+
+After adding or updating the file, re-run the stores step (no `--fetch` needed —
+this CSV is local, only the JSONL exports come from GCS):
+
+```bash
+poetry run python run.py --stores
+```
 
 ## Data files
 
-Place the JSONL exports in the `data/` folder (gitignored):
+`--fetch` populates `data/` (gitignored) automatically. To run without GCS, drop
+the exports there yourself — the pipeline picks the newest file matching each
+prefix, `.jsonl` or `.jsonl.gz`:
 
 ```
 data/
-├── products.jsonl
-├── products_prices.jsonl
-└── stores.jsonl
+├── catalogue_products_<date>.jsonl.gz
+├── mapping_products_prices_<date>.jsonl.gz
+├── magasins_stores_<date>.jsonl.gz
+└── Evénement X Concept - Concept X Magasin.csv   # manual — see "Store concepts" above
 ```
+
+Legacy plain names (`products.jsonl`, `products_prices.jsonl`, `stores.jsonl`)
+are still recognised as a fallback.
+
+## Deployment (daily job on GKE)
+
+Runs daily as a Kubernetes **CronJob** on GKE, mirroring `waib-rrg-jobs`. On push:
+`develop` → dev cluster (`waib-dev`), `main` → prod (`waib-prod`). Each workflow
+builds the image, pushes it to Artifact Registry, writes the secret from a GitHub
+secret, and `kubectl apply`s `k8s/`.
+
+Layout:
+- `Dockerfile` — builds the image and **bakes in the concept CSV** (`data/Evénement X
+  Concept - Concept X Magasin.csv`), since it isn't part of the GCS export.
+- `k8s/cron.yaml` / `k8s/cronProd.yaml` — the CronJob (schedule `0 12 * * *`, runs
+  `run.py --fetch`).
+- `k8s/secret.yaml` — env vars; its `data` is overwritten at deploy from the
+  `DEV_SECRETS` / `PROD_SECRETS` GitHub secret.
+- `.github/workflows/{dev,prod}.yml` — CI.
+
+**GitHub secrets** (per environment): `GCP_CREDENTIALS`, `GKE_PROJECT`, and
+`DEV_SECRETS` / `PROD_SECRETS` — a YAML map containing at least `MONGO_URI`, `ENV`,
+`GCS_BUCKET`, `GCS_PROJECT`, `GEMINI_API_KEY`, `OPENAI_API_KEY`, `PINECONE_API_KEY`
+(see `k8s/secret.yaml`).
+
+**GCS access.** `run.py --fetch` reads `gs://carrefour-shoppergpt-ingestion`. The
+job runs in the same GCP project as the bucket, so it authenticates automatically
+with the cluster's default service account, which already has read access — no key
+file, dedicated service account, or Workload Identity binding required.
+
+One-time prereq: the Artifact Registry repo `shoppergpt-carrefour-ingestion`. The
+CronJob `resources` are placeholders — tune after the first real run.
 
 ## MongoDB collections
 
@@ -100,6 +199,7 @@ data/
   type_label: "Hyper",
   city: "Beauvais",
   is_active: true,
+  curated_concepts: ["Boucherie", "Charcuterie & Traiteur", "Pâtisserie"], // from the Concept X Magasin CSV
   geo: { type: "Point", coordinates: [2.108, 49.412] }
 }
 // Index: { geo: "2dsphere" }
