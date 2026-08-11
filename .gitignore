@@ -1,7 +1,9 @@
-# Data files — never commit raw exports
-data/*.jsonl
-data/*.csv
-data/*.json
+# Data — everything under data/ is generated (the JSONL/GZ exports pulled by
+# `--fetch`) and must NOT be committed, EXCEPT the static store-concepts CSV.
+# That file is not in the GCS export and IS required by the --stores step
+# (it gets baked into the Docker image). See README "Store concepts".
+data/*
+!data/Evénement X Concept - Concept X Magasin.csv
 
 # Env
 .env
@@ -19,6 +21,5 @@ build/
 # OS
 .DS_Store
 
-# Data
-data/
+# Data samples (local only)
 data_samples/

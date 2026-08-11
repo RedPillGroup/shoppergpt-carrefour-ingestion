@@ -1,0 +1,1095 @@
+ID Magasin,Nom Magasin,Statut,Boucherie,Boulangerie,Caviar,Charcuterie & Traiteur,Pizza,Petits Fours,Number & Letter Cakes,Pâtisserie,"Décoration, Vaisselle Jetable",Plateaux de sushis,Plateaux de fromages,Plateaux de fruits de mer,Rôtisserie,Plateaux de fruits et de légumes,Menus Traiteur,Buffets et Cocktails Dînatoires,Salades
+338,Carrefour Beauvais - Sud,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+339,Carrefour Aix En Provence,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+340,Carrefour Carré Sénart,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+341,Carrefour Mont Saint Aignan,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+342,Carrefour Mérignac,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+343,Carrefour Aire Sur La Lys,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+344,Carrefour Ajaccio,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1
+345,Carrefour Alençon,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+346,Carrefour Amiens,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+347,Carrefour Angers Grand Maine,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+348,Carrefour Anglet,Activé,1,1,0,1,0,1,1,1,1,1,1,1,0,1,1,1,1
+349,Carrefour Angoulins,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+350,Carrefour Annecy,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+351,Carrefour Antibes,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+352,Carrefour Armentieres,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+353,Carrefour Athis Mons,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+354,Carrefour Auchy Les Mines,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+355,Carrefour Aulnay Sous Bois,Désactivé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+356,Carrefour Avignon,Activé,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+357,Carrefour Avranches Saint Martin,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+358,Carrefour Barentin,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+359,Carrefour Bayeux,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+360,Carrefour Beaucaire,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+361,Carrefour Beaune,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+362,Carrefour Berck,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+363,Carrefour Bercy,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+364,Carrefour Besancon Chalezeule,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+365,Carrefour Besancon Valentin,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+366,Carrefour Bourg en Bresse,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+367,Carrefour Bourges,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+368,Carrefour Brest,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+369,Carrefour Brive La Gaillarde,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+370,Carrefour Bègles,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+371,Carrefour Caen,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+372,Carrefour Calais,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+373,Carrefour Chalon Sur Saone Nord,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+374,Carrefour Chalon Sur Saone Sud,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+375,Carrefour Chalons En Champagne,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+376,Carrefour Chambery Bassens,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+377,Carrefour Chambery Chamnord,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+378,Carrefour Chambourcy,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+379,Carrefour Champs Sur Marne,Activé,1,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+380,Carrefour Charleville Mézières,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+381,Carrefour Chartres,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+382,Carrefour Chelles,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+383,Carrefour Cherbourg,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+384,Carrefour Cholet,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+385,Carrefour Château Thierry,Activé,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+386,Carrefour Châteauroux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+387,Carrefour Perpignan Claira,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+388,Carrefour Claye Souilly,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+389,Carrefour Cluses,Activé,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+390,Carrefour Collégien,Activé,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,1,1
+391,Carrefour Condé Sur L'Escaut,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+392,Carrefour Coquelles,Activé,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+393,Carrefour Créteil Soleil,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+394,Carrefour Crèches Sur Saône,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+395,Carrefour Cusset,Désactivé,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+396,Carrefour Denain,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+397,Carrefour Digne Les Bains,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+398,Carrefour Douai Flers,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+399,Carrefour Draguignan,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+400,Carrefour Drancy,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+401,Carrefour Ecully,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+402,Carrefour Epernay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+403,Carrefour Epinal,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+404,Carrefour Etampes,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+405,Carrefour Evreux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+406,Carrefour Evry,Désactivé,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+407,Carrefour Fecamp,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+408,Carrefour Ferney Voltaire,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+409,Carrefour Feurs,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+410,Market Flers,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+411,Carrefour Flins Sur Seine,Activé,1,1,0,1,0,1,1,1,1,1,1,1,0,1,1,1,1
+412,Carrefour Fougeres,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+413,Carrefour Francheville,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+414,Carrefour Gennevilliers,Activé,1,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+415,Carrefour Givors,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+416,Carrefour Grenoble Grand Place (Echirolles),Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+417,Carrefour Grenoble Meylan,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+418,Carrefour Gruchet Le Valasse,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+419,Carrefour Gueret,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+420,Carrefour Guingamp,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+421,Carrefour Hazebrouck,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+422,Carrefour Hérouville Saint Clair,Désactivé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+423,Carrefour Issoire,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+424,Carrefour Ivry Sur Seine,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+425,Carrefour L'Isle Adam,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+426,Carrefour L'Haÿ Les Roses,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+427,Carrefour La Ciotat,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+428,Carrefour La Roche Sur Yon,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+429,Carrefour La Ville Du Bois,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+430,Carrefour Labege,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+431,Carrefour Laon,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+432,Carrefour Lattes,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+433,Carrefour Laval,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+434,Carrefour Le Mans,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+435,Carrefour Les Ulis,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+436,Carrefour Lescar,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+437,Carrefour Lesparre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+438,Carrefour Libourne,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+439,Carrefour Lievin,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+440,Carrefour Lille,Activé,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+441,Carrefour Limay,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+442,Carrefour Limoges Boisseuil,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+443,Carrefour Lomme,Activé,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,1,1
+444,Carrefour Lorient,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+445,Carrefour Lormont,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+446,Carrefour Lyon Part Dieu,Activé,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1
+447,Carrefour Mably,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+448,Carrefour Margencel,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+449,Carrefour Marseille Bonneveine,Activé,1,1,0,1,0,1,1,1,1,0,1,1,0,1,1,1,1
+450,Carrefour Maubeuge,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+451,Carrefour Monaco,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+452,Carrefour Mondeville,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+453,Carrefour Montereau,Activé,0,1,0,0,0,1,0,1,1,1,1,1,1,0,0,0,0
+454,Carrefour Montesson,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+455,Carrefour Montigny Les Cormeilles,Activé,0,1,0,0,0,1,0,1,1,1,0,0,0,0,0,0,0
+456,Carrefour Montluçon,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+457,Carrefour Montreuil,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+458,Carrefour Moulins,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+459,Carrefour Mulhouse,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+460,Carrefour Nantes Beaujoire,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+461,Carrefour Nantes Beaulieu,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1
+462,Carrefour Narbonne,Activé,0,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1
+463,Carrefour Nevers Marzy,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+464,Carrefour Nice Lingostiere,Activé,1,1,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1
+465,Carrefour Nice Tnl,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+466,Carrefour Nimes Ouest,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+467,Carrefour Nimes Sud,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+468,Carrefour Noisy Le Grand,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+469,Carrefour Ollioules,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+470,Carrefour Orange,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+471,Carrefour Orléans,Activé,1,1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1
+472,Carrefour Ormesson,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+473,Carrefour Paimpol,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+474,Carrefour Paris Auteuil,Activé,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1
+475,Carrefour Perpignan Roussillon,Activé,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+476,Carrefour Portet Sur Garonne,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+477,Carrefour Puget Sur Argens,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+478,Carrefour Quétigny,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+479,Carrefour Quimper,Activé,1,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+480,Carrefour Rennes - Alma,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+481,Carrefour Rambouillet,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+482,Carrefour Reims Cernay,Activé,1,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+483,Carrefour Reims Tinqueux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+484,Carrefour Rennes - Cesson,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+485,Carrefour Rethel,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+486,Carrefour Riom,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+487,Carrefour Romorantin,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+488,Carrefour Rosny Sous Bois,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+489,Carrefour Rungis Belle Epine,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+490,Carrefour Saint Brieuc - Langueux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+491,Carrefour Saint André Les Vergers,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+492,Carrefour Saint Brice Sous Forêt,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+493,Carrefour Saint Clement De Riviere,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+494,Carrefour Saint Denis,Désactivé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+495,Carrefour Saint Egreve,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+496,Carrefour Saint Herblain,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+497,Carrefour Saint Jean De Vedas,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+498,Carrefour Saint Malo,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+499,Carrefour Saint Martin Au Laert,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+500,Carrefour Saint Pol Sur Mer,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+501,Carrefour Saint Quentin En Yvelines,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+502,Market Saint Lo,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+503,Carrefour Sainte Geneviève Des Bois,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+504,Carrefour Salaise Sur Sanne,Activé,1,1,0,0,0,1,1,1,1,1,0,1,1,0,0,0,0
+505,Carrefour Sallanches,Activé,0,1,0,1,1,1,0,0,1,1,1,1,1,0,1,1,1
+506,Carrefour Sannois,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+507,Carrefour Saran,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+508,Carrefour Sartrouville,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+509,Carrefour Sens Maillot,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+510,Carrefour Sens Voulx,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+511,Carrefour Sete Balaruc,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+512,Carrefour Sevran,Désactivé,1,1,0,0,0,1,1,1,1,1,0,1,1,0,0,0,0
+513,Carrefour Stains,Activé,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+514,Carrefour Thiers,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+515,Carrefour Thionville,Activé,1,1,0,1,0,0,0,1,1,1,1,1,1,0,1,1,1
+516,Carrefour Toulon Grand Var,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+517,Carrefour Toulon Mayol,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+518,Carrefour Toulouse Purpan,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+519,Carrefour Tours St Pierre Des Corps,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+520,Carrefour Tourville La Riviere,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+521,Carrefour Trans En Provence,Activé,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1,1,1
+522,Carrefour Troyes - La Chapelle Saint Luc,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+523,Carrefour Uzes,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+524,Carrefour Aulnoy Lez Valenciennes,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+525,Carrefour Vannes,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+526,Carrefour Vaulx En Velin,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+527,Carrefour Venette,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+528,Carrefour Venissieux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+529,Carrefour Vernon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+530,Carrefour Villabé,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+531,Carrefour Villejuif,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+532,Carrefour Villeurbanne,Activé,1,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1
+533,Carrefour Villiers En Bière,Activé,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1
+534,Carrefour Vitrolles,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+535,Carrefour Voiron,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+536,Carrefour Wasquehal,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+537,Carrefour Dijon - Toison D'Or,Activé,1,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1
+538,Carrefour Pontault Combault,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+539,Carrefour Angers Saint Serge,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+540,Carrefour L'Isle D'Abeau,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+541,Carrefour Villeneuve La Garenne,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+542,Carrefour Villefranche De Rouergue,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+543,Carrefour Plouzané,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+544,Carrefour Saint Renan,Activé,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,1,1
+545,Carrefour Le Crès,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+546,Market Epinay Sur Orge,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+547,Market Dinan,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+548,Market Fenestrelay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+549,Market Trets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+550,Market Scionzier,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+551,Market Breuillet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+552,Market Annoeullin,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+553,Market Tournefeuille,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+554,Market Nanteuil Les Meaux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+555,Market Le Mans - La Pointe,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+556,Market Avon,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+557,Market Colomiers - Ormeau,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+558,Market Chartres de Bretagne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+559,Market Lille - La Madeleine,Activé,1,0,0,1,0,0,0,0,1,1,1,1,1,0,1,1,1
+560,Market Gardanne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+561,Market Croissy sur Seine,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+562,Market Coupvray,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+563,Market Morangis,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+565,Market Bonneville - Bordets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+566,Market Cosne Sur Loire - Sud,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+567,Market Bois Guillaume - Bocquet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+568,Market Ballancourt,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+569,Market Mercin Et Vaux,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+570,Market Bray sur Seine,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+571,Market Montpellier - Justice,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+572,Market Vannes Tohannic,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+573,Market Bondues,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+574,Market Voves,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+575,Market Abbeville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+576,Market Amberieu en Bugey,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+577,Market Antibes - Grasse,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+578,Market Aubusson,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+579,Market Bagnols sur Ceze,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+580,Market Baisieux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+581,Market Belleville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+582,Market Briancon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+583,Market Brioude,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+584,Market Cannes - La Bocca,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+585,Market Davezieux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+586,Market Froges,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+587,Market Hesdin,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+588,Market Lagnieu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+589,Market Lamorlaye,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+590,Market Le Mesnil Esnard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+591,Market Lezoux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+592,Market Lillers,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+593,Market Limours,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+594,Market Longueil Annel,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+595,Market Lons Le Saunier,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+596,Market Meximieux,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+597,Market Nevers - Colbert 2,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+598,Market Nice - Mont Boron,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+599,Market Pertuis,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+600,Market Pierrelatte,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+601,Market Pluneret,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+602,Market Pont Audemer,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+603,Market Puiseux Pontoise,Activé,1,1,0,0,0,1,0,1,1,1,1,1,1,0,0,0,0
+604,Market Reims - Gosset,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+605,Market Rouvroy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+606,Market Rubelles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+607,Market Sarlat - La Caneda,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+608,Market Scheibenhard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+609,Market Sorbiers,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+610,Market St Denis Les Bourg,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+611,Market Saint Pierre Les Nemours,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+612,Market St Pourcain Sur Sioule,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+613,Market St Yorre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+614,Market Trevoux,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+615,Market Vernouillet,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+616,Market Villeneuve Les Avignon,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+617,Market Villers Bocage (14),Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+618,Market Voisins Le Bretonneux,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+619,Market Estaires,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+620,Market Le Mans - Les Maillets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+621,Market Orléans - Saint Mesmin,Activé,1,1,0,0,0,1,0,1,1,0,1,1,0,0,0,0,0
+622,Market Pibrac,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+623,Market Ploemeur,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+624,Market Valbonne,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+625,Market Manom,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+626,Market Livry Gargan,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+627,Market Guignes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+628,Market Vizille,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+629,Market Rillieux La Pape - Village,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+630,Market Rive De Gier,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+631,Market Argelès - Gazost,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+632,Market Theix,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+633,Market Ecuelles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+634,Market Rognac,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+635,Market Oyonnax,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+636,Market Ambert,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+637,Market Luzarches,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+638,Market Mougins - Blanchisserie,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+639,Market Saint Ambroix,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+640,Market Aytre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+641,Market Vendôme - Saint Ouen,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+642,Market Plouhinec,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+643,Market Auterive,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+644,Market Clamart,Activé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+645,Market Villevieille,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+646,Market Bellac,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+647,Market Ergue Gaberic,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+648,Market Meze,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+649,Market Villers Bocage (80),Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+650,Market Veauche,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+651,Market Irigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+652,Market Saint Andre De Corcy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+653,Market Milly La Foret,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+654,Market Fruges,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+655,Market Le Cres,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+656,Market St Florent Sur Cher,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+657,Market Bressuire - Europe,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+658,Market Villers Cotterets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+659,Market Saint Amand (50160),Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+660,Market Condrieu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+661,Market Marseille - Saint Barnabé,Désactivé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+662,Market Fouesnant,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+663,Market Saint Amand Montrond,Désactivé,1,1,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+664,Market Brunoy,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+665,Market Comines,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+666,Market Annemasse - Florissant,Activé,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,0
+667,Market Le Creusot,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+668,Market Sancerre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+669,Market Bourbon L'Archambault,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+670,Market Lannemezan,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+671,Market Bourganeuf,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+672,Market St Quentin Fallavier,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+673,Market Rue - Moulins,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+674,Market Mougins - Tournamy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+675,Market Gerzat,Activé,1,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0
+676,Market Eperlecques,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+677,Market Unieux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+678,Market Ferriere La Grande,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+679,Market Riorges,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+680,Market Desvres,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+681,Market Nimes - Painlevé,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+682,Market Saussay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+683,Market Falaise,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+684,Market Avesnes Sur Helpe,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+685,Market Monistrol Sur Loire,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+686,Market Fougeres 2,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+687,Market Raillencourt Sainte Olle,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+688,Market Meyzieu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+689,Market Sassenage,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+690,Market Mirecourt,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+691,Market Essars,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+692,Market Thimert Gatelles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+693,Market Chatenoy Le Royal,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+694,Market La Fleche,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+695,Market Blois - Quiniere,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+696,Market Beaurains,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+697,Market Cabourg,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+698,Market Witry Les Reims,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+699,Market Nesles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+700,Market Chassieu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+701,Market Cosne D'Allier,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+702,Market Gray,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+703,Market La Souterraine,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+704,Market Le Havre - Vallée,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+705,Market Guines,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+706,Market Montalieu Vercieu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+707,Market Ruy,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+708,Market Auxerre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+709,Market Gisors (27140),Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+710,Market Saint Martin D'Auxigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+711,Market Pierres,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+712,Market Decize,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+713,Market Bagneres de Bigorre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+714,Market Le Tignet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+715,Market Beauzelle,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+716,Market Avion,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+717,Market Nuits Saint Georges,Désactivé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+718,Market Dadonville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+719,Market Montpellier - Croix D'Argent,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+720,Market Sotteville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+721,Market Saint Nazaire Villeport,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+722,Market La Chaussee Saint Victor,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+723,Market Limoges Roussillon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+724,Market Montesson (Market),Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+725,Carrefour Niort,Activé,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1
+726,Carrefour Soyaux,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+727,Carrefour Fourmies,Activé,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+728,Carrefour Chateauneuf Les Martigues,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+729,Carrefour Montelimar,Activé,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+730,Carrefour Marseille Grand Littoral,Activé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+731,Carrefour Mont De Marsan,Activé,1,1,0,1,1,1,0,1,1,1,1,1,0,0,1,1,1
+732,Carrefour Aubervilliers,Activé,0,1,0,0,0,1,0,1,1,0,1,1,0,0,0,0,0
+733,Carrefour Cahors,Activé,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+734,Carrefour Dax,Activé,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1
+735,Carrefour Goussainville,Désactivé,0,1,0,0,0,1,0,1,1,1,0,0,0,0,0,0,1
+736,Carrefour Marseille Le Merlan,Désactivé,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+737,Carrefour Port de Bouc,Activé,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+738,Carrefour Segny,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+739,Carrefour Tarnos,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+740,Carrefour Auch,Activé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+741,Carrefour Serignan,Activé,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1
+742,Market Vire - La Douitée,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+743,Market Alencon - Quakenbruck,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+744,Market Breteuil Sur Noye,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+745,Market Chalette sur Loing,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+746,Market Moreuil,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+747,Market Verneuil sur Avre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+748,Market Etaples,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+749,Market Nangis,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+750,Market Mehun sur Yevre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+751,Market Villers sous Saint Leu,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+752,Market Tournon sur Rhone,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+753,Market Gometz La Ville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+754,Market Saint Sever,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+755,Market Ligny En Barrois,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+756,Market St Andre De L'Eure,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+757,Market Miramas,Activé,1,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+758,Market Pont De Cheruy,Activé,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0
+759,Market Aubigny sur Nere,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+760,Market Pont-Evêque (38),Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+761,Market Guer,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+762,Market La Ferté Bernard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+763,Market Arques,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+764,Market Albertville,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+765,Market Marseille - Schuman,Désactivé,0,1,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0
+766,Market Corbas,Désactivé,0,0,0,1,0,0,0,0,1,0,1,0,1,0,1,1,1
+767,Market Villepreux,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+768,Market Crouy,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+769,Market Marly Les Valenciennes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+770,Market Pont Saint Esprit,Désactivé,0,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+771,Market Courbevoie,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+773,Market Quievrechain,Activé,0,1,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0
+774,Market Etables sur Mer,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+775,Market Mulsanne,Activé,1,0,0,1,0,0,0,0,1,0,1,1,1,0,1,1,1
+776,Market St Remy Les Chevreuses,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+777,Market Chevigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+778,Market Geveze,Activé,1,0,0,1,0,0,0,0,1,0,1,1,1,0,1,1,1
+779,Market Objat,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+780,Market Periers,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+781,Market Le Pontel,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+782,Market Epouville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+783,Market Bourges - Aéroport,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+784,Market Montelimar,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+785,Market Marseille - Catalans,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+786,Market Bapaume,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+787,Market Saint Calais,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+788,Market Ferrieres En Gatinais,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+789,Market Buchy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+790,Market Perrigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+791,Market Bonneval,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+792,Market Ollioules,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+793,Market Voiron,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+794,Market Clermont Ferrand - Jaude,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+795,Market Saint Marcel,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+796,Market Calais - Virval,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+797,Market Nice - Gorbella,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+798,Market Sete,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+799,Market Lamotte Beuvron,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+800,Market Saint Germain Du Corbeis,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+801,Market Ennery,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+802,Market Niort - Saint Jean d'Angely,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+803,Market Fleury sur Andelle,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+804,Market Marolles En Hurepoix,Activé,1,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+805,Market Gargenville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+806,Market Dol de Bretagne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+807,Market Quimperle,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+808,Market St Aubin Du Cormier,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+809,Market Ingre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+810,Market St Julien De Concelles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+811,Market Locmine,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+812,Market Questembert,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+813,Market Distre,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+814,Market Terdeghem,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+815,Market Bray Dunes,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+816,Market Airaines,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+817,Market Aix Noulette,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+818,Market Annemasse - Le Perrier,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+819,Market Anzin - Valmont,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+820,Market Argenton - Le Pechereau,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+821,Market Arras,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+822,Market Aubigny au Bac,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+823,Market Aubigny en Artois,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+824,Market Auchel - Allouagne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+825,Market Auchel - Gandhi,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+826,Market Audruicq,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+827,Market Avesnes Le Comte,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+828,Market Beauvais,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+829,Market Bellegarde - Centre,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+830,Market Benodet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+831,Market Berck,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+832,Market Berre L'étang,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+833,Market Betton,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+834,Market Blainville sur Mer,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+835,Market Bois en Ardres,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+836,Market Bois Guillaume - République,Activé,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,1
+837,Market Bordeaux - Bastide,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+838,Market Bordeaux - Grands Hommes,Activé,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,1
+839,Market Bordeaux - St Jean Saget,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+840,Market Bosc - Le Hard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+841,Market Bouchain,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+842,Market Boulogne - Liane,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+843,Market Bourbourg,Activé,0,1,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0
+844,Market Bourg en Bresse - Marboz,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+845,Market Bourg en Bresse - Samaritaine,Activé,1,0,0,1,0,0,0,0,1,0,1,0,1,0,1,1,1
+846,Market Bourges - Cap Nord,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+847,Market Boussac,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+848,Market Bretteville sur Odon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+849,Market Brionne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+850,Market Bully Les Mines,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+851,Market Buzancais,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+852,Market Calais - 4 Boulevards,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+853,Market Cambrai,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+854,Market Cany Barville,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+855,Market Chantilly,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+856,Market Charleval,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+857,Market Chartrettes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+858,Market Chatillon sur Chalaronne,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+859,Market Claix,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+860,Market Commentry,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+861,Market Conflans Sainte Honorine,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+862,Market Corpeau,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+863,Market Crepy en Valois,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+864,Market Crevecoeur Le Grand,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+865,Market Deols,Activé,1,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+866,Market Dinard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+867,Market Dormans Chavenay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+868,Market Dunkerque Malo Les Bains,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+869,Market Elbeuf,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+870,Market Etiolles,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+871,Market Etrepagny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+872,Market Faverolles,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+873,Market Fecamp,Activé,1,0,0,1,0,0,0,0,1,0,1,1,1,0,1,1,1
+874,Market Feuquieres En Vimeu,Activé,1,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+875,Market Fismes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+876,Market Fraize,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+877,Market Genas,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+878,Market Gien,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+879,Market Goderville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+880,Market Grandvilliers,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+881,Market Grisolles,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+882,Market Haillicourt,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+883,Market Ham,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+884,Market Hauteville Lompnes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+885,Market Hem,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+886,Market Isbergues Berguette,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+887,Market Jassans Riottier,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+888,Market Jeumont,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+889,Market Jonage,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+890,Market Jouy Le Moutier,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+891,Market Jussey,Désactivé,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1
+892,Market La Baule,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+893,Market Landrecies,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+894,Market Lapalisse,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+895,Market Lavelanet,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+896,Market Le Havre - Sanvic,Activé,1,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,1
+897,Market Le Taillan Medoc,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+898,Market Le Touquet,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+899,Market Leforest,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+900,Market Lens Maës,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+901,Market Les Andelys,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+902,Market Lille - Fives,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+903,Market Lille - Gambetta,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+904,Market Longperrier,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+905,Market Lorette,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+906,Market Louhans,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+907,Market Lourdes,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+908,Market Marines,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+909,Market Marly Le Roi,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+910,Market Marquise,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+911,Market Menucourt,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+912,Market Mezieres Sur Seine,Activé,0,1,0,0,0,1,0,1,1,0,1,1,0,0,0,0,0
+913,Market Miribel,Activé,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1
+914,Market Moirans,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+915,Market Montcornet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+916,Market Montpellier - Jacques Cœur,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+917,Market Montreal La Cluse,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+918,Market Campigneulles les petites,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+919,Market Montrevel En Bresse,Activé,1,0,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+920,Market Montrond,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+921,Market Mortain,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+922,Market Neuville Les Dieppe - Libération,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+923,Market Nouzonville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+924,Market Offranville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+925,Market Outreau - Soleil,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+926,Market Pavilly,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+927,Market Peronnas,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+928,Market Petit Quevilly - Jaurès,Désactivé,0,1,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0
+929,Market Poix De Picardie,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+930,Market Pontorson,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+931,Market Pornichet,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+932,Market Premery,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+933,Market Reignier,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+934,Market Reims - Clémenceau,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+935,Market Reims - Gambetta,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+936,Market Remoulins,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+937,Market Rillieux La Pape - Europe,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+938,Market Rives Sur Fure,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+939,Market Romilly Sur Seine,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+940,Market Sablé sur Sarthe,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+941,Market Saint Andre La Roche,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+942,Market Saint Martin Du Vieux - Belleme,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+943,Market Saint Michel De Maurienne,Désactivé,1,0,0,1,0,0,0,0,1,0,1,0,1,0,1,1,1
+944,Market Saint Pol Sur Ternoise,Désactivé,1,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+945,Market Saint Priest,Activé,0,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+946,Market Salbris,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+947,Market Salon De Provence,Désactivé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+948,Market Soulac Sur Mer - Godineau,Activé,1,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+949,Market St Maur Des Fosses,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+951,Market St Romain De Colbosc,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+952,Market Saint Soupplets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+953,Market Suresnes - Verdun,Désactivé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+954,Market Tarbes - Claverie,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+955,Market Taverny,Désactivé,1,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+956,Market Tence,Activé,1,1,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+957,Market Teteghem,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+958,Market Thonon Les Bains - Landaz,Activé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+959,Market Toulon - Bourgeois,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+960,Market Toulouse - Hers Rougenet,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+961,Market Toulouse - Lombez (Mirail),Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+962,Market Tourcoing,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+963,Market Tourgeville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+964,Market Tournus - Résistance,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+965,Market Trith Saint Leger,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+966,Market Vatan,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+967,Market Vendin Lès Bethune,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+968,Market Vervins,Activé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+969,Market Viarmes,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+970,Market Villefranche sur Saône,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+971,Market Vonnas,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+972,Market Vouziers,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+973,Market Wimille,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+974,Market Wingles Meurchin,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+975,Market Yutz,Activé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+976,Market Yzeure,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+977,Market Beaurainville,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+978,Market Les Abrets,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+979,Market L'Arbresle,Activé,0,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,0
+980,Market Auneuil,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+981,Market Bar Sur Aube,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+982,Market Champagne sur Seine,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+983,Market Château Landon,Activé,1,1,0,1,0,1,0,1,0,0,1,0,1,0,1,1,1
+984,Market Montereau,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+985,Market Montmirail,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+986,Market Nogent sur Seine,Activé,1,0,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+987,Market Rozay En Brie,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+988,Market Tournan en Brie,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+989,Market Trilport,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+990,Market Vertus,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+991,Market Lesigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+992,Market Coulaines - Paix,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+993,Market Le Mans - Heuze,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+994,Market Le Mans - Sablons,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+995,Market Le Mans - Universite,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+997,Market Orléans - Madeleine,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+998,Market Bethisy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+999,Market Mouroux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1000,Market Blere - Tours,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1001,Market Château Renault,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1002,Market Orléans - Olivet,Activé,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+1003,Market Tours - La Riche,Désactivé,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0
+1004,Market Dange Saint Romain,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1005,Market Ouistreham,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1006,Market Bourg Achard,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1007,Carrefour Bayonne,Activé,1,1,0,1,0,1,1,1,1,1,0,1,1,0,1,1,1
+1008,Market Clermont Ferrand - Saint Alyre,Activé,0,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1009,Market Châteaurenard,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1011,Carrefour Saint Jean de Luz,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1012,Market Vaires sur Marne,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1014,Market Libercourt,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1015,Market Saint Amand Les Eaux,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1016,Market Valenciennes - Harpignies,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1017,Market Wavrin,Désactivé,1,1,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1018,Market Marck en Calaisis,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1019,Market Thumeries,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1020,Market Valenciennes - Place d'armes,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1021,Market Erquinghem - Lys,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1022,Market Villeneuve d'Ascq,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1023,Market Aubenas,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1024,Market Porticcio,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1026,Market Alençon - Papin,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1027,Market Rennes - Bourg l'Evêque,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1193,Market Drancy,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1194,Market Draveil,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1196,Market Paris - Italie 2,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1197,Market Reims - Paris,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1198,Market Tremblay En France,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1201,Market Barneville Carteret,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1202,Market Breteuil Sur Iton,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1205,Market Connerré,Activé,1,0,0,1,0,0,0,0,1,0,1,1,1,0,1,1,1
+1206,Market Courseulles Sur Mer,Activé,1,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1,1
+1207,Market Doudeville,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1208,Market Ducey - Route Nationale 176,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1210,Market Forges-Les-Eaux,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1211,Market La Haye Du Puits,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1212,Market La Loupe,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1214,Market Laval,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1215,Market Mézidon Canon,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1216,Market Nogent Le Roi,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1217,Market Pacy Sur Eure,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1218,Market Parigny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1219,Market Penestin - Pontcano,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1220,Market Plouagat,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1223,Market Rennes - La Poterie,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1225,Market Riec Sur Bélon,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1226,Market Sées,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1227,Market Saint Malo - Pasteur,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1228,Market Saint Pierre Montlimart,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1229,Market Saint Saëns,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1230,Market Thorigné - Fouillard,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1234,Market Cosne Cours Sur Loire -Lec,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1235,Market Cusset - Charmeil,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1238,Market Lignières,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1239,Market Malesherbes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1240,Market Nevers - Saint Exupery,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1243,Market Albertville - Pierre Du Roy,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1244,Market Annecy Le Vieux,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1245,Market Beaurepaire,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1249,Market Chauffailles,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1250,Market Cluny,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1251,Market Crémieu,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1252,Market Cruseilles,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1253,Market Culoz,Désactivé,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+1254,Market Divonne Les Bains,Activé,0,0,0,1,0,0,0,1,1,1,1,1,1,0,1,1,1
+1255,Market Douvaine - Thonon,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1256,Market Dunières,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1257,Market Faverges,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1258,Market Gex,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1259,Carrefour Grésy Sur Aix,Activé,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1260,Market Groisy,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1261,Market La Roche Sur Foron - Amancy,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1262,Market La Rochette,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1264,Market Le Coteau,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1265,Market Les Rousses,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1266,Market Montbrison,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1267,Market Morteau,Activé,1,1,0,1,0,1,0,1,1,0,0,0,1,0,1,1,1
+1268,Market Moutiers - Tarentaise,Activé,0,0,0,1,0,0,0,1,1,1,1,1,1,0,1,1,1
+1270,Market Renaison - Etangs,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1271,Market Roanne,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1272,Market Samoëns,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1273,Market Sevrier,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1274,Market Seynod,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1275,Market Seyssel,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1276,Market Saint Clair De La Tour,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1277,Market Saint Etienne - Normandie,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1278,Market Saint Fons,Activé,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+1279,Market Saint Genis Pouilly,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1281,Market Saint Jean De Maurienne,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1282,Market Saint Jean De Moirans,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1283,Market Saint Jeoire Prieuré,Désactivé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1284,Market Saint Julien En Genevois l'Hôpital,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1285,Market Saint Julien En Genevois - Le Puy Saint Martin,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1288,Market Sainte Sigolene,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1289,Market Thônes,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1290,Market Thonon Les Bains - Ferry,Activé,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1291,Market Tullins,Désactivé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1292,Market Ugine,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1293,Market Vienne,Activé,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,1,1
+1294,Market Villeurbanne - Grand Clément,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1295,Market Yenne,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1296,Market Aire Sur L'Adour,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1297,Market Amendeuix Oneix Saint-Palais,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1299,Market Bédarieux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1300,Market Bourg Sur Gironde,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1301,Market Brantôme,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1303,Market Condom,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1304,Market Cugnaux,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1306,Market Gimont,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1307,Market Gourdon,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1308,Market Ille Sur Têt,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1309,Market L'Isle Jourdain,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1310,Market La Primaube,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1312,Market Marmande - 2,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1313,Market Millau,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1315,Market Oloron Sainte Marie,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1318,Market Pomarez,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1319,Market Prigonrieux,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1320,Market Puygouzon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1321,Market Rieumes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1323,Market Siorac,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1324,Market Saint Affrique,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1325,Market Saint Cyprien,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1328,Market Tarnos - Gerard Philippe,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1329,Market Terrasson,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1330,Market Toulouse - Compans,Activé,1,1,0,0,0,1,0,1,1,1,0,1,1,0,0,0,0
+1331,Market Villeneuve De Marsan,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1332,Market Barlin - Verte Plaine,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1333,Market Bauvin,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1336,Market Chaulnes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1337,Market Dechy,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1338,Market Guignicourt,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1340,Market La Capelle,Activé,0,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1
+1342,Market Laon - Champagne,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1343,Market Lens - Zola,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1345,Market Maignelay Montigny,Activé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1347,Market Sedan,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1350,Market Agde - Moleon,Désactivé,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1
+1353,Market Marseille - Belle de Mai,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1354,Market Nice - Californie,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1355,Market Nîmes - Kennedy,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1356,Carrefour Lyon Confluence,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1357,Carrefour Carcassonne,Activé,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+1358,Carrefour Beauvais - Centre,Activé,1,1,0,1,0,1,0,1,1,1,1,1,0,0,1,1,1
+1359,Market Tours - Tonnelle,Désactivé,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0
+1360,Market Saint Just - Malmont,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1362,Market Barcelonnette,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1363,Market Antibes - RN7,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1365,Market Bréal Sous Montfort,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1366,Market Ernée - La Hainaud,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1367,Market Baden,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1368,Market Baud,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1369,Market Plouay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1370,Carrefour Belley,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1371,Market Vaulx en Velin - Carré de Soie,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1372,Market Saint Symphorien sur Coise,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1373,Market Argentan,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1374,Market Metz - Muse,Désactivé,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1375,Market Ambon Muzillac,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1376,Market Le Havre - Briand,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1377,Market Saint Jean d'Aulp,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1378,Carrefour Touques - Deauville,Désactivé,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1
+1379,Market Saint Sulpice,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1380,Market Guise,Activé,1,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+1381,Market Sèvres,Activé,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1383,Carrefour Bellegarde sur Valserine,Activé,0,1,0,1,0,0,0,1,1,0,1,1,0,0,1,1,1
+1384,Carrefour Saint Mard,Activé,0,1,0,1,0,1,0,1,1,1,1,1,0,0,1,1,1
+1385,Market Fresnoy,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1386,Market Bordeaux - Caudéran Ferry,Activé,1,0,0,1,0,0,0,0,1,1,1,1,1,0,1,1,1
+1387,Market Mérignac - Montesquieu,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1389,Market Châteauroux - Beaulieu,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1390,Market Issoudun,Désactivé,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0
+1391,Market Crolles,Activé,0,0,0,1,0,0,0,1,1,0,0,1,1,0,1,1,1
+1392,Market Varennes sur Allier,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1393,Market Saint Eloy les Mines,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1394,Market Aigueperse,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+1395,Market Azay le Rideau,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1396,Market Langeais,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1397,Market Cérans Foulletourte,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1398,Market Bordeaux - Delattre,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1399,Market Charnay lès Mâcon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1400,Market Créon - Sauveterre,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+1401,Market Beautiran,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1402,Market Massy - Grand Ouest,Désactivé,0,1,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1
+1403,Market Evian Les Bains,Désactivé,0,0,0,1,0,0,0,1,1,0,1,1,0,0,1,1,1
+1404,Market Six Fours les Plages,Activé,1,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1405,Market Avrillé,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1406,Market Toulouse - Minimes,Activé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1407,Market Bourges - Dun sur Auron,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1408,Market Frévent - Ferry,Activé,1,1,0,1,0,1,0,1,1,0,1,0,0,0,1,1,1
+1409,Market Boulogne - Sud,Activé,1,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1410,Market Gouzon,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1411,Market Le Chambon - Feugerolles,Activé,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,1,1
+1412,Market Damville,Désactivé,1,1,0,1,0,1,0,1,1,0,0,1,1,0,1,1,1
+1413,Market Léon,Activé,0,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1414,Market Aix Les Bains - Verlaine,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1415,Market Bailly - Romainvilliers,Activé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1416,Market Bayonne - Marracq,Activé,1,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,1
+1417,Market Beaumont,Désactivé,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1
+1418,Market Boismont,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1419,Market Bordeaux - Victor Hugo,Activé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1420,Market Boulogne Billancourt,Désactivé,1,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1
+1421,Market Bussy Saint Georges,Désactivé,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+1422,Market Cazères,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1423,Market Chatillon - Gabriel Peri,Activé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1424,Market Conches En Ouche - Moulin,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1425,Market Fleurance,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1426,Market Fonsorbes,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1427,Market Freneuse,Activé,1,1,0,1,0,1,0,1,1,0,0,1,0,0,1,1,1
+1428,Market Gannat,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1429,Market La Ferté Saint Aubin,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1430,Market Laon - Christ,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1431,Market Le Plessis Robinson - Place,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1432,Market Le Pré Saint Gervais,Désactivé,0,1,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1
+1433,Market Le Trait,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1434,Market Louviers - Champ De Ville,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1435,Market Lyon - Frères Lumiere,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1436,Market Melun - Gaillardon,Activé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1437,Market Montrejeau,Désactivé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1438,Market Nogaro,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1439,Market Nonancourt,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1440,Market Paris - Alésia,Désactivé,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+1441,Market Paris - Clignancourt,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1442,Market Paris - Gambetta,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1443,Market Paris - Rochechouart,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1444,Market Paris - Saint Ouen,Désactivé,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,1
+1445,Market Paris - Vouillé,Désactivé,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+1446,Market Pechbonnieu,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1447,Market Peyrehorade - Bayonne,Activé,1,1,0,1,0,1,0,1,1,0,0,1,0,0,1,1,1
+1448,Market Pontault Combault,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1449,Market Rennes - Isly,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1450,Market Rennes - Villejean,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1321,Market Rieumes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1452,Market Rueil Malmaison - Colmar,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1453,Market Rueil Malmaison - Sue,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1454,Market Saint Gaultier,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1455,Market Saint Jean Pied De Port,Désactivé,0,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1456,Market Saint Pierre D'Irube,Activé,1,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1457,Market Salies De Bearn,Activé,1,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1458,Market Toulouse - Jean Rieux,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1459,Market Toulouse - Jolimont,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1460,Market Toulouse - Maourines,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1461,Market Toulouse - Saint Michel,Activé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1462,Market Vélizy - De Gaulle,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+1463,Market Versailles,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1464,Market Vierzon - Forges,Activé,1,0,0,1,0,0,0,1,1,0,0,1,0,0,1,1,1
+1465,Market Vierzon - République,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1466,Market Vincennes,Désactivé,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1
+1467,Market Rettel,Activé,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1
+1468,Market Thionville,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1469,Market Belfort - Bohn,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1470,Market Amiens,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1471,Market Douai - Armes,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1472,Market Lille - Moselle,Désactivé,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1473,Carrefour Contact L'Absie,Désactivé,1,1,0,1,0,0,0,1,0,0,1,0,1,0,1,1,1
+1474,Carrefour Contact Salleboeuf,Désactivé,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,1
+1475,Market Les Aix d'Angillon,Activé,1,1,0,1,0,1,0,1,0,0,1,1,1,0,1,1,1
+1476,Market Saint-Lô,Désactivé,1,1,0,1,1,0,0,1,0,1,1,1,1,0,1,1,1
+1477,Market Bethune - Lille,Activé,1,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,1
+1478,Market Oullins,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1479,Carrefour Aurillac,Activé,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,1,1
+1480,Market Paris - Saint Marcel,Activé,1,1,0,1,0,0,0,1,0,0,1,1,0,0,1,1,1
+1481,Market Bezons,Désactivé,1,1,0,1,0,0,0,1,0,0,1,1,0,0,1,1,1
+1483,Market Bethune - Bar,Activé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1486,Market Evron,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1487,Market Laillé - Pont du Jour,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1488,Market Mauriac,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1235,Market Cusset - Charmeil,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1490,Market Blois - Chavy,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1491,Market Le Mans - Piron,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1239,Market Malesherbes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1216,Market Nogent Le Roi,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1494,Market La Chatre,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1495,Market Autreville,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1496,Market Vanves,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1497,Market Meudon,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1498,Market Maulette,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1499,Market Neuilly En Thelle,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1500,Market Magny En Vexin,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1338,Market Guignicourt,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1502,Market Fumay,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1503,Market Braine,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1504,Market Cappelle La Grande,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1336,Market Chaulnes,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1506,Market Quesnoy sur Deule,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1507,Market Blagny,Activé,1,1,0,1,0,0,0,1,0,0,1,0,0,0,1,1,1
+1508,Market Divion,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1509,Market Beuvry,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1510,Market Marigny,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1511,Market Pledran,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+1512,Market Mezidon Canon,Désactivé,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,1,1
+1513,Market Orbec - Vespiere,Désactivé,1,0,0,1,0,0,0,1,0,0,1,1,0,0,1,1,1
+1214,Market Laval,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1515,Market Nivillac,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1516,Market Grand Champ - Vannes,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1201,Market Barneville Carteret,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1518,Market Duclair,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1519,Market Saint Mihiel,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1520,Market Rocroi,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1521,Market Bourbonne Les Bains,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1522,Market Verton,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1523,Market Somain - Semard,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1524,Market Paris - Maubeuge,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1525,Market Paris - Nationale,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1526,Market Paris - Seine,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1527,Market Ploeuc-L'Hermitage,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1528,Market Plouha,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1529,Market Domfront,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1219,Market Penestin - Pontcano,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1531,Market Coueron,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1532,Market Beuzeville,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1533,Market Coutances - Planche,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1211,Market La Haye Du Puits,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1535,Market Sees,Désactivé,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,1,1
+1536,Market Change Les Laval,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1537,Market St Martin Fontenay,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1538,Market St Pierre Montlimart,Désactivé,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,1,1
+1539,Market Mauleon-Licharre,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1540,Market Bergerac - St Alvère,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1541,Market Salles,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1542,Market Vic Fezensac,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1543,Market Carbonne,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1312,Market Marmande - 2,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1300,Market Bourg sur Gironde,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1546,Market Ferrieres D'Aunis,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1547,Market Entraigues sur Sorgue,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1548,Market Vauvert,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1549,Market Vinon sur Verdon,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1550,Market Nice Le Ray,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1551,Market La Crau,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1552,Market St Flour,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1553,Market Borgo,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1554,Market Allauch,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1249,Market Chauffailles,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1264,Market Le Coteau,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1557,Market Amplepuis,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1266,Market Montbrison,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1271,Market Roanne,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1560,Market Anse,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1258,Market Gex,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1562,Market Ferney Voltaire,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1563,Market Hagetmau,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1564,Market Mirande,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1565,Market Tartas,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1566,Market Os Marsillon,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1567,Market Pessac - Alouettes,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1568,Market Tarbes - Lacaussade,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1569,Market Mimizan,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1570,Market Condom - Hontaut,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1571,Market Pont L'Abbe D'Arnoul,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1306,Market Gimont,Désactivé,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1
+1573,Market Carentan,Désactivé,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1574,Market Florange,Désactivé,1,1,0,1,0,0,0,1,0,0,1,1,1,0,1,1,1
+1575,Market Bernay,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1576,Market Sin Le Noble,Activé,1,1,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1
+1577,Market Monteils,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+1578,Market Saint Jean Pied De Port - Relais Delipop,Désactivé,0,1,0,1,0,1,0,1,1,0,1,1,0,0,1,1,1
+1580,Market Vimoutiers,Activé,1,1,0,1,0,1,0,1,0,0,1,1,1,0,1,1,1
+1581,Market Bordeaux Belvédère,Activé,0,1,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0
+1603,Carrefour Montauban,Activé,1,1,1,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1604,Market Roost-Warendin,Activé,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1
+1605,Carrefour La Ricamarie,Activé,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,1,1
+1606,Carrefour Avignon Cap Sud,Désactivé,0,1,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0
+1607,Carrefour Lanester,Activé,0,1,0,1,0,0,0,1,0,1,1,1,0,0,1,1,1
+1608,Carrefour Villefranche Sur Saone,Activé,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1
+1609,Carrefour Albi,Activé,0,1,1,1,0,1,0,1,0,1,1,1,0,0,1,1,1
+1610,Carrefour Vals Pres Le Puy,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1611,Market Saint Martin Boulogne Nord,Activé,0,1,0,1,1,1,0,1,0,1,1,0,1,0,1,1,1
+1612,Market Villeneuve Sur Aisne,Activé,1,1,0,1,0,1,0,1,0,0,1,1,1,0,1,1,1
+1613,Carrefour Lons Le Saunier,Activé,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1
+1614,Carrefour Clermont-Ferrand,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1615,Carrefour Saint-Jouan-des-Guérets,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1616,Carrefour Rennes Pacé,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1617,Carrefour Perrigny-lès-Dijon,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1618,Carrefour Auxerre Monéteau,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1619,Carrefour Vichy,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1620,Carrefour Ales,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1621,Carrefour Amphion,Désactivé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1622,Carrefour Ermont,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1623,Carrefour Val d'Yerres-Boussy,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1624,Carrefour Belfort Andelnans,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1625,Carrefour Dole,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1626,Carrefour Montbéliard,Activé,1,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1,1
+1627,Carrefour Vesoul,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1628,Carrefour Mulhouse-Dornach,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1629,Carrefour Creil Saint-Maximin,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1630,Carrefour Reims Cormontreuil,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1631,Carrefour Reims Neuvillette,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1632,Carrefour Saint Quentin,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1633,Carrefour Soissons,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1634,Carrefour Cambrai Proville,Activé,1,0,0,1,1,0,1,1,1,0,1,1,0,0,1,1,1
+1636,Carrefour Dunkerque Coudeker,Activé,1,0,0,1,1,0,0,1,1,1,1,1,0,0,1,1,1
+1637,Carrefour Flers Villeneuve D'Ascq,Activé,1,0,0,1,1,0,0,1,1,0,1,1,0,0,1,1,1
+1638,Carrefour Wattignies,Activé,1,0,0,1,1,0,0,1,1,0,0,1,0,0,1,1,1
+1639,Carrefour Garges-lès-Gonesse,Activé,1,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,1
+1640,Market Saint-Léonard-De-Noblat,Activé,1,1,0,1,0,1,0,1,0,0,0,0,1,0,1,1,1
+1641,Carrefour Bruay La Buissière,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1642,Carrefour Courrières,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1643,Carrefour Saint Dizier,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1644,Carrefour Lens,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1645,Carrefour Villers Semeuse,Désactivé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1646,Carrefour Arcueil,Activé,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1
+1647,Carrefour Blois,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1648,Carrefour Caen-Rots,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1649,Carrefour Dreux,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1650,Carrefour Limoges,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1651,Carrefour Evreux Saint Taurin,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1652,Carrefour Livry Gargan,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1653,Carrefour Massy,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1654,Carrefour Les Pavillons Sous Bois,Désactivé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1655,Carrefour Wittenheim,Activé,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1656,Carrefour Essey Les Nancy,Activé,1,1,0,1,1,0,0,1,1,0,1,0,1,0,1,1,1
+1657,Carrefour Luneville,Activé,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1658,Carrefour Toul,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1659,Carrefour Nancy Houdemont,Activé,1,1,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1660,Carrefour Strasbourg Mundo,Activé,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1661,Carrefour Longeville-lès-Saint-Avold,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1662,Carrefour Grosbliederstroff,Activé,1,0,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1663,Carrefour Metz Technopole,Activé,1,0,0,1,0,0,1,1,1,1,1,1,1,0,1,1,1
+1664,Carrefour Mondelange,Activé,1,0,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1665,Carrefour Moulins-Lès-Metz,Activé,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1666,Carrefour Forbach,Activé,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1667,Carrefour Haguenau,Activé,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1668,Carrefour Sainte-Marie-aux-Chênes,Activé,1,1,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1669,Carrefour Sarrebourg,Activé,1,1,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1
+1670,Carrefour Sarreguemines,Activé,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1
+1671,Carrefour Colmar Houssen,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1672,Carrefour Dorlisheim Molsheim,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1673,Carrefour Saint-Dié-des-Vosges,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1674,Carrefour Remiremont,Activé,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1
+1675,Carrefour Verdun,Activé,1,1,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1
+1676,Market Annay Sous Lens,Activé,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,1
+1677,Market Saint-Aubin-Lès-Elbeuf,Activé,1,1,0,1,1,1,0,1,0,0,1,0,1,0,1,1,1
+1678,Market Susville,Activé,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0
