@@ -29,6 +29,26 @@ import structlog
 
 _CONFIGURED = False
 
+# Cloud Logging derives a log entry's severity from a top-level `severity` field
+# (it ignores structlog's `level`). Map one so the GCP Logs Explorer can filter by
+# severity — the whole point of "show me only the ERRORs".
+_GCP_SEVERITY = {
+    "debug": "DEBUG",
+    "info": "INFO",
+    "warning": "WARNING",
+    "error": "ERROR",
+    "critical": "CRITICAL",
+    "exception": "ERROR",
+}
+
+
+def _add_gcp_severity(_logger, _method, event_dict):
+    """Copy structlog's `level` into a Cloud-Logging-recognised `severity` field."""
+    level = event_dict.get("level")
+    if level:
+        event_dict["severity"] = _GCP_SEVERITY.get(level, level.upper())
+    return event_dict
+
 
 def _use_json() -> bool:
     """Decide whether to emit JSON or pretty console output.
@@ -66,6 +86,10 @@ def configure_logging() -> None:
         # ── K8s / CI / Docker: newline-delimited JSON ────────────────────────
         # Each line is a valid JSON object — easy to ingest with any aggregator.
         # Stack traces are serialised under the "exception" key.
+        # `severity` (from level) + `message` (from event) make each line a
+        # first-class Cloud Logging entry: filterable by severity, readable summary.
+        processors.append(_add_gcp_severity)
+        processors.append(structlog.processors.EventRenamer("message"))
         processors.append(structlog.processors.format_exc_info)
         processors.append(structlog.processors.JSONRenderer(ensure_ascii=False))
     else:
