@@ -29,17 +29,22 @@ Environment variables::
 
 import argparse
 import gzip
-import io
 import json
 import sys
 from pathlib import Path
 
 from tqdm import tqdm
 
-from ingest.categorize import batch_categorize, batch_classify_event_fit, batch_classify_roles
 from ingest.catalogue import build_store_catalogue
+from ingest.categorize import batch_categorize, batch_classify_event_fit, batch_classify_roles
 from ingest.concepts import load_store_concepts
-from ingest.config import INGEST_NON_RECOMMENDABLE, PRICES_FILE, PRODUCTS_FILE, STORES_FILE
+from ingest.config import (
+    INGEST_NON_RECOMMENDABLE,
+    PRICES_FILE,
+    PRODUCTS_FILE,
+    STORES_FILE,
+    latest_data_files,
+)
 from ingest.db import (
     bulk_upsert,
     bulk_upsert_prices,
@@ -290,6 +295,11 @@ def ingest_products(force_categorize: bool = False) -> None:
 def main() -> None:
     """Parse CLI arguments and run the requested ingestion steps."""
     parser = argparse.ArgumentParser(description="Carrefour Traiteur ETL ingestion pipeline")
+    parser.add_argument(
+        "--fetch",
+        action="store_true",
+        help="Download the latest exports from GCS into data/ before ingesting",
+    )
     parser.add_argument("--stores", action="store_true", help="Ingest stores only")
     parser.add_argument("--prices", action="store_true", help="Ingest prices only")
     parser.add_argument("--products", action="store_true", help="Ingest products only")
@@ -320,6 +330,17 @@ def main() -> None:
     log.info("pipeline_starting", run_all=run_all, steps={k: v for k, v in vars(args).items() if v})
 
     try:
+        if args.fetch:
+            # Imported lazily so runs without --fetch don't require the GCS client
+            # (google-cloud-storage) to be installed.
+            from ingest.fetch import fetch_latest_exports
+
+            fetch_latest_exports()
+            # config resolved the *_FILE constants at import, BEFORE this download —
+            # re-resolve so the ingest steps below read what we just pulled.
+            global PRODUCTS_FILE, PRICES_FILE, STORES_FILE
+            PRODUCTS_FILE, PRICES_FILE, STORES_FILE = latest_data_files()
+
         ensure_indexes()
 
         if run_all or args.stores:

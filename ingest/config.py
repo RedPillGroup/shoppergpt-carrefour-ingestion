@@ -49,6 +49,40 @@ PRODUCTS_FILE = _latest_file("catalogue_products", "products")
 PRICES_FILE = _latest_file("mapping_products_prices", "products_prices")
 STORES_FILE = _latest_file("magasins_stores", "stores")
 
+
+def latest_data_files() -> tuple[Path, Path, Path]:
+    """Re-resolve ``(products, prices, stores)`` from ``data/`` at call time.
+
+    The ``*_FILE`` constants above are resolved once, at import. After a
+    ``run.py --fetch`` downloads newer exports, call this to pick them up — the
+    constants would otherwise still point at whatever was on disk when this module
+    was first imported.
+    """
+    return (
+        _latest_file("catalogue_products", "products"),
+        _latest_file("mapping_products_prices", "products_prices"),
+        _latest_file("magasins_stores", "stores"),
+    )
+
+
+# ── GCS source (Carrefour exports) ──────────────────────────────────────────────
+# Carrefour drops one dated JSONL(.gz) per stream into gs://<GCS_BUCKET>/<folder>/.
+# ``run.py --fetch`` (see ingest/fetch.py) pulls the most recent of each into
+# data/ before ingesting. Auth uses Application Default Credentials: locally,
+# ``gcloud auth application-default login`` or GOOGLE_APPLICATION_CREDENTIALS=<sa.json>;
+# a service-account key in CI; workload identity on GKE.
+GCS_BUCKET = os.getenv("GCS_BUCKET", "carrefour-shoppergpt-ingestion")
+GCS_PROJECT = os.getenv("GCS_PROJECT", "waib-459906")
+
+# Remote folder (object-name prefix) → local data/ filename prefix. The readers key
+# off the LOCAL prefix (see _latest_file); the remote folder names are Carrefour's.
+# One dated .jsonl.gz per folder per export.
+GCS_STREAMS = {
+    "catalogue": "catalogue_products",
+    "magasins": "magasins_stores",
+    "mapping": "mapping_products_prices",
+}
+
 # Carrefour's curated business taxonomy — static export file (not dated/rotated
 # like the exports above). See ingest/concepts.py for how it's used. (The
 # "Evénement X Concept" and "Concept X Produits" sibling exports were used once
