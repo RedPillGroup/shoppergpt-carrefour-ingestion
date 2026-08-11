@@ -1,0 +1,23 @@
+# Keep the build context small and deterministic. The daily exports are pulled
+# at runtime by `run.py --fetch`, so nothing under data/ belongs in the image
+# EXCEPT the static store-concepts CSV (required by the --stores step).
+data/*
+!data/Evénement X Concept - Concept X Magasin.csv
+
+.git
+.github
+.venv
+**/__pycache__
+*.pyc
+.env
+.ruff_cache
+.pytest_cache
+.mypy_cache
+tests
+scripts
+data_samples
+missing_portions.json
+*.md
+Dockerfile
+.dockerignore
+k8s

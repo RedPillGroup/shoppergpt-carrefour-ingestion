@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-ingestion-carrefour
+spec:
+  # Daily. Set to land AFTER Carrefour's daily GCS export (observed ~08:30 UTC for
+  # the catalogue/magasins/mapping objects). --fetch always takes the most recent
+  # object anyway, so a slightly-early run just re-ingests the previous day's data.
+  # Tune once the export SLA is confirmed.
+  schedule: "0 12 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          # GCS: `run.py --fetch` reads the exports bucket using the cluster's
+          # default service account (same GCP project) — no key or dedicated
+          # service account needed.
+          restartPolicy: Never
+          containers:
+            - name: carrefour-ingestion
+              image: europe-west1-docker.pkg.dev/waib-459906/shoppergpt-carrefour-ingestion/shoppergpt-carrefour-ingestion-dev:latest
+              imagePullPolicy: Always
+              envFrom:
+                - secretRef:
+                    name: carrefour-ingestion-secret
+              command: ["/bin/sh"]
+              args: ["-c", "poetry run python run.py --fetch"]
+              resources:
+                # Placeholder — tune after observing a real run. The prices export
+                # is ~50 MB, loaded into an in-memory price index; the pinecone step
+                # embeds ~1.3k products via OpenAI.
+                requests:
+                  cpu: "250m"
+                  memory: "512Mi"
+                limits:
+                  cpu: "1"
+                  memory: "1536Mi"
