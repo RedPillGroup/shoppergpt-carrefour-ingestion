@@ -71,8 +71,11 @@ def latest_data_files() -> tuple[Path, Path, Path]:
 # data/ before ingesting. Auth uses Application Default Credentials: locally,
 # ``gcloud auth application-default login`` or GOOGLE_APPLICATION_CREDENTIALS=<sa.json>;
 # a service-account key in CI; workload identity on GKE.
-GCS_BUCKET = os.getenv("GCS_BUCKET", "carrefour-shoppergpt-ingestion")
-GCS_PROJECT = os.getenv("GCS_PROJECT", "waib-459906")
+# `or <default>` (not a getenv default arg) so an EMPTY env var falls back to the
+# known-good value too — an unset key in the k8s secret still exists as "", which
+# os.getenv would return as-is, and storage.Client.bucket("") raises IndexError.
+GCS_BUCKET = os.getenv("GCS_BUCKET") or "carrefour-shoppergpt-ingestion"
+GCS_PROJECT = os.getenv("GCS_PROJECT") or "waib-459906"
 
 # Remote folder (object-name prefix) → local data/ filename prefix. The readers key
 # off the LOCAL prefix (see _latest_file); the remote folder names are Carrefour's.
