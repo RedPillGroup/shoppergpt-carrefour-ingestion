@@ -133,8 +133,8 @@ secret, and `kubectl apply`s `k8s/`.
 Layout:
 - `Dockerfile` — builds the image and **bakes in the concept CSV** (`data/Evénement X
   Concept - Concept X Magasin.csv`), since it isn't part of the GCS export.
-- `k8s/cron.yaml` / `k8s/cronProd.yaml` — the CronJob (schedule `0 12 * * *`, runs
-  `run.py --fetch`).
+- `k8s/cron.yaml` / `k8s/cronProd.yaml` — the CronJob (schedule `0 3 * * *` —
+  03:00 UTC / 05:00 Paris, off-peak; runs `run.py --fetch`).
 - `k8s/secret.yaml` — env vars; its `data` is overwritten at deploy from the
   `DEV_SECRETS` / `PROD_SECRETS` GitHub secret.
 - `.github/workflows/{dev,prod}.yml` — CI.
@@ -148,6 +148,19 @@ Layout:
 job runs in the same GCP project as the bucket, so it authenticates automatically
 with the cluster's default service account, which already has read access — no key
 file, dedicated service account, or Workload Identity binding required.
+
+**Schedule.** Runs daily at **`0 3 * * *` = 03:00 UTC (05:00 Europe/Paris)** —
+deep off-peak, so a full ingest never competes with live traffic (midday is a
+usage peak). Kubernetes cron is **UTC** by default; to pin it to local time
+instead, add `timeZone: "Europe/Paris"` next to `schedule` (GKE ≥ 1.27).
+
+The slot deliberately does **not** try to line up with Carrefour's export: its
+publish time is variable and unconfirmed. `--fetch` always pulls the latest
+object and the skip logic (`ingestion_meta` marker in Mongo) ingests only when a
+genuinely new file has landed — so an export published after a run is simply
+picked up on the **next** run (at most ~1 day of lag, fine for slow-moving
+catalogue data). To change the cadence, edit `schedule` in **both** `k8s/cron.yaml`
+and `k8s/cronProd.yaml`, then redeploy.
 
 One-time prereq: the Artifact Registry repo `shoppergpt-carrefour-ingestion`. The
 CronJob `resources` are placeholders — tune after the first real run.
