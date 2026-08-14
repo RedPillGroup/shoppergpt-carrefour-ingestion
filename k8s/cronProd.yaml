@@ -4,7 +4,7 @@ metadata:
   name: daily-ingestion-carrefour
 spec:
   # See k8s/cron.yaml for the schedule rationale.
-  schedule: "0 12 * * *"
+  schedule: "0 3 * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -13,8 +13,10 @@ spec:
       backoffLimit: 1
       template:
         spec:
-          # GCS via the cluster's default service account (same GCP project) —
-          # no key or dedicated service account needed.
+          # GCS via Workload Identity — KSA bound to carrefour-ingestion-sa
+          # (roles/iam.workloadIdentityUser + storage.objectViewer). See
+          # k8s/cron.yaml and README "Deployment".
+          serviceAccountName: carrefour-ingestion
           restartPolicy: Never
           containers:
             - name: carrefour-ingestion

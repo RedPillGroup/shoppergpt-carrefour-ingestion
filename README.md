@@ -144,10 +144,29 @@ Layout:
 `GCS_BUCKET`, `GCS_PROJECT`, `GEMINI_API_KEY`, `OPENAI_API_KEY`, `PINECONE_API_KEY`
 (see `k8s/secret.yaml`).
 
-**GCS access.** `run.py --fetch` reads `gs://carrefour-shoppergpt-ingestion`. The
-job runs in the same GCP project as the bucket, so it authenticates automatically
-with the cluster's default service account, which already has read access — no key
-file, dedicated service account, or Workload Identity binding required.
+**GCS access (Workload Identity).** `run.py --fetch` reads
+`gs://carrefour-shoppergpt-ingestion`. `waib-dev` has **Workload Identity enabled**,
+so the node default SA is not usable — the pod must run under a KSA bound to a GSA.
+Bind the KSA `carrefour-ingestion` (namespace `default`) to the GSA
+`carrefour-ingestion-sa`:
+
+```bash
+# 1. KSA + annotation (you can run these):
+kubectl create serviceaccount carrefour-ingestion -n default
+kubectl annotate serviceaccount carrefour-ingestion -n default \
+  iam.gke.io/gcp-service-account=carrefour-ingestion-sa@waib-459906.iam.gserviceaccount.com
+
+# 2. IAM (needs project admin — devops):
+gcloud iam service-accounts add-iam-policy-binding \
+  carrefour-ingestion-sa@waib-459906.iam.gserviceaccount.com \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:waib-459906.svc.id.goog[default/carrefour-ingestion]"
+gcloud storage buckets add-iam-policy-binding gs://carrefour-shoppergpt-ingestion \
+  --member "serviceAccount:carrefour-ingestion-sa@waib-459906.iam.gserviceaccount.com" \
+  --role roles/storage.objectViewer
+```
+
+The CronJob sets `serviceAccountName: carrefour-ingestion` (see `k8s/cron.yaml`).
 
 **Schedule.** Runs daily at **`0 3 * * *` = 03:00 UTC (05:00 Europe/Paris)** —
 deep off-peak, so a full ingest never competes with live traffic (midday is a

@@ -3,11 +3,14 @@ kind: CronJob
 metadata:
   name: daily-ingestion-carrefour
 spec:
-  # Daily. Set to land AFTER Carrefour's daily GCS export (observed ~08:30 UTC for
-  # the catalogue/magasins/mapping objects). --fetch always takes the most recent
-  # object anyway, so a slightly-early run just re-ingests the previous day's data.
-  # Tune once the export SLA is confirmed.
-  schedule: "0 12 * * *"
+  # Daily at 03:00 UTC (05:00 Europe/Paris) — deep off-peak, so a full ingest never
+  # competes with live traffic (midday is a usage peak). It likely runs before
+  # Carrefour's daily export publishes (exact time unconfirmed), so it may ingest
+  # the PREVIOUS day's export and pick up the new one on the next run (~1 day lag,
+  # fine for slow-moving catalogue data). --fetch always takes the latest object
+  # and the skip logic avoids re-ingesting unchanged data, so the schedule doesn't
+  # depend on knowing the export time.
+  schedule: "0 3 * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -16,9 +19,12 @@ spec:
       backoffLimit: 1
       template:
         spec:
-          # GCS: `run.py --fetch` reads the exports bucket using the cluster's
-          # default service account (same GCP project) — no key or dedicated
-          # service account needed.
+          # GCS access via Workload Identity (this cluster has WI enabled, so the
+          # node default SA is NOT usable). This KSA must be bound to the
+          # carrefour-ingestion-sa GSA — roles/iam.workloadIdentityUser on the GSA
+          # for serviceAccount:waib-459906.svc.id.goog[default/carrefour-ingestion],
+          # plus storage.objectViewer on the bucket. See README "Deployment".
+          serviceAccountName: carrefour-ingestion
           restartPolicy: Never
           containers:
             - name: carrefour-ingestion
