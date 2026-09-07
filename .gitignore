@@ -4,6 +4,10 @@
 # (it gets baked into the Docker image). See README "Store concepts".
 data/*
 !data/Evénement X Concept - Concept X Magasin.csv
+data_samples/
+
+# Generated reports (scripts/missing_portions.py writes here by default)
+missing_portions.json
 
 # Env
 .env
@@ -14,12 +18,11 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-
-# Poetry virtualenv (local)
 .venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
 
 # OS
 .DS_Store
-
-# Data samples (local only)
-data_samples/
