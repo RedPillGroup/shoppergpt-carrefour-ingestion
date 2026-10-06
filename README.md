@@ -175,6 +175,47 @@ gcloud storage buckets add-iam-policy-binding gs://carrefour-shoppergpt-ingestio
 
 The CronJob sets `serviceAccountName: carrefour-ingestion` (see `k8s/cron.yaml`).
 
+**Prod (`waib-prod`).** Same mechanism, but with its own bucket, GSA and KSA, so dev
+and prod never share a credential:
+
+| | dev | prod |
+|---|---|---|
+| Bucket | `carrefour-shoppergpt-ingestion` | `carrefour-shoppergpt-ingestion-prod` |
+| GSA | `carrefour-ingestion-sa` | `carrefour-ingestion-prod-sa` |
+| KSA (namespace `default`) | `carrefour-ingestion` | `carrefour-ingestion-prod` |
+
+The prod KSA has a different name on purpose: the Workload Identity pool
+(`waib-459906.svc.id.goog`) is shared by both clusters, so reusing the dev name would
+let a pod in the dev cluster bind to the prod GSA.
+
+Prerequisite: Workload Identity must be enabled on `waib-prod` (cluster
+`--workload-pool=waib-459906.svc.id.goog` **and** node pools in `GKE_METADATA` mode).
+Then, with the `waib-prod` kube context:
+
+```bash
+kubectl create serviceaccount carrefour-ingestion-prod -n default
+kubectl annotate serviceaccount carrefour-ingestion-prod -n default \
+  iam.gke.io/gcp-service-account=carrefour-ingestion-prod-sa@waib-459906.iam.gserviceaccount.com
+
+gcloud iam service-accounts add-iam-policy-binding \
+  carrefour-ingestion-prod-sa@waib-459906.iam.gserviceaccount.com \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:waib-459906.svc.id.goog[default/carrefour-ingestion-prod]"
+```
+
+The bucket grants (`objectCreator` + `objectViewer`) to `carrefour-ingestion-prod-sa`
+are already in place. Carrefour uploads with that GSA's key; the pod reads with
+Workload Identity (no key). `PROD_SECRETS` needs `ENV=prod`,
+`GCS_BUCKET=carrefour-shoppergpt-ingestion-prod`, `GCS_PROJECT=waib-459906` and the
+usual Mongo/LLM/Pinecone keys (index and DB default to the prod ones when `ENV=prod`).
+
+After the first deploy, trigger a run by hand instead of waiting for 03:00 UTC:
+
+```bash
+kubectl create job --from=cronjob/daily-ingestion-carrefour first-run -n default
+kubectl logs -f job/first-run -n default
+```
+
 **Schedule.** Runs daily at **`0 3 * * *` = 03:00 UTC (05:00 Europe/Paris)** —
 deep off-peak, so a full ingest never competes with live traffic (midday is a
 usage peak). Kubernetes cron is **UTC** by default; to pin it to local time

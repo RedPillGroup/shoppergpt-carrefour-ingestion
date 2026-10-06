@@ -13,10 +13,13 @@ spec:
       backoffLimit: 1
       template:
         spec:
-          # GCS via Workload Identity — KSA bound to carrefour-ingestion-sa
-          # (roles/iam.workloadIdentityUser + storage.objectViewer). See
-          # k8s/cron.yaml and README "Deployment".
-          serviceAccountName: carrefour-ingestion
+          # GCS via Workload Identity — this KSA is annotated to impersonate the
+          # prod GSA carrefour-ingestion-prod-sa (roles/iam.workloadIdentityUser on
+          # the GSA + storage.objectViewer on gs://carrefour-shoppergpt-ingestion-prod).
+          # Distinct from the dev KSA name on purpose: the WI pool is project-wide, so
+          # the same name would let the dev cluster bind to the prod GSA. See README
+          # "Deployment" for the one-time setup.
+          serviceAccountName: carrefour-ingestion-prod
           restartPolicy: Never
           containers:
             - name: carrefour-ingestion

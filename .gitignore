@@ -26,3 +26,7 @@ build/
 
 # OS
 .DS_Store
+
+# Per-environment env files (keep only the template committed)
+.env.*
+!.env.example
