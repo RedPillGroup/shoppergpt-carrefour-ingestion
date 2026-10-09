@@ -3,14 +3,16 @@ kind: CronJob
 metadata:
   name: daily-ingestion-carrefour
 spec:
-  # Daily at 03:00 UTC (05:00 Europe/Paris) — deep off-peak, so a full ingest never
-  # competes with live traffic (midday is a usage peak). It likely runs before
-  # Carrefour's daily export publishes (exact time unconfirmed), so it may ingest
-  # the PREVIOUS day's export and pick up the new one on the next run (~1 day lag,
-  # fine for slow-moving catalogue data). --fetch always takes the latest object
-  # and the skip logic avoids re-ingesting unchanged data, so the schedule doesn't
-  # depend on knowing the export time.
-  schedule: "0 3 * * *"
+  # Daily at 07:15 Europe/Paris, year-round (timeZone below keeps it at 07:15 local
+  # across the summer/winter clock change; without it Kubernetes cron is UTC).
+  # Carrefour publishes its daily export around 04:45 UTC (06:45 Paris) — measured on
+  # 2026-10-09 — so this slot runs AFTER the export and ingests the same-day files
+  # (the previous 03:00 UTC slot ran before it and always lagged by one day).
+  # The publish time is not guaranteed: --fetch always takes the latest object and
+  # the skip logic (ingestion_meta marker in Mongo) ingests only when a genuinely new
+  # file has landed, so a late export is simply picked up on the next run.
+  schedule: "15 7 * * *"
+  timeZone: "Europe/Paris"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3

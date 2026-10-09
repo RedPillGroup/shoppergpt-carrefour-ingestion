@@ -4,7 +4,8 @@ metadata:
   name: daily-ingestion-carrefour
 spec:
   # See k8s/cron.yaml for the schedule rationale.
-  schedule: "0 3 * * *"
+  schedule: "15 7 * * *"
+  timeZone: "Europe/Paris"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
